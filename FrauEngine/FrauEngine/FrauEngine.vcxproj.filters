@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\DoNotTouch">
+      <UniqueIdentifier>{6d7bddd9-5789-4751-bc17-0d98b98c4b5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\DoNotTouch\imgui">
+      <UniqueIdentifier>{240dd82c-0897-4d6d-8a14-a2b6bf336ebc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\LowApplication">
+      <UniqueIdentifier>{1f119db4-c62b-40ed-b7d0-df1d19126dc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Application">
+      <UniqueIdentifier>{92b84c23-e700-4bf1-8205-7fff943b5d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Components">
+      <UniqueIdentifier>{3d4de2ab-4870-4a91-a0f9-339a516551f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame">
+      <UniqueIdentifier>{d23df101-6b29-48c1-96da-47de74de41ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Objects">
+      <UniqueIdentifier>{4b800afc-07df-42b8-a74f-861352adea38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Scenes">
+      <UniqueIdentifier>{47e453d4-12e3-4035-beb8-e8665006e796}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Class">
+      <UniqueIdentifier>{81dc1271-4d87-4204-a21a-e5b62e8c5670}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Components\Camera">
+      <UniqueIdentifier>{b872874e-e1a9-4201-aa6d-74d891b214fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Components\ConstantBuffer">
+      <UniqueIdentifier>{0f081f5a-c060-4052-99c9-f150325f2686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Components\DXTK">
+      <UniqueIdentifier>{40696ea4-823f-4a63-9d49-5e12854261f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Components\Effekseer">
+      <UniqueIdentifier>{afbd1730-7705-4461-a02e-5f11ebe67a89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Components\FBX">
+      <UniqueIdentifier>{3b66ff53-81ef-4745-a5d5-52a5d66e7aba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Components\Light">
+      <UniqueIdentifier>{04314c55-eed3-4178-862e-4a622687038c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Components\ImGUI">
+      <UniqueIdentifier>{2e822b25-f1d6-4627-b0ed-76df66ca74d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Components\PostEffect">
+      <UniqueIdentifier>{49fb1aa7-4441-4b45-82f3-d61e0e0ca74c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Components\Shader">
+      <UniqueIdentifier>{3a224c8f-4ea6-4628-a983-6ce647010772}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Objects\Effect">
+      <UniqueIdentifier>{a47441e2-4c3e-469c-b4cc-21f50ae67e6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Objects\Camera">
+      <UniqueIdentifier>{a931f843-3153-4ad1-85de-2dfb5a422ba2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Objects\Model">
+      <UniqueIdentifier>{0749fb18-4303-4e35-888a-645d4f68b843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Objects\Image">
+      <UniqueIdentifier>{4ab8edb3-19a4-4e54-bf1b-76c376b42bce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Objects\Sound">
+      <UniqueIdentifier>{606c0bf8-2b6c-47ce-8ab6-1fb5dec55d25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library">
+      <UniqueIdentifier>{ada78e30-e04a-4889-a578-12e019005d56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Objects\ModelExtend">
+      <UniqueIdentifier>{61d60edf-6b0d-457b-851e-518f47def23c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ImGui\imgui.cpp">
+      <Filter>ソース ファイル\DoNotTouch\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_demo.cpp">
+      <Filter>ソース ファイル\DoNotTouch\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_draw.cpp">
+      <Filter>ソース ファイル\DoNotTouch\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_dx12.cpp">
+      <Filter>ソース ファイル\DoNotTouch\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_win32.cpp">
+      <Filter>ソース ファイル\DoNotTouch\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_tables.cpp">
+      <Filter>ソース ファイル\DoNotTouch\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_widgets.cpp">
+      <Filter>ソース ファイル\DoNotTouch\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\main.cpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MaterialLinkerData.cpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\OpenFileDialog.cpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\LowApplication.cpp">
+      <Filter>ソース ファイル\LowApplication</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Scene.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Resource.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorScene.cpp">
+      <Filter>ソース ファイル\InGame\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\BackObject.cpp">
+      <Filter>ソース ファイル\InGame\Class</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Material.cpp">
+      <Filter>ソース ファイル\InGame\Class</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MaterialLinker.cpp">
+      <Filter>ソース ファイル\InGame\Class</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Camera.cpp">
+      <Filter>ソース ファイル\Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ConstantBuffer.cpp">
+      <Filter>ソース ファイル\Components\ConstantBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\DXTK.cpp">
+      <Filter>ソース ファイル\Components\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EffekseerDX12.cpp">
+      <Filter>ソース ファイル\Components\Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\FBX.cpp">
+      <Filter>ソース ファイル\Components\FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Light.cpp">
+      <Filter>ソース ファイル\Components\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PostEffect.cpp">
+      <Filter>ソース ファイル\Components\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ImGuiDX12.cpp">
+      <Filter>ソース ファイル\Components\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Shader.cpp">
+      <Filter>ソース ファイル\Components\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ShaderResourceBuffer.cpp">
+      <Filter>ソース ファイル\Components\ConstantBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CameraObject.cpp">
+      <Filter>ソース ファイル\Objects\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EffectObject.cpp">
+      <Filter>ソース ファイル\Objects\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ModelObject.cpp">
+      <Filter>ソース ファイル\Objects\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ImageObject.cpp">
+      <Filter>ソース ファイル\Objects\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SoundObject.cpp">
+      <Filter>ソース ファイル\Objects\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\input.cpp">
+      <Filter>ソース ファイル\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Utility.cpp">
+      <Filter>ソース ファイル\InGame\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ModelObjectExtend.cpp">
+      <Filter>ソース ファイル\Objects\ModelExtend</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ImGui\imconfig.h">
+      <Filter>ソース ファイル\DoNotTouch\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui.h">
+      <Filter>ソース ファイル\DoNotTouch\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_dx12.h">
+      <Filter>ソース ファイル\DoNotTouch\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_win32.h">
+      <Filter>ソース ファイル\DoNotTouch\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_internal.h">
+      <Filter>ソース ファイル\DoNotTouch\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_rectpack.h">
+      <Filter>ソース ファイル\DoNotTouch\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_textedit.h">
+      <Filter>ソース ファイル\DoNotTouch\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_truetype.h">
+      <Filter>ソース ファイル\DoNotTouch\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MaterialLinkerData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\OpenFileDialog.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\LowApplication.h">
+      <Filter>ソース ファイル\LowApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application.h">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Scene.h">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Resource.h">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\EditorScene.h">
+      <Filter>ソース ファイル\InGame\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\BackObject.h">
+      <Filter>ソース ファイル\InGame\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Object.h">
+      <Filter>ソース ファイル\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Material.h">
+      <Filter>ソース ファイル\InGame\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MaterialLinker.h">
+      <Filter>ソース ファイル\InGame\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Camera.h">
+      <Filter>ソース ファイル\Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ConstantBuffer.h">
+      <Filter>ソース ファイル\Components\ConstantBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\DXTK.h">
+      <Filter>ソース ファイル\Components\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\EffekseerDX12.h">
+      <Filter>ソース ファイル\Components\Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\FBX.h">
+      <Filter>ソース ファイル\Components\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ImGuiDX12.h">
+      <Filter>ソース ファイル\Components\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Light.h">
+      <Filter>ソース ファイル\Components\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PostEffect.h">
+      <Filter>ソース ファイル\Components\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Shader.h">
+      <Filter>ソース ファイル\Components\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ShaderResourceBuffer.h">
+      <Filter>ソース ファイル\Components\ConstantBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\CameraObject.h">
+      <Filter>ソース ファイル\Objects\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\EffectObject.h">
+      <Filter>ソース ファイル\Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ModelObject.h">
+      <Filter>ソース ファイル\Objects\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ImageObject.h">
+      <Filter>ソース ファイル\Objects\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\SoundObject.h">
+      <Filter>ソース ファイル\Objects\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Library.h">
+      <Filter>ソース ファイル\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\input.h">
+      <Filter>ソース ファイル\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Utility.h">
+      <Filter>ソース ファイル\InGame\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ModelObjectExtend.h">
+      <Filter>ソース ファイル\Objects\ModelExtend</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
