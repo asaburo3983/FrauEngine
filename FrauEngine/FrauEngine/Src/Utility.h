@@ -6,6 +6,10 @@
 class Vector3
 {
 public:
+	float X = 0;
+	float Y = 0;
+	float Z = 0;
+
 	Vector3()
 	{
 		this->X = 0.0f;
@@ -48,10 +52,17 @@ public:
 		v3.Z = Z * tmp.Z;
 		return v3;
 	};
+	void SetFloat3(float* _float3) {
+		X = _float3[0];
+		Y = _float3[1];
+		Z = _float3[2];
+	}
+	void GetFloat3(float* _float3) {
+		_float3[0] = X;
+		_float3[1] = Y;
+		_float3[2] = Z;
+	}
 
-	float X = 0;
-	float Y = 0;
-	float Z = 0;
 };
 class Vector2
 {

@@ -98,21 +98,23 @@ void Lights::SetDirectionalLight(Vector3 _pos, Vector3 _target, Vector3 _up, flo
 	lightBufferHeap.buffer->directionalLightVector.y = _vector.Y;
 	lightBufferHeap.buffer->directionalLightVector.z = _vector.Z;
 
+	XMFLOAT3 pos;
 	pos.x = _pos.X;
 	pos.y = _pos.Y;
 	pos.z = _pos.Z;
-	
+	XMFLOAT3 up;
 	up.x = _up.X;
 	up.y = _up.Y;
 	up.z = _up.Z;
-	
+	XMFLOAT3 target;
 	target.x = _target.X;
 	target.y = _target.Y;
 	target.z = _target.Z;
 
 	lightBufferHeap.buffer->directionalLightView = XMMatrixLookAtLH(XMLoadFloat3(&pos), XMLoadFloat3(&target), XMLoadFloat3(&up));
 	lightBufferHeap.buffer->directionalLightProjection = XMMatrixPerspectiveFovLH(45,
-		1,
+		static_cast<float>(LowApplication::GetInstance()->GetWindowSizeX()) /
+		static_cast<float>(LowApplication::GetInstance()->GetWindowSizeY()),
 		0.1f,//‹ß‚¢•û
 		1000.0f//‰“‚¢•û
 	);

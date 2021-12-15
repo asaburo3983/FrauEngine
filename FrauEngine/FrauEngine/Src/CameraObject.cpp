@@ -40,6 +40,10 @@ void CameraObject::SetAll(Vector3 _pos, Vector3 _angle) {
 
 void CameraObject::Updata() {
 
+	DrawImGUI();
+	if (enable == false) {
+		return;
+	}
 	frauEngine::Camera::GetInstance()->SetCamera(pos, target, up, fov);
 	
 }
@@ -77,13 +81,4 @@ void CameraObject::DrawImGUI() {
 
 	ImGui::End();
 }
-void CameraObject::Draw() {
-	DrawImGUI();
-	if (enable==false) {
-		return;
-	}
 
-	frauEngine::Camera::GetInstance()->SetCamera(pos, target, up, fov);
-
-
-}

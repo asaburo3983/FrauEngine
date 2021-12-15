@@ -18,8 +18,11 @@ namespace frauEngine {
 
 		Scene* scene;
 		Scene* sceneOld;
+		std::unordered_map<std::string, Scene*> sceneList;
 
-		bool load = true;//ロード中かどうか
+		int loadTime = 0;//ロード中かどうか
+		bool loaded = false;
+		int loadTimeMaxFrame = 15;
 
 		PostEffect postEffect;
 		PostEffect blurEffect;
@@ -35,10 +38,14 @@ namespace frauEngine {
 		}
 		void Init(const char* _windowName, int _windowSizeX, int _windowSizeY, bool _fullscreen);
 		void UnInit();
+		void SetSceneList(std::string _str, Scene* _scene);
 		void Load(Scene* _scene);
+		void Load(std::string _nextScene);
 		void Loop();
 		void LoadLoop();
 		void LoadScene();
+
+		void SetLoadTimeMaxFrame(int _maxFrame) { loadTimeMaxFrame = _maxFrame; }
 
 		void SetDepthOfField(bool _on, int forcusX = 0, int forcusY = 0) {
 			auto lowApp = frauEngine::LowApplication::GetInstance();

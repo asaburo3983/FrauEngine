@@ -1,8 +1,8 @@
-#include "ModelObjectExtend.h"
+#include "ModelExtendObject.h"
 
 using namespace frauEngine;
 
-void ModelObjectExtend::InitializeSub(ModelType _modelType,
+void ModelExtendObject::InitializeSub(ModelType _modelType,
 	frauEngine::Shader* _shaderV,
 	frauEngine::Shader* _shaderP,
 	frauEngine::Shader* _shaderG,
@@ -35,7 +35,7 @@ void ModelObjectExtend::InitializeSub(ModelType _modelType,
 
 }
 
-void ModelObjectExtend::Draw(ModelType _modelType) {
+void ModelExtendObject::Draw(ModelType _modelType) {
 
 	int objectNum = (int)_modelType - 1;
 	switch (_modelType) {

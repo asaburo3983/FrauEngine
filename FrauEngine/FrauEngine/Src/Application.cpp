@@ -58,14 +58,41 @@ void frauEngine::Application::UnInit() {
 	frauEngine::LowApplication::GetInstance()->UnInit();
 
 }
+void Application::SetSceneList(std::string _str, Scene* _scene) {
+	sceneList[_str] = _scene;
+}
 void frauEngine::Application::Load(Scene* _scene) {
 
-	load = true;
+	loadTime = 0;
+	loaded = false;
+
 	sceneOld = scene;
 	if (sceneOld != nullptr) {
 		sceneOld->UnLoad();
 	}
 	scene = _scene;
+
+	scene->Init();
+
+	scene->LoadFrontLoad();
+
+	std::thread loadLoopThread(&frauEngine::Application::LoadLoop,this);
+
+	std::thread loadSceneThread(&frauEngine::Application::LoadScene,this);
+
+	loadLoopThread.join();
+	loadSceneThread.join();
+}
+void Application::Load(string _nextScene) {
+
+	loadTime = 0;
+	loaded = false;
+
+	sceneOld = scene;
+	if (sceneOld != nullptr) {
+		sceneOld->UnLoad();
+	}
+	scene = sceneList[_nextScene];
 
 	scene->Init();
 
@@ -127,6 +154,8 @@ void frauEngine::Application::Loop() {
 		else {
 			postEffect.Draw();
 		}
+		//ポストエフェクトなしのシーンからの描画
+		scene->DrawNonePostEffect();
 
 		if (frauEngine::LowApplication::GetInstance()->GetDebugMode()) {
 			scene->DrawObjectList();
@@ -134,6 +163,15 @@ void frauEngine::Application::Loop() {
 		}
 		lowApp->DrawFinish();
 		frauEngine::ManagerDXTK::GetInstance()->DrawFinish();
+
+		//シーン移動
+		if (scene->loadScene) {
+			Load(scene->nextScene);
+		}
+		//終了処理
+		if (scene->gameEnd) {
+			break;
+		}
 	}
 }
 
@@ -179,18 +217,29 @@ void frauEngine::Application::LoadLoop() {
 		else {
 			postEffect.Draw();
 		}
+		//ポストエフェクトなしのシーンからの描画
+		scene->DrawNonePostEffect();
 
 		lowApp->DrawFinish();
 
 		frauEngine::ManagerDXTK::GetInstance()->DrawFinish();
 	
-		if (load == false) {
+		loadTime++;
+
+		if (loadTime >= loadTimeMaxFrame && loaded == true) {
 			break;
 		}
 	}
 }
 void frauEngine:: Application::LoadScene() {
-	scene->Load();//継承したロード
-	load = false;
+	if (loadTime == 0) {
+		if (scene->GetStaticLoad()) {
+			scene->StaticLoad();
+			scene->SetStaticLoadOFF();
+		}
+		scene->Load();//継承したロード
+	}
+	loadTime = 1;
+	loaded = true;
 }
 

@@ -2,23 +2,27 @@
 #include "Application.h"
 #include "Object.h"
 
+#include "Loading.h"
+#include "Fade.h"
 
-#include "MaterialLinker.h"
-#include "BackObject.h"
+using namespace frauEngine;
 
-class EditorScene : public Scene {
+class GallaryScene : public Scene {
 private:
-	MaterialLinker materialLinker;
+	Loading loading;
+	Fade fade;
 
-	BackObject backObject;
 public:
 
 	void LoadFrontLoad();
 	void LoadInUpdata();
 	void LoadInDraw();
 
+	void StaticLoad();
 	void Load();
 	void Updata();
 	void Draw();
+	void DrawNonePostEffect();
 	void UnLoad();
+
 };

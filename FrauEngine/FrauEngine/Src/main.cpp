@@ -1,11 +1,10 @@
 // strictStrings_off.cpp
 #include "Application.h"
-
-#include "EditorScene.h"
+#include "TitleScene.h"
+#include "FlowerShopScene.h"
 
 using namespace DirectX;
 using namespace std;
-
 using namespace frauEngine;
 
 
@@ -17,17 +16,20 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	int wx = GetSystemMetrics(SM_CXSCREEN);
 	int wy = GetSystemMetrics(SM_CYSCREEN);
 
-	Application::GetInstance()->Init("PBRマテリアル作成ソフト", wx, wy, false);
+	auto app = Application::GetInstance();
+	app->Init("FrauBouquet", wx, wy, false);
 
-	EditorScene editorScene;
+	
+	TitleScene titleScene;
+	FlowerShopScene flowerShopScene;
+	app->SetSceneList("Title", &titleScene);
+	app->SetSceneList("FlowerShop", &flowerShopScene);
 
-	Application::GetInstance()->Load(&editorScene);
+	app->Load(&titleScene);
 
-	Application::GetInstance()->Loop();
+	app->Loop();
 
-	Application::GetInstance()->UnInit();
-
-	LowApplication::GetInstance()->UnInit();
+	app->UnInit();
 
 }
 

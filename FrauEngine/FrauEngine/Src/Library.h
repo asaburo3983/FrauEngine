@@ -15,7 +15,7 @@
 #include<d3dx12.h>
 #include<dxgidebug.h>
 #include <codecvt>
-
+#include <cmath>
 #include <wrl.h>
 #include <thread>
 #include <algorithm>
@@ -58,4 +58,4 @@
 //便利機能まとめ 単独、もしくは↑のライブラリで動くものだけの記述
 #include "Utility.h"
 #include "input.h" 
-
+#include "GameMathLib.h"

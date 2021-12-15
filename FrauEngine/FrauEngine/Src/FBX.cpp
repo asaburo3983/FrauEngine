@@ -244,8 +244,6 @@ bool FBX::LoadTexture(FbxFileTexture* texture, std::string& keyword, string _tex
 
 	std::string root_path = _texturePath;
 
-	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
-	std::wstring wstr_file_name = cv.from_bytes(root_path + split_list[split_list.size() - 1]);
 
 	// 文字化け対策
 	char* file_name;
@@ -255,8 +253,8 @@ bool FBX::LoadTexture(FbxFileTexture* texture, std::string& keyword, string _tex
 	DirectX::TexMetadata meta{};
 	DirectX::ScratchImage img;
 
-	wstring wext = GetExtension(wstr_file_name);
-	string ext = GetStringFromWideString(wext);
+	string ext = GetExtension(split_list[split_list.size() - 1]);
+	
 	string filePath = _texturePath + file_name;
 	wstring filePathW = GetWideStringFromString(filePath);
 	//テクスチャ読み込み処理

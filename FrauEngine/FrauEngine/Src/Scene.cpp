@@ -33,3 +33,11 @@ void Scene::DrawObjectList() {
 
 	ImGui::End();
 }
+void Scene::SetStaticLoadOFF() {
+	staticLoad = false;
+}
+
+void Scene::LoadScene(std::string _str) {
+	loadScene = true;
+	nextScene = _str;
+}

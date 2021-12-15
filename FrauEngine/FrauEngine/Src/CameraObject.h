@@ -34,7 +34,6 @@ namespace frauEngine {
 
 		void DrawImGUI();
 		void Updata();
-		void Draw();
 
 	};
 }

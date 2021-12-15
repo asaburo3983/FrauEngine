@@ -106,3 +106,12 @@ void ImageObject::Draw() {
 	resource->Draw(pos.X, pos.Y, scale.X, scale.Y, angle, alpha, turnLR, turnUD, center);
 }
 
+bool ImageObject::Hit(int _x,int _y) {
+
+	using namespace GameMath;
+	
+	float width = resource->GetWidth();
+	float height = resource->GetHeight();
+
+	return HitRect(Pos2{ (float)pos.X, (float)pos.Y }, Pos2{ width,height }, Pos2{ (float)_x,(float)_y });
+}

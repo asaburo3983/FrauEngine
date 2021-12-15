@@ -82,33 +82,32 @@ float CookTorranceSpecular(float3 L, float3 V, float3 N, float _metallic)
 
 float3 PointLight(float3 modelWorldPos, float3 lightPos,float lightRange,float3 lightColor) {
 
-    float3 distance = abs(modelWorldPos - lightPos);//頂点との距離を計算
+    float distance = length(modelWorldPos - lightPos);//頂点との距離を計算
     distance /= lightRange;//範囲内での処理に
 
-    float3 anser = float3(1.0f, 1.0f, 1.0f) - distance;
-    //TODO anserをfloat型に変えたい
-    anser.x = anser.x * anser.y * anser.z;
-    if (anser.x < 0) {
-        anser.x = 0;
+    float anser = 1.0f - distance;
+
+    if (anser < 0) {
+        anser = 0;
     }
-    anser.x = pow(anser.x, 2.0f);
-    anser = lightColor * anser.x;
-    return anser;
+    anser = pow(anser, 2.0f);
+    return lightColor * anser;
 }
 float3 SpotLight(float3 modelWorldPos, float3 lightPos, float lightRange, float3 lightColor,float lightAnglurRange,float3 lightVector) {
     //スポットライトの計算
     lightVector = normalize(lightVector);
 
-    float3 objectVector = normalize(modelWorldPos - lightPos);
-    float3 length = abs(modelWorldPos - lightPos);
+    float3 objectVector = normalize(modelWorldPos - lightPos);//オブジェクトのライトへのベクトル
 
-    float scalar = dot(objectVector, lightVector);//内積を求める
+    float scalar = dot(objectVector, lightVector);//ライトとオブジェクトの内積を求める
 
     float angle = (1.0 - scalar) * 180.0f;//度数が出ます
 
     float anser = 1.0f - 1.0f / lightAnglurRange * angle;//角度減衰
 
-    anser *= 1.0f - 1.0f / lightRange * length;//距離減衰
+    float length2 = length(modelWorldPos - lightPos);//距離（実数地）
+    length2 /= lightRange;
+    anser *= length2;//距離減衰
     if (anser < 0) {
         anser = 0;
     }
@@ -118,8 +117,8 @@ float3 SpotLight(float3 modelWorldPos, float3 lightPos, float lightRange, float3
 }
 float4 main(VS_OUT input) : SV_TARGET{
 
-    float offsetX = 1.0f / 1920.0f;
-    float offsetY = 1.0f / 1080.0f;
+    float offsetX = 1.5f / 1920.0f;
+    float offsetY = 1.5f / 1080.0f;
 
      //テクスチャカラー
      float4 tex_color = tex.Sample(smp, input.uv);
@@ -159,17 +158,18 @@ float4 main(VS_OUT input) : SV_TARGET{
     if (shadowRate == 0.0f) {
         shadowRate += 0.25f;//最低の黒さ
     }
-
-
-
-
+    //簡単なシャドウ
+    //shadowRate = 1;
+    //if (zShadoBuffar > sm0) {
+    //    shadowRate = 0.5f;
+    //}
 
     //アウトライン処理(シェーダー部での実装案,2パス方式のほうが精度がよいので考える)
     float outlineCos = dot(normalize(CameraPos.xyz), normalize(normal));
     
     float outlineAngle= lerp(45.0f, 50.0f, outline);
     if (outlineCos <cos(outlineAngle)) {
-        return float4(outlineColorR,outlineColorG,outlineColorB, 1);
+        //return float4(outlineColorR,outlineColorG,outlineColorB, 1);
     }
 
     //PBR処理
@@ -208,11 +208,10 @@ float4 main(VS_OUT input) : SV_TARGET{
         if (spotLightRange[i].x > 0)
              spotLight += SpotLight(input.worldPos.xyz, spotLightPos[i], spotLightRange[i].x, spotLightColor[i], spotLightAngularRange[i].x, spotLightTarget[i]);
     }
-   // return float4(spotLight, 1);//Spotライトの仮出力処理
-   // return float4(pointLight, 1);//Pointライトの仮出力仮処理
+
 
     // 環境光による底上げ　
-    lig += 0.5;
+    lig += ambientLight.x;
     lig *= albedoColor;
 
     //ソフトシャドウ追加
@@ -240,8 +239,6 @@ float4 main(VS_OUT input) : SV_TARGET{
     finalColor.xyz = lig;
 
     finalColor.a = tex_color.a;
-
-    finalColor.a *= workSpace;//Material作成処理で必要
 
     return finalColor;
 

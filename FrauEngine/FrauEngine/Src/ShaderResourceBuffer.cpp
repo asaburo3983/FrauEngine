@@ -61,15 +61,15 @@ void ShaderResourceBufferHeap::CreateShaderResourceBufferHeap(std::string _fileP
 
 	std::string root_path = _filePath;
 
-	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
-	std::wstring wstr_file_name = cv.from_bytes(_filePath);//いろいろ処理したがめんどくさいのでフルパスを突っ込む
+	//std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
+	//std::wstring wstr_file_name = cv.from_bytes(_filePath);//いろいろ処理したがめんどくさいのでフルパスを突っ込む
 
 	// 文字化け対策
 	DirectX::TexMetadata meta{};
 	DirectX::ScratchImage img;
 
-	std::wstring wext = GetExtension(wstr_file_name);
-	std::string ext = GetStringFromWideString(wext);
+	//std::wstring wext = GetExtension(wstr_file_name);
+	std::string ext = _filePath;// GetStringFromWideString(wext);
 	std::string filePath = _filePath;
 	std::wstring filePathW = GetWideStringFromString(filePath);
 	//テクスチャ読み込み処理

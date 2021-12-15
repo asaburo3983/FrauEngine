@@ -8,7 +8,7 @@ namespace frauEngine {
 		OUTLINE,
 		MAX
 	};
-	class ModelObjectExtend : public ModelObject {
+	class ModelExtendObject : public ModelObject {
 	private:
 
 		ModelObject modelObject[(int)ModelType::MAX - 1];

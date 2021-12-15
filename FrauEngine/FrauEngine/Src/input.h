@@ -65,8 +65,8 @@ public:
 		return &mouseInput;
 	}
 public:
-	long x, y;
-	long axisX, axisY, axisZ;
+	float x, y;
+	float axisX, axisY, axisZ;
 	int left,right,center;
 	void updata() {
 		if (GetMouseLeftPress())

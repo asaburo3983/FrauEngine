@@ -1,49 +1,59 @@
 #include "Resource.h"
 
 using namespace frauEngine;
-void Resource::LoadIm(const char* _filepath) {
+Image2D* Resource::LoadIm(const char* _filepath) {
 	if (image[_filepath] != nullptr) {
 		MessageBox(NULL, TEXT("画像データが重複しています"), TEXT("ResourceError"), MB_OK | MB_ICONERROR);
-		return;
+		return nullptr;
 	}
 	image[_filepath] = new frauEngine::Image2D();
 	image[_filepath]->Load(_filepath);
+
+	return image[_filepath];
 }
-void Resource::LoadSound(const char* _filepath) {
+Sound_MP3* Resource::LoadSound(const char* _filepath) {
 	if (sound[_filepath] != nullptr) {
 		MessageBox(NULL, TEXT("サウンドデータが重複しています"), TEXT("ResourceError"), MB_OK | MB_ICONERROR);
-		return;
+		return nullptr;
 	}
 	sound[_filepath] = new frauEngine::Sound_MP3();
 	sound[_filepath]->Load(_filepath);
+
+	return sound[_filepath];
 }
-void Resource::LoadModel(std::string _filepath, std::string _texpath) {
+FBX* Resource::LoadModel(std::string _filepath, std::string _texpath) {
 	if (model[_filepath] != nullptr) {
 		MessageBox(NULL, TEXT("モデルデータが重複しています"), TEXT("ResourceError"), MB_OK | MB_ICONERROR);
-		return;
+		return nullptr;
 	}
 	model[_filepath] = new frauEngine::FBX();
 	model[_filepath]->Load(_filepath, _texpath);
+
+	return model[_filepath];
 }
-void Resource::LoadEffect(const char* _filepath) {
+Effect* Resource::LoadEffect(const char* _filepath) {
 	char16_t ustr[256];
 	mbstate_t* ps=nullptr;
 	mbrtoc16(ustr, _filepath, 256, ps);
 
 	if (effect[_filepath] != nullptr) {
 		MessageBox(NULL, TEXT("エフェクトデータが重複しています"), TEXT("ResourceError"), MB_OK | MB_ICONERROR);
-		return;
+		return nullptr;
 	}
 	effect[_filepath] = new frauEngine::Effect();
 	effect[_filepath]->Load(ustr);
+
+	return effect[_filepath];
 }
-void Resource::LoadShader(frauEngine::ShaderType _shaderType, const char* _filepath) {
+Shader* Resource::LoadShader(frauEngine::ShaderType _shaderType, const char* _filepath) {
 	if (shader[_filepath] != nullptr) {
 		MessageBox(NULL, TEXT("シェーダーデータが重複しています"), TEXT("ResourceError"), MB_OK | MB_ICONERROR);
-		return;
+		return nullptr;
 	}
 	shader[_filepath] = new frauEngine::Shader();
 	shader[_filepath]->Load(_shaderType, _filepath);
+
+	return shader[_filepath];
 }
 void Resource::UnLoadIm(std::string _filepath) {
 	auto itr = image.find(_filepath);

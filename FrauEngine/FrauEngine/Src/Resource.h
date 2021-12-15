@@ -22,11 +22,11 @@ namespace frauEngine {
 		std::unordered_map<std::string, Shader*> shader;
 
 	public:
-		void LoadIm(const char* _filepath);
-		void LoadSound(const char* _filepath);
-		void LoadModel(std::string _filepath, std::string _texpath);
-		void LoadEffect(const char* _ufilepath);
-		void LoadShader(frauEngine::ShaderType _shaderType, const char* _filepath);
+		Image2D* LoadIm(const char* _filepath);
+		Sound_MP3* LoadSound(const char* _filepath);
+		FBX* LoadModel(std::string _filepath, std::string _texpath);
+		Effect* LoadEffect(const char* _ufilepath);
+		Shader* LoadShader(frauEngine::ShaderType _shaderType, const char* _filepath);
 
 		void UnLoadIm(std::string _name);
 		void UnLoadSound(std::string _name);

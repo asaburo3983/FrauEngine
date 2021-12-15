@@ -19,8 +19,6 @@ VS_OUT main(VS_IN input) {
 	output.pos = mul(World, output.pos);
 	output.pos = mul(DLightView, output.pos);
 	output.pos = mul(DLightProjection, output.pos);
-	//output.pos = mul(CameraView, output.pos);
-	//output.pos = mul(CameraProjection, output.pos);
 
 	return output;
 }

@@ -6,16 +6,12 @@ namespace frauEngine {
 
 	class Lights {
 	public:
-		DirectX::XMFLOAT3 pos;
-		DirectX::XMFLOAT3 up;
-		DirectX::XMFLOAT3 target;
-
 		frauEngine::LightBufferHeap lightBufferHeap;
 
 		ID3D12DescriptorHeap* depthHeap;//深度データのヒープ
 		ID3D12DescriptorHeap* depthSRVHeap;//深度テククチャのヒープ
 
-		int shadowTexSize = 1024;
+		int shadowTexSize = 4096;
 
 	public:
 		static Lights* GetInstance() {
