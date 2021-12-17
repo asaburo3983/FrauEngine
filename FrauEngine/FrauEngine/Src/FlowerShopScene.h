@@ -23,6 +23,11 @@ private:
 	ModelExtendObject playerExModel;
 	ModelExtendObject flowerShopExModel;
 
+	std::vector<SimpleBoxCollider2D> boxCollider;
+	std::vector<SimpleCircleCollider2D> circleCollider;
+	std::vector <SimpleBoxCollider2D> boxColliderEvent;
+
+	bool photoMode = false;
 public:
 
 	void LoadFrontLoad();

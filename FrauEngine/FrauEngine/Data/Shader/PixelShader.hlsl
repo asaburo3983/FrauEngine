@@ -159,10 +159,10 @@ float4 main(VS_OUT input) : SV_TARGET{
         shadowRate += 0.25f;//最低の黒さ
     }
     //簡単なシャドウ
-    //shadowRate = 1;
-    //if (zShadoBuffar > sm0) {
-    //    shadowRate = 0.5f;
-    //}
+    shadowRate = 1;
+    if (zShadoBuffar > sm0) {
+        shadowRate = 0.5f;
+    }
 
     //アウトライン処理(シェーダー部での実装案,2パス方式のほうが精度がよいので考える)
     float outlineCos = dot(normalize(CameraPos.xyz), normalize(normal));

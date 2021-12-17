@@ -117,6 +117,7 @@ std::wstring GetWideStringFromString(const std::string& str);
 std::string GetStringFromWideString(std::wstring wstr);
 
 void Split(char split_char, char* buffer, std::vector<std::string>& out);
+std::string GetSplitEnd(std::string _str);
 
 void Replace(char search_char, char replace_char, char* buffer);
 

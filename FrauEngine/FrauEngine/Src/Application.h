@@ -53,7 +53,10 @@ namespace frauEngine {
 			depthOfFieldEffect.constantBufferHeap.buffer->forcusU = 1.0f / lowApp->GetWindowSizeX() * forcusX;
 			depthOfFieldEffect.constantBufferHeap.buffer->forcusV = 1.0f / lowApp->GetWindowSizeY() * forcusY;
 		}
-
+		//”íŽÊŠE[“x‚É’Ç‰Á‚Å“ü‚ê‚é‚±‚Æ‚É‚È‚é
+		void SetAddEffect(int _effectNum) {
+			depthOfFieldEffect.constantBufferHeap.buffer->effectNum = _effectNum;
+		}
 		ID3D12DescriptorHeap* GetPostEffectRenderTarget() {
 			return postEffect.GetRenderTargetHeap().Get();
 		}

@@ -99,7 +99,20 @@ void Split(char split_char, char* buffer, std::vector<std::string>& out)
 		out.emplace_back(split_str);
 	}
 }
-
+// [/]での分割の末尾を得る
+std::string GetSplitEnd(std::string _str) {
+	// ファイル分解
+	char buffer[256];
+	ZeroMemory(buffer, sizeof(char) * 256);
+	memcpy(buffer, _str.c_str(), sizeof(char) * 256);
+	// 記号統一
+	Replace('\\', '/', buffer);
+	std::vector<std::string> split_list;
+	std::string replace_file_name = buffer;
+	// 「/」で分解
+	Split('/', buffer, split_list);
+	return split_list[split_list.size() - 1];
+}
 //第一引数を第二引数に変換した文字列を返す　第三引数は変換する文字列
 void Replace(char search_char, char replace_char, char* buffer)
 {

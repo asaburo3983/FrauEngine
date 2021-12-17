@@ -22,15 +22,15 @@ void frauEngine::Application::Init(const char* _windowName, int _windowSizeX, in
 	resource->LoadShader(frauEngine::ShaderType::PS, "Data/Shader/PixelShader_DepthOfField.hlsl");
 
 	postEffect.Create(
-		resource->Shader("Data/Shader/VertexShader_PostEffect.hlsl"),
-		resource->Shader("Data/Shader/PixelShader_PostEffect.hlsl"));
+		resource->Shader("VertexShader_PostEffect.hlsl"),
+		resource->Shader("PixelShader_PostEffect.hlsl"));
 	blurEffect.Create(
-		resource->Shader("Data/Shader/VertexShader_PostEffect.hlsl"),
-		resource->Shader("Data/Shader/PixelShader_Blur.hlsl"));
+		resource->Shader("VertexShader_PostEffect.hlsl"),
+		resource->Shader("PixelShader_Blur.hlsl"));
 
 	depthOfFieldEffect.Create(
-		resource->Shader("Data/Shader/VertexShader_PostEffect.hlsl"),
-		resource->Shader("Data/Shader/PixelShader_DepthOfField.hlsl"));
+		resource->Shader("VertexShader_PostEffect.hlsl"),
+		resource->Shader("PixelShader_DepthOfField.hlsl"));
 
 	blurEffect.SetMainTexture(postEffect.GetResourceHeap());
 

@@ -1,33 +1,43 @@
 #include "Resource.h"
 
 using namespace frauEngine;
+
 Image2D* Resource::LoadIm(const char* _filepath) {
-	if (image[_filepath] != nullptr) {
+
+	string strEnd = GetSplitEnd(_filepath);
+
+	if (image[strEnd] != nullptr) {
 		MessageBox(NULL, TEXT("画像データが重複しています"), TEXT("ResourceError"), MB_OK | MB_ICONERROR);
 		return nullptr;
 	}
-	image[_filepath] = new frauEngine::Image2D();
-	image[_filepath]->Load(_filepath);
+	image[strEnd] = new frauEngine::Image2D();
+	image[strEnd]->Load(_filepath);
 
-	return image[_filepath];
+	return image[strEnd];
 }
 Sound_MP3* Resource::LoadSound(const char* _filepath) {
-	if (sound[_filepath] != nullptr) {
+
+	string strEnd = GetSplitEnd(_filepath);
+
+	if (sound[strEnd] != nullptr) {
 		MessageBox(NULL, TEXT("サウンドデータが重複しています"), TEXT("ResourceError"), MB_OK | MB_ICONERROR);
 		return nullptr;
 	}
-	sound[_filepath] = new frauEngine::Sound_MP3();
-	sound[_filepath]->Load(_filepath);
+	sound[strEnd] = new frauEngine::Sound_MP3();
+	sound[strEnd]->Load(_filepath);
 
 	return sound[_filepath];
 }
 FBX* Resource::LoadModel(std::string _filepath, std::string _texpath) {
-	if (model[_filepath] != nullptr) {
+
+	string strEnd = GetSplitEnd(_filepath);
+
+	if (model[strEnd] != nullptr) {
 		MessageBox(NULL, TEXT("モデルデータが重複しています"), TEXT("ResourceError"), MB_OK | MB_ICONERROR);
 		return nullptr;
 	}
-	model[_filepath] = new frauEngine::FBX();
-	model[_filepath]->Load(_filepath, _texpath);
+	model[strEnd] = new frauEngine::FBX();
+	model[strEnd]->Load(_filepath, _texpath);
 
 	return model[_filepath];
 }
@@ -36,24 +46,28 @@ Effect* Resource::LoadEffect(const char* _filepath) {
 	mbstate_t* ps=nullptr;
 	mbrtoc16(ustr, _filepath, 256, ps);
 
-	if (effect[_filepath] != nullptr) {
+	string strEnd = GetSplitEnd(_filepath);
+	if (effect[strEnd] != nullptr) {
 		MessageBox(NULL, TEXT("エフェクトデータが重複しています"), TEXT("ResourceError"), MB_OK | MB_ICONERROR);
 		return nullptr;
 	}
-	effect[_filepath] = new frauEngine::Effect();
-	effect[_filepath]->Load(ustr);
+	effect[strEnd] = new frauEngine::Effect();
+	effect[strEnd]->Load(ustr);
 
 	return effect[_filepath];
 }
 Shader* Resource::LoadShader(frauEngine::ShaderType _shaderType, const char* _filepath) {
-	if (shader[_filepath] != nullptr) {
+
+	string strEnd = GetSplitEnd(_filepath);
+
+	if (shader[strEnd] != nullptr) {
 		MessageBox(NULL, TEXT("シェーダーデータが重複しています"), TEXT("ResourceError"), MB_OK | MB_ICONERROR);
 		return nullptr;
 	}
-	shader[_filepath] = new frauEngine::Shader();
-	shader[_filepath]->Load(_shaderType, _filepath);
+	shader[strEnd] = new frauEngine::Shader();
+	shader[strEnd]->Load(_shaderType, _filepath);
 
-	return shader[_filepath];
+	return shader[strEnd];
 }
 void Resource::UnLoadIm(std::string _filepath) {
 	auto itr = image.find(_filepath);

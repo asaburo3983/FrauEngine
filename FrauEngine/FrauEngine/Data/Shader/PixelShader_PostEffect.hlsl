@@ -36,7 +36,7 @@ float4 main(PeraType input) : SV_TARGET{
 
 		return anser;
 	}
-	//エッジ協調
+	//エッジ協調(先鋭化)
 	if (0) {
 		float power = 5.0f;
 		float vicinity = (power - 1.0f) / 4 * -1;
@@ -62,7 +62,7 @@ float4 main(PeraType input) : SV_TARGET{
 
 	//色調を減らす　レトロ
 	if (0) {
-		return float4(tex_color.rgb - fmod(tex_color.rgb, 1.0f/4.0f) , 1);
+		return float4(tex_color.rgb - fmod(tex_color.rgb, 1.0f/6.0f) , 1);
 	}
 	//彩度をあげる
 	if (0) {

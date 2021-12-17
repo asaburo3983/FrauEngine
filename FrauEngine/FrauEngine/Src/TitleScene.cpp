@@ -16,11 +16,18 @@ void TitleScene::LoadInDraw() {
 }
 
 void TitleScene::StaticLoad() {
-	////シェーダーロード　プログラマブルにシーンに飛ぶ時用にここに記述
-	//LoadShader("vs", shader::VS, "../x64/Debug/VertexShader.cso");
-	//LoadShader("vsAnime", shader::VS, "../x64/Debug/VertexShader_Anime.cso");
-	//LoadShader("gs", shader::GS, "../x64/Debug/GeometryShader.cso");
-	//LoadShader("ps", shader::PS, "../x64/Debug/PixelShader.cso");
+	
+	resource->LoadShader(ShaderType::VS, "Data/Shader/VertexShader.hlsl");
+	resource->LoadShader(ShaderType::VS, "Data/Shader/VertexShader_Shadow.hlsl");
+
+	resource->LoadShader(ShaderType::VS, "Data/Shader/VertexShader_Anim.hlsl");
+	resource->LoadShader(ShaderType::VS, "Data/Shader/VertexShader_AnimShadow.hlsl");
+
+	resource->LoadShader(ShaderType::PS, "Data/Shader/PixelShader.hlsl");
+	resource->LoadShader(ShaderType::PS, "Data/Shader/PixelShader_Shadow.hlsl");
+
+	resource->LoadModel("Data/Model/Frau/Frau.fbx", "Data/Model/Frau/Tex/");
+	resource->LoadModel("Data/Model/FlowerShop/FlowerShop.fbx", "Data/Model/FlowerShop/Tex/");
 
 
 	titleFront.SetResource(resource->LoadIm("Data/Image/Title/TitleFront.png"));
@@ -50,7 +57,6 @@ void TitleScene::UnLoad() {
 }
 
 void TitleScene::Updata() {
-
 
 	//選択肢文字画像の位置設定
 	float hitSelect = false;

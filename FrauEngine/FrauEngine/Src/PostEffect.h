@@ -8,7 +8,14 @@ namespace frauEngine {
 		VALUE_SLOT = 1,
 		TEXTURE_SLOT = 3
 	};
-
+	enum class AddPostEffect {
+		DEPTHOFFIELD,
+		BLUR,
+		SHARP,
+		RETORO,
+		NEGA,
+		MAX,
+	};
 	class PostEffect {
 	public:
 		void Create(

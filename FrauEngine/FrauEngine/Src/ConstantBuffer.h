@@ -12,6 +12,8 @@ namespace frauEngine {
 		SPOT_LIGHT=4,
 
 	};
+
+
 	//定数バッファの中身を定義//////////////////
 	struct WorldBuffer {
 		DirectX::XMMATRIX world;
@@ -90,6 +92,7 @@ namespace frauEngine {
 	struct PostEffectBuffer {
 		float forcusU;
 		float forcusV;
+		int effectNum;
 	};
 	//デスクリプタヒープを補完している/////////////////////////
 	class ConstantBufferHeap {

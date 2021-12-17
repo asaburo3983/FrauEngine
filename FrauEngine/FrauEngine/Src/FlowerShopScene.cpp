@@ -17,34 +17,25 @@ void FlowerShopScene::LoadInDraw() {
 void FlowerShopScene::StaticLoad() {
 	Player* player = Player::GetInstance();
 
-	auto vertexShader=resource->LoadShader(ShaderType::VS, "Data/Shader/VertexShader.hlsl");	
-	auto vertexShaderShadow = resource->LoadShader(ShaderType::VS, "Data/Shader/VertexShader_Shadow.hlsl");
+	auto vertexShader = resource->Shader("VertexShader.hlsl");
+	auto vertexShaderShadow = resource->Shader("VertexShader_Shadow.hlsl");
 
-	auto vertexShaderAnim = resource->LoadShader(ShaderType::VS, "Data/Shader/VertexShader_Anim.hlsl");
-	auto vertexShaderAnimShadow = resource->LoadShader(ShaderType::VS, "Data/Shader/VertexShader_AnimShadow.hlsl");
+	auto vertexShaderAnim = resource->Shader("VertexShader_Anim.hlsl");
+	auto vertexShaderAnimShadow = resource->Shader("VertexShader_AnimShadow.hlsl");
 
-	auto pixelShader = resource->LoadShader(ShaderType::PS, "Data/Shader/PixelShader.hlsl");
-	//auto pixelShaderAnim = resource->LoadShader(ShaderType::PS, "Data/Shader/PixelShader_Anim.hlsl");
-	auto pixelShaderShadow = resource->LoadShader(ShaderType::PS, "Data/Shader/PixelShader_Shadow.hlsl");
+	auto pixelShader = resource->Shader("PixelShader.hlsl");
+	auto pixelShaderShadow = resource->Shader("PixelShader_Shadow.hlsl");
 
 
-	auto playerModel = resource->LoadModel("Data/Model/Frau/Frau.fbx", "Data/Model/Frau/Tex/");
+	auto playerModel = resource->Model("Frau.fbx");
 	playerExModel.Initialize(playerModel, vertexShaderAnim, pixelShader);
 	playerExModel.InitializeSub(ModelType::SHADOW, vertexShaderAnimShadow, pixelShaderShadow);
 	player->Setup(&playerExModel);
 
-	auto flowerShopModel = resource->LoadModel("Data/Model/FlowerShop/FlowerShop.fbx", "Data/Model/FlowerShop/Tex/");
+	auto flowerShopModel = resource->Model("FlowerShop.fbx");
 	flowerShopExModel.Initialize(flowerShopModel, vertexShader, pixelShader);
 	flowerShopExModel.InitializeSub(ModelType::SHADOW, vertexShaderShadow, pixelShaderShadow);
 
-	//モデルロード
-	//LoadModel("MainBack", "Data/Model/MainBack/MainBack.fbx", "Data/Model/MainBack/Tex/");
-	//modelObjM["MainBack"].Initialize(Model("MainBack"), Shader("vs"), Shader("ps"), Shader("gs"));
-	//modelObjM["MainBackS"].Initialize(Model("MainBack"), Shader("vs"), Shader("ps"), Shader("gs"));
-
-	//LoadModel("Frau", "Data/Model/Frau/Frau.fbx", "Data/Model/Frau/Tex/");
-	//modelObjM["Frau"].Initialize(Model("Frau"), Shader("vsAnime"), Shader("ps"), Shader("gs"));
-	//modelObjM["FrauS"].Initialize(Model("Frau"), Shader("vsAnime"), Shader("ps"), Shader("gs"));
 
 	//マテリアルロード
 	//LoadLinker(
@@ -77,28 +68,28 @@ void FlowerShopScene::StaticLoad() {
 	//imageObjM["ShopingStr"].SetResource(Image("ShopingStr"));
 
 	////ぶつかり判定用のコライダー
-	//SimpleBoxCollider2D boxCollider[8];
-	//boxCollider[0].Setup(Vector2(7, 0), Vector2(1, 32));
-	//boxCollider[1].Setup(Vector2(0, 4.8), Vector2(32, 1));
-	//boxCollider[2].Setup(Vector2(-7, 0), Vector2(1, 32));
-	//boxCollider[3].Setup(Vector2(0, -4.75), Vector2(32, 1));
-	//boxCollider[4].Setup(Vector2(-2.75, 0.9), Vector2(5.5, 3.6));
-	//boxCollider[5].Setup(Vector2(5.6, 3.5), Vector2(7.6, 3));
-	//boxCollider[6].Setup(Vector2(4.4, -4.8), Vector2(4.4, 4.8));
-	//boxCollider[7].Setup(Vector2(7.5, -4.5), Vector2(4, 10.3));
-	//for (int i = 0; i < 8; i++) {
-	//	myShopBoxCollider.push_back(boxCollider[i]);
-	//}
-	//SimpleCircleCollider2D circleCollider(Vector2(5.5, -2.5), 0.5);
-	//myShopCircleCollider.push_back(circleCollider);
+	SimpleBoxCollider2D _boxCollider[8];
+	_boxCollider[0].Setup(Vector2(7, 0), Vector2(1, 32));
+	_boxCollider[1].Setup(Vector2(0, 4.8), Vector2(32, 1));
+	_boxCollider[2].Setup(Vector2(-7, 0), Vector2(1, 32));
+	_boxCollider[3].Setup(Vector2(0, -4.75), Vector2(32, 1));
+	_boxCollider[4].Setup(Vector2(-2.75, 0.9), Vector2(5.5, 3.6));
+	_boxCollider[5].Setup(Vector2(5.6, 3.5), Vector2(7.6, 3));
+	_boxCollider[6].Setup(Vector2(4.4, -4.8), Vector2(4.4, 4.8));
+	_boxCollider[7].Setup(Vector2(7.5, -4.5), Vector2(4, 10.3));
+	for (int i = 0; i < 8; i++) {
+		boxCollider.push_back(_boxCollider[i]);
+	}
+	SimpleCircleCollider2D _circleCollider(Vector2(5.5, -2.5), 0.5);
+	circleCollider.push_back(_circleCollider);
 	////イベント用のぶつかり判定のないコライダー
-	//SimpleBoxCollider2D boxColliderEvent[3];
-	//boxColliderEvent[0].Setup(Vector2(-2.4, -4.6), Vector2(4.8, 4.6));//出口	
-	//boxColliderEvent[1].Setup(Vector2(-11, 1), Vector2(11, 2));//花壇	
-	//boxColliderEvent[2].Setup(Vector2(4.95, 1.75), Vector2(3, 0.5));//開店
-	//for (int i = 0; i < 3; i++) {
-	//	myShopBoxColliderEvent.push_back(boxColliderEvent[i]);
-	//}
+	SimpleBoxCollider2D _boxColliderEvent[3];
+	_boxColliderEvent[0].Setup(Vector2(-2.4, -4.6), Vector2(4.8, 4.6));//出口	
+	_boxColliderEvent[1].Setup(Vector2(-11, 1), Vector2(11, 2));//花壇	
+	_boxColliderEvent[2].Setup(Vector2(4.95, 1.75), Vector2(3, 0.5));//開店
+	for (int i = 0; i < 3; i++) {
+		boxColliderEvent.push_back(_boxColliderEvent[i]);
+	}
 
 
 	////オブジェクトの設定
@@ -106,11 +97,9 @@ void FlowerShopScene::StaticLoad() {
 
 	//myShopEventUI.Setup(&imageObjM["EventBase"], &imageObjM["OpenShopStr"], &imageObjM["PlanterStr"], &imageObjM["ExitShopStr"]);
 
-	////デバッグ用リストに追加
-	//SetObjectList(&modelObjM["MainBack"], "MainBack");
-	//SetObjectList(&modelObjM["Frau"], "Frau");
-	//SetObjectList(&cameraObjM["camera1"], "camera1");
-	//SetObjectList(&dLightObjM["dLightTest"], "Sun");
+	SetObjectList(&playerExModel, "Player");
+	SetObjectList(&camera, "Camera");
+	SetObjectList(&light, "Lights");
 }
 void FlowerShopScene::Load() {
 
@@ -127,16 +116,14 @@ void FlowerShopScene::Load() {
 	directionalLightParam.color = Vector3(1, 1, 1);
 
 	light.SetDirectionalLight(directionalLightParam);
+	light.SetAmbientLight(0.5);
 
 
-	SetObjectList(&camera, "Camera");
-	SetObjectList(&light, "Lights");
 	
 
 	camera.Updata();
 	light.Updata();
-	//dLightObjM["dLightTest"].SetCameraRelative(cameraObjM["camera1"], Vector3(-12, 20, -7.5), Vector3(0, 1, 0), 45, Vector3(1, 1, 1));
-
+	
 	//fade.Reset();
 
 	flowerShopExModel.SetAllAnimeState(false, 1, 0.2);
@@ -151,37 +138,96 @@ void FlowerShopScene::UnLoad() {
 void FlowerShopScene::Updata() {
 	Player* player = Player::GetInstance();
 
+	//フォトモード切替
+	if (key->key[DIK_F] == 1) {
+		photoMode = !photoMode;
 
-	//auto dLight = light::DirectionalLight::GetInstance();
+		if (photoMode) {
+			Vector3 targetPos = player->GetPos();
+			targetPos.Y += 3.5f;
+			Vector3 cameraPos = player->GetPos();
+			cameraPos.Y += 3.5f;
+			cameraPos.Z -= 5;
+			camera.SetPos(cameraPos);
+			camera.SetTarget(targetPos);
+		}
+		else {
+			camera.SetPos(Vector3(0, 5, -13));
+			camera.SetTarget(Vector3(0, 0, 0));
+			camera.SetUp(Vector3(0, 1, 0));
+			camera.SetFov(45);
+		}
+	}
+	if (photoMode) {
+		float cameraSpeed = 0.05f;
+		Vector2 cameraMaxDist = { 3.0f ,3.0f };
 
-	//Player* player = Player::GetInstance();
-	player->Move(0.04f, 9.0f);
+		if (key->key[DIK_UP] >= 1) {
+			Vector3 cameraPos = camera.GetPos();
 
-	player->AnimationControl();
+			if (cameraPos.Y < camera.GetTarget().Y+ cameraMaxDist.Y) {
+				cameraPos.Y += cameraSpeed;
+			}
+			camera.SetPos(cameraPos);
 
-	//player->Collision(myShopBoxCollider, myShopCircleCollider, myShopBoxColliderEvent);
+		}
+		if (key->key[DIK_DOWN] >= 1) {
+			Vector3 cameraPos = camera.GetPos();
+			if (cameraPos.Y > camera.GetTarget().Y - cameraMaxDist.Y) {
+				cameraPos.Y -= cameraSpeed;
+			}
+			camera.SetPos(cameraPos);
+		}
+		if (key->key[DIK_RIGHT] >= 1) {
+			Vector3 cameraPos = camera.GetPos();
+			if (cameraPos.X < camera.GetTarget().X+ cameraMaxDist.X) {
+				cameraPos.X += cameraSpeed;
+			}
+			camera.SetPos(cameraPos);
 
-	//myShopEventUI.SetDrawPos();
+		}
+		if (key->key[DIK_LEFT] >= 1) {
+			Vector3 cameraPos = camera.GetPos();
+			if (cameraPos.X > camera.GetTarget().X - cameraMaxDist.X) {
+				cameraPos.X -= cameraSpeed;
+			}
+			camera.SetPos(cameraPos);
+		}
 
-	//int eventClickNum = myShopEventUI.Click();
 
-	//switch (eventClickNum) {
-	//case 1://出口	
-	//	LoadScene("Handyman");
-	//	break;
-	//case 2://プランター
+	}
 
-	//	break;
-	//case 3://開店
+		//auto dLight = light::DirectionalLight::GetInstance();
 
-	//	break;
-	//}
+		//Player* player = Player::GetInstance();
+		player->Move(0.04f, 9.0f);
 
-	//if (KEY->key[DIK_ESCAPE]) {
-	//	gameEnd = true;
-	//}
+		player->AnimationControl();
+
+		player->Collision(boxCollider, circleCollider, boxColliderEvent);
+
+		//myShopEventUI.SetDrawPos();
+
+		//int eventClickNum = myShopEventUI.Click();
+
+		//switch (eventClickNum) {
+		//case 1://出口	
+		//	LoadScene("Handyman");
+		//	break;
+		//case 2://プランター
+
+		//	break;
+		//case 3://開店
+
+		//	break;
+		//}
+
+		//if (KEY->key[DIK_ESCAPE]) {
+		//	gameEnd = true;
+		//}
 }
 
+int pe = 0;
 void FlowerShopScene::Draw() {
 
 
@@ -190,17 +236,19 @@ void FlowerShopScene::Draw() {
 	auto lights = Lights::GetInstance();
 	Player* player = Player::GetInstance();
 
-
+	//影の描画
 	lowApp->DrawOnDepth(Lights::GetInstance()->depthHeap, Lights::GetInstance()->shadowTexSize);
 
-	
 	flowerShopExModel.Draw(ModelType::SHADOW);
 	player->DrawShadow();
 
+	//通常の描画
 	lowApp->DrawOnRenderTarget(Application::GetInstance()->GetPostEffectRenderTarget());
+
 	flowerShopExModel.ModelObject::Draw();
 	player->Draw();
 	
+	ImGui::End();
 
 	//	lowApp->DrawDepth(dLight->depthHeap);//ライトからの視点で深度を描画
 
@@ -209,7 +257,7 @@ void FlowerShopScene::Draw() {
 	//	modelObjM["MainBackS"].SetAll(modelObjM["MainBack"].GetPos(), modelObjM["MainBack"].GetAngle(), modelObjM["MainBack"].GetScale());
 	//	modelObjM["MainBackS"].Draw();
 
-	
+
 	//}
 	//{
 	//	lowApp->DrawModel();//普通の頂点描画
@@ -222,7 +270,7 @@ void FlowerShopScene::Draw() {
 	//	modelObjM["MainBack"].SetAll(Vector3(-8, 2, 1.8), Vector3(0, 90, 0), Vector3(2, 0.9, 1.5));
 	//	modelObjM["MainBack"].Draw();
 
-		
+
 
 
 
@@ -232,6 +280,20 @@ void FlowerShopScene::Draw() {
 
 	camera.Updata();
 	light.Updata();
+
+	//被写界深度
+	if (photoMode) {
+		Application::GetInstance()->SetDepthOfField(true, mouse->x, mouse->y);
+
+		if (key->key[DIK_1] == 1) {
+			pe = (pe + 1) % (int)AddPostEffect::MAX;
+
+		}
+		Application::GetInstance()->SetAddEffect(pe);
+	}
+	else {
+		Application::GetInstance()->SetDepthOfField(false);
+	}
 }
 
 void FlowerShopScene::DrawNonePostEffect() {
