@@ -20,6 +20,19 @@ float4 main(PeraType input) : SV_TARGET{
 		lerpValue = 0;
 	}
 
+	//深度情報だけでのアウトライン描画
+	float depthL = texDepth.Sample(smp, input.uv + float2(-offsetU, 0));
+	float depthAll = depthL;
+	depthAll /= 1.0f;	
+	float depthOutline = abs(depthAll - tex_depth)*100;
+	if (depthOutline > 0.0) {
+		float a = lerp(0.0f, 1.0f, depthOutline);
+		float darkness = depthOutline;
+		float3 outlineColor = 0.0f;
+		outlineColor = lerp(tex_color.xyz, outlineColor, darkness);
+		return float4(outlineColor, 1);
+	}
+
 	float4 anser = lerp(tex_color, tex_blur, lerpValue);
 
 	switch (effectNum) {
