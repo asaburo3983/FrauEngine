@@ -25,18 +25,22 @@ void FlowerShopScene::StaticLoad() {
 
 	auto pixelShader = resource->Shader("PixelShader.hlsl");
 	auto pixelShaderShadow = resource->Shader("PixelShader_Shadow.hlsl");
-
-
+	auto pixelShaderToon = resource->Shader("PixelShader_Toon.hlsl");
+		
 	auto playerModel = resource->Model("Frau.fbx");
-	playerExModel.Initialize(playerModel, vertexShaderAnim, pixelShader);
+	
+	playerExModel.Initialize(playerModel, vertexShaderAnim, pixelShaderToon, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_FRONT);
 	playerExModel.InitializeSub(ModelType::SHADOW, vertexShaderAnimShadow, pixelShaderShadow);
 	player->Setup(&playerExModel);
+	LoadMaterialLinker("Data/Model/Frau/MatLink/Frau.matlink", "Data/Model/Frau/MatLink/Material/", "Data/Model/Frau/Tex/", &playerExModel);
 
 	auto flowerShopModel = resource->Model("FlowerShop.fbx");
-	flowerShopExModel.Initialize(flowerShopModel, vertexShader, pixelShader);
+	flowerShopExModel.Initialize(flowerShopModel, vertexShader, pixelShaderToon, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_BACK);
 	flowerShopExModel.InitializeSub(ModelType::SHADOW, vertexShaderShadow, pixelShaderShadow);
 
+	LoadMaterialLinker("Data/Model/FlowerShop/MatLink/FlowerShop.matlink", "Data/Model/FlowerShop/MatLink/Material/", "Data/Model/FlowerShop/Tex/", &flowerShopExModel);
 
+	
 	//マテリアルロード
 	//LoadLinker(
 	//	"Data/Material/MaterialLinker/MainBack.matlink",
@@ -119,7 +123,6 @@ void FlowerShopScene::Load() {
 	light.SetAmbientLight(0.5);
 
 
-	
 
 	camera.Updata();
 	light.Updata();
@@ -227,7 +230,7 @@ void FlowerShopScene::Updata() {
 		//}
 }
 
-int pe = 0;
+int postEffectNum = 0;
 void FlowerShopScene::Draw() {
 
 
@@ -250,28 +253,6 @@ void FlowerShopScene::Draw() {
 	
 	ImGui::End();
 
-	//	lowApp->DrawDepth(dLight->depthHeap);//ライトからの視点で深度を描画
-
-	//	modelObjM["MainBackS"].SetShadow(true);
-	//	modelObjM["MainBackS"].SetAllAnimeState(false, 1, 0.2);
-	//	modelObjM["MainBackS"].SetAll(modelObjM["MainBack"].GetPos(), modelObjM["MainBack"].GetAngle(), modelObjM["MainBack"].GetScale());
-	//	modelObjM["MainBackS"].Draw();
-
-
-	//}
-	//{
-	//	lowApp->DrawModel();//普通の頂点描画
-
-	//	imageObjM["Back"].Draw();
-
-
-	//	modelObjM["MainBack"].SetShadow(false);
-	//	modelObjM["MainBack"].SetAllAnimeState(false, 1, 0.2);
-	//	modelObjM["MainBack"].SetAll(Vector3(-8, 2, 1.8), Vector3(0, 90, 0), Vector3(2, 0.9, 1.5));
-	//	modelObjM["MainBack"].Draw();
-
-
-
 
 
 	ImGui::Begin("FPS");                          //ウィンドウ名になる
@@ -286,10 +267,10 @@ void FlowerShopScene::Draw() {
 		Application::GetInstance()->SetDepthOfField(true, mouse->x, mouse->y);
 
 		if (key->key[DIK_1] == 1) {
-			pe = (pe + 1) % (int)AddPostEffect::MAX;
+			postEffectNum = (postEffectNum + 1) % (int)AddPostEffect::MAX;
 
 		}
-		Application::GetInstance()->SetAddEffect(pe);
+		Application::GetInstance()->SetAddEffect(postEffectNum);
 	}
 	else {
 		Application::GetInstance()->SetDepthOfField(false);

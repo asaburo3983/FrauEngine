@@ -124,13 +124,7 @@ float4 main(VS_OUT input) : SV_TARGET{
      float4 tex_color = tex.Sample(smp, input.uv);
      if (tex_color.a <= 0.0)discard;//a０値非表示処理
 
-     if (anotherTexture0 == 1) {
-         return(texAnother0.Sample(smp, input.uv));
-     }
-
     float3 normal = input.normalDLight;
-    //normal = mul(CameraView, normal);
-    //normal = mul(CameraProjection, normal);
 
     //ソフトシャドウ　生成
     float sm0 = texDepth.Sample(smpSM, input.posSM.xy);
@@ -164,13 +158,6 @@ float4 main(VS_OUT input) : SV_TARGET{
         shadowRate = 0.5f;
     }
 
-    //アウトライン処理(シェーダー部での実装案,2パス方式のほうが精度がよいので考える)
-    float outlineCos = dot(normalize(CameraPos.xyz), normalize(normal));
-    
-    float outlineAngle= lerp(45.0f, 50.0f, outline);
-    if (outlineCos <cos(outlineAngle)) {
-        //return float4(outlineColorR,outlineColorG,outlineColorB, 1);
-    }
 
     //PBR処理
     float4 albedoColor = tex_color;
@@ -219,19 +206,6 @@ float4 main(VS_OUT input) : SV_TARGET{
 
     lig += lig * pointLight;// ポイントライトを加算 //先にPBRの理解を完了させるほうがいい
     lig += lig * spotLight;//スポットライトを加算
-
-    //テューン処理 0.5~1.0の数値で３分割
-    //if (1) {
-    //    if (lig.x < 0.7) {
-    //        lig = 0.7;
-    //    }
-    //    if (lig.x < 0.6f) {
-    //        lig = 0.5;
-    //    }
-    //    if (lig.x > 0.7) {
-    //        lig = 0.9;
-    //    }
-    //}
 
 
 

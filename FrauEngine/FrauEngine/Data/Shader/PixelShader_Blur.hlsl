@@ -1,8 +1,8 @@
 #include "ConstantBuffer_PostEffect.hlsli"
 float4 main(PeraType input) : SV_TARGET{
 
-	float offsetU = 1.5f / 1920.0f;
-	float offsetV = 1.5f / 1080.0f;
+	float offsetU = 1.5f / 1920.0f*1.5f;
+	float offsetV = 1.5f / 1080.0f*1.5f;
 
 	float4 tex_color = tex.Sample(smp, input.uv);
 

@@ -25,6 +25,8 @@
 #include <pix.h>
 #include <direct.h>
 #include <atlstr.h>
+#include <sstream>
+#include <iomanip>
 #ifdef _DEBUG
 #include<iostream>
 #endif

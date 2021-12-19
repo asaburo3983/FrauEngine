@@ -43,5 +43,5 @@ namespace frauEngine {
 		Vector3 outlineColor;
 
 	};
-	void LoadMaterialLinker(const char* _linkerPath, const char* _materialPath, const char* _texPath, ModelObject* modelObj);
+	void LoadMaterialLinker(const char* _linkerPath, const char* _materialPath, const char* _texPath, ModelObject* _modelObj);
 }

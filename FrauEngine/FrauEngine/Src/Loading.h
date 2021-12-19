@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include "Application.h"
 #include "Fade.h"
 class Loading {

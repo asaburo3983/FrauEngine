@@ -49,8 +49,6 @@ void Loading::Updata() {
 
 }
 
-#include <sstream>
-#include <iomanip>
 
 void Loading::Draw() {
 	Resource* rc = Resource::GetInstance();

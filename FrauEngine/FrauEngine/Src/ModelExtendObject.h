@@ -6,6 +6,9 @@ namespace frauEngine {
 		MAIN,
 		SHADOW,
 		OUTLINE,
+		SUB1,
+		SUB2,
+		SUB3,
 		MAX
 	};
 	class ModelExtendObject : public ModelObject {
@@ -22,12 +25,16 @@ namespace frauEngine {
 			frauEngine::Shader* _shaderP = nullptr,
 			frauEngine::Shader* _shaderG = nullptr,
 			frauEngine::Shader* _shaderH = nullptr,
-			frauEngine::Shader* _shaderD = nullptr
+			frauEngine::Shader* _shaderD = nullptr,
+			D3D12_CULL_MODE _cullMode = D3D12_CULL_MODE_NONE
 		);
 
 		void SetOutlineScale(Vector3 _scale) { outlienScale = _scale; };
 
 		void Draw(ModelType _modelType);
 
+		ModelObject* GetModelObject(ModelType _modelType) {
+			return &modelObject[(int)_modelType - 1];
+		}
 	};
 }

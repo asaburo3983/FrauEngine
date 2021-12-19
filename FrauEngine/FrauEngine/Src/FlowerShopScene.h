@@ -7,6 +7,8 @@
 #include "Fade.h"
 #include "Player.h"
 
+#include "MaterialLinkerData.h"
+
 using namespace frauEngine;
 
 class FlowerShopScene : public Scene {

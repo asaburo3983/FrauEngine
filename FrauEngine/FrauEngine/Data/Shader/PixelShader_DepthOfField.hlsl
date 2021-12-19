@@ -20,18 +20,6 @@ float4 main(PeraType input) : SV_TARGET{
 		lerpValue = 0;
 	}
 
-	//深度情報だけでのアウトライン描画
-	float depthL = texDepth.Sample(smp, input.uv + float2(-offsetU, 0));
-	float depthAll = depthL;
-	depthAll /= 1.0f;	
-	float depthOutline = abs(depthAll - tex_depth)*100;
-	if (depthOutline > 0.0) {
-		float a = lerp(0.0f, 1.0f, depthOutline);
-		float darkness = depthOutline;
-		float3 outlineColor = 0.0f;
-		outlineColor = lerp(tex_color.xyz, outlineColor, darkness);
-		return float4(outlineColor, 1);
-	}
 
 	float4 anser = lerp(tex_color, tex_blur, lerpValue);
 
@@ -40,7 +28,7 @@ float4 main(PeraType input) : SV_TARGET{
 		anser = lerp(tex_color, tex_blur, 1);
 		break;
 	case SHARP:
-		float power = 5.0f;
+		float power = 2.0f;
 		float vicinity = (power - 1.0f) / 4.0f * -1;
 		anser = 0;
 		float offsetPower = 4.0f;
@@ -63,7 +51,25 @@ float4 main(PeraType input) : SV_TARGET{
 	case NEGA:
 		anser = float4(float3(1.0, 1.0, 1.0) - anser.rgb, 1);
 		break;
+
 	}
+
+	
+
+	//深度情報だけでのアウトライン描画
+	float depthL = texDepth.Sample(smp, input.uv + float2(-offsetU, 0));
+	float depthAll = depthL;
+	depthAll /= 1.0f;
+	float depthOutline = abs(depthAll - tex_depth) * 100;
+	if (depthOutline > 0.0) {
+		float a = lerp(0.0f, 1.0f, depthOutline);
+		float darkness = depthOutline;
+		float3 outlineColor = 0.0f;
+		outlineColor = lerp(anser.xyz, outlineColor, darkness);
+		return float4(outlineColor, 1);
+	}
+
 	return anser;
+	
 
 }

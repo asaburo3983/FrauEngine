@@ -20,9 +20,6 @@ void Scene::SetObjectList(Object* _object, const char* _name) {
 	objectList.push_back(_object);
 }
 void Scene::DrawObjectList() {
-	//TODO マジックナンバーは修正する
-	ImGui::SetNextWindowPos(ImVec2(280, 720 - 150), 1);
-	ImGui::SetNextWindowSize(ImVec2(280, 150), 1);
 
 	ImGui::Begin("ObjectList");
 

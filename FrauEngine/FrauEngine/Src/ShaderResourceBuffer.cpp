@@ -69,7 +69,7 @@ void ShaderResourceBufferHeap::CreateShaderResourceBufferHeap(std::string _fileP
 	DirectX::ScratchImage img;
 
 	//std::wstring wext = GetExtension(wstr_file_name);
-	std::string ext = _filePath;// GetStringFromWideString(wext);
+	std::string ext = GetExtension(split_list[split_list.size() - 1]);
 	std::string filePath = _filePath;
 	std::wstring filePathW = GetWideStringFromString(filePath);
 	//テクスチャ読み込み処理

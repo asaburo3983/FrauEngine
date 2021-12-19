@@ -25,6 +25,7 @@ void TitleScene::StaticLoad() {
 
 	resource->LoadShader(ShaderType::PS, "Data/Shader/PixelShader.hlsl");
 	resource->LoadShader(ShaderType::PS, "Data/Shader/PixelShader_Shadow.hlsl");
+	resource->LoadShader(ShaderType::PS, "Data/Shader/PixelShader_Toon.hlsl");
 
 	resource->LoadModel("Data/Model/Frau/Frau.fbx", "Data/Model/Frau/Tex/");
 	resource->LoadModel("Data/Model/FlowerShop/FlowerShop.fbx", "Data/Model/FlowerShop/Tex/");
@@ -95,7 +96,7 @@ void TitleScene::Updata() {
 			LoadScene("FlowerShop");
 			break;
 		case (int)TitleStr::GALLARY:
-
+			LoadScene("Gallary");
 			break;
 		case (int)TitleStr::OPTION:
 

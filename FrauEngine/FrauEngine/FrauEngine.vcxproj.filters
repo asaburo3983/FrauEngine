@@ -118,6 +118,9 @@
     <Filter Include="リソース ファイル\Shader\VS\PostEffect">
       <UniqueIdentifier>{d11fd7db-e21f-4fc9-80d0-b39fc14e709a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\InGame\Class\Gallary">
+      <UniqueIdentifier>{7213ba8f-28b2-46a5-b0ad-149d2e0b4055}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\imgui.cpp">
@@ -251,6 +254,9 @@
     </ClCompile>
     <ClCompile Include="Src\ModelExtendObject.cpp">
       <Filter>ソース ファイル\FrauEngine\Objects\ModelExtend</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GallaryPlayer.cpp">
+      <Filter>ソース ファイル\InGame\Class\Gallary</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -395,6 +401,9 @@
     <ClInclude Include="Src\ModelExtendObject.h">
       <Filter>ソース ファイル\FrauEngine\Objects\ModelExtend</Filter>
     </ClInclude>
+    <ClInclude Include="Src\GallaryPlayer.h">
+      <Filter>ソース ファイル\InGame\Class\Gallary</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Shader\ConstantBuffer.hlsli">
@@ -437,6 +446,9 @@
     </FxCompile>
     <FxCompile Include="Data\Shader\VertexShader_AnimShadow.hlsl">
       <Filter>リソース ファイル\Shader\VS</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shader\PixelShader_Toon.hlsl">
+      <Filter>リソース ファイル\Shader\PS</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
