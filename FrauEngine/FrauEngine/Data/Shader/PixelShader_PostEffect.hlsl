@@ -77,5 +77,8 @@ float4 main(PeraType input) : SV_TARGET{
 		tex_color.b*=1.0f;
 
 	}
+
+	
+
 	return tex_color;
 }

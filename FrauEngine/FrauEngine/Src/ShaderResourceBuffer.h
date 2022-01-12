@@ -12,5 +12,11 @@ namespace frauEngine {
 		void CreateShaderResourceBufferHeap(ID3D12Resource* resource);//リソースから生成する
 
 		void CreateShaderResourceBufferHeap(std::string _texturePath);//ファイルパスから作成する
+		void Destroy() {
+			if (descripterHeap != nullptr) {
+				descripterHeap->Release();
+				descripterHeap = nullptr;
+			}
+		}
 	};
 }

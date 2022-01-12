@@ -2,6 +2,7 @@
 
 #include "Library.h"
 
+float GetOneFromColor(int _num);
 
 class Vector3
 {
@@ -83,24 +84,54 @@ public:
 class Color
 {
 public:
-	float Red = 0;
-	float Green = 0;
-	float Blue = 0;
-	float Alpha = 0;
+	float R = 0;
+	float G = 0;
+	float B = 0;
+	float A = 0;
 	Color(float red, float green, float blue, float alpha)
 	{
-		Red = red;
-		Green = green;
-		Blue = blue;
-		Alpha = alpha;
+		if (red > 1) {
+			red=GetOneFromColor(red);
+		}
+		if (green > 1) {
+			green = GetOneFromColor(green);
+		}
+		if (blue > 1) {
+			blue = GetOneFromColor(blue);
+		}
+
+		R = red;
+		G = green;
+		B = blue;
+		A = alpha;
+	}
+	Color(float _color) {
+		R = _color;
+		G = _color;
+		B = _color;
+		A = 1;
 	}
 	Color()
 	{
-		Red = Green = Blue = Alpha = 1.0f;
+		R = G = B = A = 1.0f;
 	}
 };
 
-
+class Time {
+private:
+	int time=0;
+	int timeMax = 6000;
+public:
+	static Time* GetInstance() {
+		static Time t;
+		return &t;
+	}
+	void Update() {
+		time = (time + 1) % timeMax;
+	}
+	int GetTime() { return time; }
+	void SetTimeMax(int _max) { timeMax = _max; }
+};
 //コンソール画面にフォーマット付き文字列を表示
 void DebugOutputFormatString(const char* format, ...);
 
@@ -125,4 +156,5 @@ WCHAR* GetWCharFromChar(const char* str);
 
 DirectX::XMFLOAT3 GetXMFLOAT3FromVector3(Vector3 v3);
 Vector3 GetVector3FromXMFLOAT3(DirectX::XMFLOAT3 f3);
+
 

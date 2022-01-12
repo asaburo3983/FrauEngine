@@ -3,6 +3,8 @@
 
 #include "Application.h"
 #include "Fade.h"
+#include "ImageObject.h"
+
 class Loading {
 private:
 	int animeNum = 0;
@@ -14,7 +16,19 @@ private:
 	Fade fade;
 
 	int frontAlpha = 0;
+
+	ImageObject backImage;
+	ImageObject frontImage;
+	ImageObject grassImage;
+	ImageObject animeImage[5];
+
 public:
+	static Loading* GetInstance() {
+		static Loading loading;
+		return &loading;
+	}
+
+	void Initialize();
 	void Reset();
 	void Updata();
 	void Draw();

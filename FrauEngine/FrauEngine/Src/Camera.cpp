@@ -17,7 +17,7 @@ void Camera::SetCamera(Vector3 _pos, Vector3 _target, Vector3 _up,float _fov) {
 	SetFov(_fov);
 
 	//セット時には必ず１度アップデートをはさむ
-	Updata();
+	Update();
 }
 void Camera::SetPos(Vector3 _pos) {
 	pos = GetXMFLOAT3FromVector3(_pos);
@@ -44,6 +44,13 @@ Vector3 Camera::GetUp() {
 float Camera::GetFov() {
 	return XMConvertToDegrees(fov);
 }
+Vector3 Camera::GetScreenPos(Vector3 _pos) {
+
+	DirectX::XMMATRIX translate = DirectX::XMMatrixTranslation(_pos.X, _pos.Y, _pos.Z);
+	DirectX::XMMATRIX ret = translate * cameraBufferHeap.buffer->view * cameraBufferHeap.buffer->projection;
+	
+	return Vector3(0, 0, 0);
+}
 DirectX::XMMATRIX Camera::GetView() {
 	return cameraBufferHeap.buffer->view;
 }
@@ -56,7 +63,7 @@ DirectX::XMFLOAT3 Camera::GetCameraPos() {
 CameraBufferHeap* Camera::GetConstantBuffer() {
 	return &cameraBufferHeap;
 }
-void Camera::Updata() {
+void Camera::Update() {
 	
 	//定数バッファのデータ更新
 	cameraBufferHeap.buffer->pos.x = pos.x;

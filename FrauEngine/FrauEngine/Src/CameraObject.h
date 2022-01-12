@@ -32,8 +32,9 @@ namespace frauEngine {
 		Vector3 GetUp() { return up; };
 		float GetFov() { return fov; };
 
+		Vector3 GetScreenPos(Vector3 _pos);
 		void DrawImGUI();
-		void Updata();
+		void Update();
 
 	};
 }

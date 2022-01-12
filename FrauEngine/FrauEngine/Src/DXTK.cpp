@@ -3,6 +3,65 @@
 using namespace frauEngine;
 using namespace DirectX;
 
+
+void Font::DrawString(std::string _str , Vector2 _pos , float _scale, Color _color , bool _center, float _angle ) {
+	auto manager = ManagerDXTK::GetInstance();
+
+	frauEngine::ManagerDXTK* def = frauEngine::ManagerDXTK::GetInstance();
+
+	ID3D12GraphicsCommandList* commandList = frauEngine::LowApplication::GetInstance()->GetCommandList();
+	ID3D12DescriptorHeap* heaps[] = { manager->resourceDescriptors->Heap(), def->commonStates->Heap() };
+	commandList->SetDescriptorHeaps(_countof(heaps), heaps);
+
+	manager->sprites->Begin(frauEngine::LowApplication::GetInstance()->GetCommandList());
+	XMVECTORF32 color = { {{_color.R,_color.G,_color.B,_color.A}} };
+
+
+	WCHAR* str = GetWCharFromChar(_str.c_str());
+	int length = _str.length() / 2;
+	int sizeX2 = length * pixelSize / 2 * _scale * allSize;
+	int sizeY2 =          pixelSize / 2	* _scale * allSize;
+
+	font->DrawString(manager->sprites.get(),
+		str,
+		XMFLOAT2(_pos.X, _pos.Y),
+		color,
+		_angle,
+		DirectX::SimpleMath::Vector2(_center*sizeX2, _center*sizeY2),
+		_scale * allSize);
+
+	manager->sprites->End();
+
+}void Font::DrawString(std::string _str , Vector2 _pos , float _scale, Color _color , Vector2 _anchor, float _angle ) {
+	auto manager = ManagerDXTK::GetInstance();
+
+	frauEngine::ManagerDXTK* def = frauEngine::ManagerDXTK::GetInstance();
+
+	ID3D12GraphicsCommandList* commandList = frauEngine::LowApplication::GetInstance()->GetCommandList();
+	ID3D12DescriptorHeap* heaps[] = { manager->resourceDescriptors->Heap(), def->commonStates->Heap() };
+	commandList->SetDescriptorHeaps(_countof(heaps), heaps);
+
+	manager->sprites->Begin(frauEngine::LowApplication::GetInstance()->GetCommandList());
+	XMVECTORF32 color = { {{_color.R,_color.G,_color.B,_color.A}} };
+
+
+	WCHAR* str = GetWCharFromChar(_str.c_str());
+	int length = _str.length() / 2;
+	int sizeX = length * pixelSize  * _scale * allSize;
+	int sizeY =          pixelSize  * _scale * allSize;
+
+	font->DrawString(manager->sprites.get(),
+		str,
+		XMFLOAT2(_pos.X, _pos.Y),
+		color,
+		_angle,
+		DirectX::SimpleMath::Vector2(_anchor.X*sizeX, _anchor.Y*sizeY),
+		_scale * allSize);
+
+	manager->sprites->End();
+
+}
+
 void ManagerDXTK::Init() {
 	auto device = LowApplication::GetInstance()->GetDevice();
 	ResourceUploadBatch resourceUpload(device);
@@ -31,6 +90,18 @@ void ManagerDXTK::Init() {
 	pd.customRootSignature = pl.pRootSignature;
 
 	sprites = std::make_unique<SpriteBatch>(device, resourceUpload, pd);
+
+	//ƒtƒHƒ“ƒgˆ—‚ğ‘‚«‚Ş
+	auto fonts = Fonts::GetInstance();
+	setlocale(LC_ALL, "japanese");
+	resourceDescriptors = std::make_unique<DescriptorHeap>(device, 256);
+	for (int i = 0; i < (int)FontList::MAX; i++) {
+		
+		
+		fonts->font[i].font = std::make_unique<SpriteFont>(device, resourceUpload, fonts->fontPass[i],
+			resourceDescriptors->GetCpuHandle(i),
+			resourceDescriptors->GetGpuHandle(i));
+	}
 	sprites->SetViewport(LowApplication::GetInstance()->GetViewPort(frauEngine::PipelineType::DEFAULT));
 
 	auto uploadResourcesFinished = resourceUpload.End(LowApplication::GetInstance()->GetCommandQueue());

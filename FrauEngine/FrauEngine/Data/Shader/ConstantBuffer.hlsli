@@ -58,7 +58,7 @@ cbuffer DirectionalLightBuffer : register(b4) {
 
 }
 cbuffer UtilityBuffer : register(b5) {
-
+    int time;
     int meshNum;
 
 }

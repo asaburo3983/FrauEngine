@@ -53,8 +53,10 @@ namespace frauEngine {
 
 		float animeCount = 0;
 
+		bool billboard = false;
 	public:
 		~ModelObject();
+		void Destroy();
 		void SetResource(frauEngine::FBX* _model);
 		void SetShader(frauEngine::Shader* _shaderV = nullptr, frauEngine::Shader* _shaderP = nullptr, frauEngine::Shader* _shaderG = nullptr, frauEngine::Shader* _shaderH = nullptr, frauEngine::Shader* _shaderD = nullptr);
 
@@ -116,6 +118,9 @@ namespace frauEngine {
 
 		void SetAllAnimeState(bool _anime, int _animeNum, float _animeSpeed);
 
+		
+		void SetBillboard(bool _enable) { billboard = _enable; };
+
 		ID3D12PipelineState* GetPipelineState() { return pipelineState; };
 		ID3D12RootSignature* GetRootSignature() { return rootSignature; };
 		Vector3 GetPos() { return pos; };
@@ -128,7 +133,7 @@ namespace frauEngine {
 		int GetMeshNum() { return meshMax; }
 
 		void DrawImGUI();
-		void Updata();
+		void Update();
 		void Draw();
 	};
 	

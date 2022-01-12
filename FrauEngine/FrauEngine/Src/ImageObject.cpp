@@ -93,7 +93,7 @@ void ImageObject::DrawImGUI() {
 	ImGui::End();
 
 }
-void ImageObject::Updata() {
+void ImageObject::Update() {
 	if (enable == false) {
 		return;
 	}
@@ -110,8 +110,8 @@ bool ImageObject::Hit(int _x,int _y) {
 
 	using namespace GameMath;
 	
-	float width = resource->GetWidth();
-	float height = resource->GetHeight();
+	float width = resource->GetWidth() * scale.X;
+	float height = resource->GetHeight() * scale.Y;
 
 	return HitRect(Pos2{ (float)pos.X, (float)pos.Y }, Pos2{ width,height }, Pos2{ (float)_x,(float)_y });
 }

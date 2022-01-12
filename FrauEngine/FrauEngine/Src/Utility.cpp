@@ -103,8 +103,9 @@ void Split(char split_char, char* buffer, std::vector<std::string>& out)
 std::string GetSplitEnd(std::string _str) {
 	// ファイル分解
 	char buffer[256];
-	ZeroMemory(buffer, sizeof(char) * 256);
-	memcpy(buffer, _str.c_str(), sizeof(char) * 256);
+
+	sprintf_s(buffer, _str.c_str());
+	
 	// 記号統一
 	Replace('\\', '/', buffer);
 	std::vector<std::string> split_list;
@@ -141,4 +142,9 @@ DirectX::XMFLOAT3 GetXMFLOAT3FromVector3(Vector3 v3) {
 }
 Vector3 GetVector3FromXMFLOAT3(DirectX::XMFLOAT3 f3) {
 	return Vector3(f3.x, f3.y, f3.z);
+}
+
+
+float GetOneFromColor(int _num) {
+	return (float)_num / 256;
 }

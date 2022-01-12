@@ -34,12 +34,13 @@ namespace frauEngine {
 		Vector3 GetUp();
 		float GetFov();
 
+		Vector3 GetScreenPos(Vector3 _pos);
 		DirectX::XMMATRIX GetView();
 		DirectX::XMMATRIX GetProjection();
 		DirectX::XMFLOAT3 GetCameraPos();
 
 		frauEngine::CameraBufferHeap* GetConstantBuffer();
-		void Updata();
+		void Update();
 	};
 
 }

@@ -125,6 +125,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\ManyUseLib\FBX SDK\LINK\lib\vs2017\x64\debug;C:\ManyUseLib\Effekseer12\Lib\debug;C:\ManyUseLib\DirectXTK12\Lib\debug;C:\ManyUseLib\DirectXTex12\Lib\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LargeAddressAware>true</LargeAddressAware>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -146,6 +147,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\ManyUseLib\FBX SDK\LINK\lib\vs2017\x64\release;C:\ManyUseLib\Effekseer12\Lib\release;C:\ManyUseLib\DirectXTK12\Lib\release;C:\ManyUseLib\DirectXTex12\Lib\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LargeAddressAware>true</LargeAddressAware>
+      <StackReserveSize>
+      </StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -164,27 +168,40 @@
     <ClCompile Include="Src\DXTK.cpp" />
     <ClCompile Include="Src\EffectObject.cpp" />
     <ClCompile Include="Src\EffekseerDX12.cpp" />
-    <ClCompile Include="Src\EventUI.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="Src\EventManager.cpp" />
     <ClCompile Include="Src\Fade.cpp" />
     <ClCompile Include="Src\FBX.cpp" />
     <ClCompile Include="Src\GallaryPlayer.cpp" />
     <ClCompile Include="Src\GallaryScene.cpp" />
     <ClCompile Include="Src\GameMathLib.cpp" />
+    <ClCompile Include="Src\HandyShopScene.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Src\HandyShop.cpp" />
     <ClCompile Include="Src\ImageObject.cpp" />
     <ClCompile Include="Src\ImGuiDX12.cpp" />
     <ClCompile Include="Src\input.cpp" />
+    <ClCompile Include="Src\Item.cpp" />
     <ClCompile Include="Src\Light.cpp" />
     <ClCompile Include="Src\LightsObject.cpp" />
+    <ClCompile Include="Src\CSV.cpp" />
     <ClCompile Include="Src\Loading.cpp" />
     <ClCompile Include="Src\LowApplication.cpp" />
+    <ClCompile Include="Src\MagicShop.cpp" />
+    <ClCompile Include="Src\MagicShopScene.cpp" />
     <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\MainGameCommonProcess.cpp" />
+    <ClCompile Include="Src\MapScene.cpp" />
+    <ClCompile Include="Src\NormalUI.cpp" />
+    <ClCompile Include="Src\PlanterSystem.cpp" />
+    <ClCompile Include="Src\Shop.cpp" />
+    <ClCompile Include="Src\SlopeCollider.cpp" />
+    <ClCompile Include="Src\Stage.cpp" />
     <ClCompile Include="Src\MaterialLinkerData.cpp" />
     <ClCompile Include="Src\ModelObject.cpp" />
     <ClCompile Include="Src\ModelExtendObject.cpp" />
     <ClCompile Include="Src\FlowerShopScene.cpp" />
+    <ClCompile Include="Src\NovelSystem.cpp" />
     <ClCompile Include="Src\OpenFileDialog.cpp" />
     <ClCompile Include="Src\Player.cpp" />
     <ClCompile Include="Src\PostEffect.cpp" />
@@ -196,6 +213,7 @@
     <ClCompile Include="Src\SimpleCircleCollider.cpp" />
     <ClCompile Include="Src\SoundObject.cpp" />
     <ClCompile Include="Src\TitleScene.cpp" />
+    <ClCompile Include="Src\TutorialSystem.cpp" />
     <ClCompile Include="Src\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -211,14 +229,26 @@
     <ClInclude Include="Src\Camera.h" />
     <ClInclude Include="Src\CameraObject.h" />
     <ClInclude Include="Src\CameraWork.h" />
+    <ClInclude Include="Src\EventManager.h" />
+    <ClInclude Include="Src\CSV.h" />
+    <ClInclude Include="Src\HandyShopScene.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Src\HandyShop.h" />
+    <ClInclude Include="Src\Item.h" />
+    <ClInclude Include="Src\MagicShop.h" />
+    <ClInclude Include="Src\MagicShopScene.h" />
+    <ClInclude Include="Src\MainGameCommonProcess.h" />
+    <ClInclude Include="Src\MapScene.h" />
+    <ClInclude Include="Src\NormalUI.h" />
+    <ClInclude Include="Src\PlanterSystem.h" />
+    <ClInclude Include="Src\Shop.h" />
+    <ClInclude Include="Src\SlopeCollider.h" />
+    <ClInclude Include="Src\Stage.h" />
     <ClInclude Include="Src\ConstantBuffer.h" />
     <ClInclude Include="Src\DXTK.h" />
     <ClInclude Include="Src\EffectObject.h" />
     <ClInclude Include="Src\EffekseerDX12.h" />
-    <ClInclude Include="Src\EventUI.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="Src\Fade.h" />
     <ClInclude Include="Src\FBX.h" />
     <ClInclude Include="Src\GallaryPlayer.h" />
@@ -236,6 +266,7 @@
     <ClInclude Include="Src\ModelObject.h" />
     <ClInclude Include="Src\ModelExtendObject.h" />
     <ClInclude Include="Src\FlowerShopScene.h" />
+    <ClInclude Include="Src\NovelSystem.h" />
     <ClInclude Include="Src\Object.h" />
     <ClInclude Include="Src\Objects.h" />
     <ClInclude Include="Src\OpenFileDialog.h" />
@@ -249,6 +280,7 @@
     <ClInclude Include="Src\SimpleCircleCollider.h" />
     <ClInclude Include="Src\SoundObject.h" />
     <ClInclude Include="Src\TitleScene.h" />
+    <ClInclude Include="Src\TutorialSystem.h" />
     <ClInclude Include="Src\Utility.h" />
   </ItemGroup>
   <ItemGroup>
@@ -267,13 +299,21 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+    <FxCompile Include="Data\Shader\PixelShader_BillBoard.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="Data\Shader\PixelShader_Blur.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Data\Shader\PixelShader_DepthOfField.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Data\Shader\PixelShader_Outline.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -289,6 +329,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+    <FxCompile Include="Data\Shader\PixelShader_Texture.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="Data\Shader\PixelShader_Toon.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
@@ -296,6 +342,12 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Data\Shader\PixelShader_Water.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Data\Shader\VertexShader.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -317,6 +369,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Data\Shader\VertexShader_BillBoard.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Data\Shader\VertexShader_PostEffect.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

@@ -70,6 +70,7 @@ void LowApplication::InitWindow(const char* winName, int _windowSizeX, int _wind
 	windowClass.lpfnWndProc = (WNDPROC)WindowProcedure;
 	windowClass.lpszClassName = _T("DirectXTest");
 	windowClass.hInstance = GetModuleHandle(0);
+	//windowClass.hIcon= LoadIcon(GetModuleHandle(NULL), (LPCTSTR)IDI_ICON1), //ÉAÉCÉRÉì
 	RegisterClassEx(&windowClass);
 
 	RECT wrc = { 0,0, windowSizeX,windowSizeY };

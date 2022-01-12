@@ -104,7 +104,7 @@ void LightsObject::DrawImGUI() {
 
 }
 
-void LightsObject::Updata() {
+void LightsObject::Update() {
 
 	
 	auto light = Lights::GetInstance();

@@ -54,6 +54,7 @@ namespace frauEngine {
 	};
 
 	struct UtilityBuffer {
+		int time = 0;
 		int meshNum = -1;
 	};
 	struct PBRBuffer {
@@ -93,6 +94,9 @@ namespace frauEngine {
 		float forcusU;
 		float forcusV;
 		int effectNum;
+		float blurPower = 1;
+		Color colorPlus = { 0,0,0,0 };
+		Color colorMulti = { 1,1,1,1 };
 	};
 	//デスクリプタヒープを補完している/////////////////////////
 	class ConstantBufferHeap {
@@ -104,43 +108,115 @@ namespace frauEngine {
 
 	class WorldBufferHeap : public ConstantBufferHeap {
 	public:
-		WorldBuffer* buffer;
+		WorldBuffer* buffer = nullptr;
 		void Create();
+		void Destroy() {
+			if (descripterHeap != nullptr) {
+				descripterHeap->Release();
+			}
+			if (buffer != nullptr) {
+				//delete buffer;
+				buffer = nullptr;
+			}
+		}
 	};
 	class BoneBufferHeap : public ConstantBufferHeap {
 	public:
-		BoneBuffer* buffer;
+		BoneBuffer* buffer=nullptr;
 		void Create();
+		void Destroy() {
+			if (descripterHeap != nullptr) {
+				descripterHeap->Release();
+			}
+			if (buffer != nullptr) {
+				//delete buffer;
+				buffer = nullptr;
+			}
+		}
 	};	
 	class MaterialBufferHeap : public ConstantBufferHeap {
 	public:
-		MaterialBuffer buffer;
+		MaterialBuffer* buffer=nullptr;
 		void Create();
+		void Destroy() {
+			if (descripterHeap != nullptr) {
+				descripterHeap->Release();
+			}
+			if (buffer != nullptr) {
+				//delete buffer;
+				buffer = nullptr;
+			}
+		}
 	};	
 	class CameraBufferHeap : public ConstantBufferHeap {
 	public:
-		CameraBuffer* buffer;
+		CameraBuffer* buffer=nullptr;
 		void Create();
+		void Destroy() {
+			if (descripterHeap != nullptr) {
+				descripterHeap->Release();
+			}
+			if (buffer != nullptr) {
+				//delete buffer;
+				buffer = nullptr;
+			}
+		}
 	};	
 	class LightBufferHeap : public ConstantBufferHeap {
 	public:
-		LightBuffer* buffer;
+		LightBuffer* buffer=nullptr;
 		void Create();
+		void Destroy() {
+			if (descripterHeap != nullptr) {
+				descripterHeap->Release();
+			}
+			if (buffer != nullptr) {
+				//delete buffer;
+				buffer = nullptr;
+			}
+		}
 	};	
 	class UtilityBufferHeap : public ConstantBufferHeap {
 	public:
-		UtilityBuffer* buffer;
+		UtilityBuffer* buffer=nullptr;
 		void Create();
+		void Destroy() {
+			if (descripterHeap != nullptr) {
+				descripterHeap->Release();
+			}
+			if (buffer != nullptr) {
+				//delete buffer;
+				buffer = nullptr;
+			}
+		}
 	};
 	class PBRBufferHeap : public ConstantBufferHeap {
 	public:
-		PBRBuffer* buffer;
+		PBRBuffer* buffer=nullptr;
 		void Create();
+		void Destroy() {
+			if (descripterHeap != nullptr) {
+				descripterHeap->Release();
+			}
+			if (buffer != nullptr) {
+				//delete buffer;
+				buffer = nullptr;
+			}
+		}
 	};
 	class PostEffectBufferHeap : public ConstantBufferHeap {
 	public:
-		PostEffectBuffer* buffer;
+		PostEffectBuffer* buffer=nullptr;
 		void Create();
+		void Destroy() {
+			if (descripterHeap != nullptr) {
+				descripterHeap->Release();
+			}
+			if (buffer != nullptr) {
+				//delete buffer;
+				buffer = nullptr;
+			}
+		}
 	};
 	//////////////////////////////////////////////////////
 }

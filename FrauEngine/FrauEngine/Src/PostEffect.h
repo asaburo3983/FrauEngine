@@ -9,11 +9,14 @@ namespace frauEngine {
 		TEXTURE_SLOT = 3
 	};
 	enum class AddPostEffect {
+		NONE,
 		DEPTHOFFIELD,
 		BLUR,
 		SHARP,
 		RETORO,
 		NEGA,
+		OUTLINE,
+		OUTLINE_DEPTHOFFIELD,
 		MAX,
 	};
 	class PostEffect {
@@ -37,6 +40,8 @@ namespace frauEngine {
 		ComPtr<ID3D12Resource> GetResource() { return resource; };
 		ComPtr<ID3D12DescriptorHeap> GetRenderTargetHeap() { return renderTargetViewHeap; };
 		ComPtr<ID3D12DescriptorHeap> GetResourceHeap() { return registerHeap; };
+		void SetColorPlus(Color _color) { constantBufferHeap.buffer->colorPlus = _color; }
+		void SetColorMulti(Color _color) { constantBufferHeap.buffer->colorMulti = _color; }
 
 	public:
 		frauEngine::PostEffectBufferHeap constantBufferHeap;

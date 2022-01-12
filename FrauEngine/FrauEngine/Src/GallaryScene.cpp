@@ -5,13 +5,13 @@
 
 //ロード前のデータロード　マルチスレッドで使うデータなどの初期化
 void GallaryScene::LoadFrontLoad() {
-	//loading.Reset();
+	Loading::GetInstance()->Reset();
 }
-void GallaryScene::LoadInUpdata() {
-	//loading.Updata();
+void GallaryScene::LoadInUpdate() {
+	Loading::GetInstance()->Updata();
 }
 void GallaryScene::LoadInDraw() {
-	//loading.Draw();
+	Loading::GetInstance()->Draw();
 }
 
 void GallaryScene::StaticLoad() {
@@ -47,23 +47,33 @@ void GallaryScene::StaticLoad() {
 	LoadMaterialLinker("Data/Model/FlowerShop/MatLink/FlowerShop.matlink", "Data/Model/FlowerShop/MatLink/Material/", "Data/Model/FlowerShop/Tex/", flowerShopSub1);
 
 
-	////画像ロード　
-	//LoadIm("Back", "Data/Image/MainGame/Back.png");
-	//imageObjM["Back"].SetResource(Image("Back"));
-	//imageObjM["Back"].SetAll(Vector2(960, 540), Vector2(4, 4), 0, 1);
+	//UI
+	auto wideButton = resource->LoadIm("Data/Image/Gallary/WideButon.png");
+	for (int i = 0; i < (int)Button::MAX; i++) {
+		wideButtonImage[i].SetResource(wideButton);
+	}
 
-	////UI
-	//LoadIm("EventBase", "Data/Image/MainGame/UI/EventBase.png");
-	//LoadIm("OpenShopStr", "Data/Image/MainGame/UI/OpenShopStr.png");
-	//LoadIm("PlanterStr", "Data/Image/MainGame/UI/PlanterStr.png");
-	//LoadIm("ExitShopStr", "Data/Image/MainGame/UI/ExitShopStr.png");
-	//LoadIm("ShopingStr", "Data/Image/MainGame/UI/ShopingStr.png");
+	cameraStrImage.SetResource(resource->LoadIm("Data/Image/Gallary/Str/CameraStr.png"));
+	enableUIStrImage.SetResource(resource->LoadIm("Data/Image/Gallary/Str/EnableUIStr.png"));
 
-	//imageObjM["EventBase"].SetResource(Image("EventBase"));
-	//imageObjM["OpenShopStr"].SetResource(Image("OpenShopStr"));
-	//imageObjM["PlanterStr"].SetResource(Image("PlanterStr"));
-	//imageObjM["ExitShopStr"].SetResource(Image("ExitShopStr"));
-	//imageObjM["ShopingStr"].SetResource(Image("ShopingStr"));
+	shaderStrImages[0].SetResource(resource->LoadIm("Data/Image/Gallary/Str/PBRShaderStr.png"));
+	shaderStrImages[1].SetResource(resource->LoadIm("Data/Image/Gallary/Str/ToonShaderStr.png"));
+
+	postEffectStrImages[0].SetResource(resource->LoadIm("Data/Image/Gallary/Str/NoneEffectStr.png"));
+	postEffectStrImages[1].SetResource(resource->LoadIm("Data/Image/Gallary/Str/DepthOfFieldStr.png"));
+	postEffectStrImages[2].SetResource(resource->LoadIm("Data/Image/Gallary/Str/BlurStr.png"));
+	postEffectStrImages[3].SetResource(resource->LoadIm("Data/Image/Gallary/Str/SharpStr.png"));
+	postEffectStrImages[4].SetResource(resource->LoadIm("Data/Image/Gallary/Str/RetoroStr.png"));
+	postEffectStrImages[5].SetResource(resource->LoadIm("Data/Image/Gallary/Str/NegativeStr.png"));
+	postEffectStrImages[6].SetResource(resource->LoadIm("Data/Image/Gallary/Str/OutlineStr.png"));
+	postEffectStrImages[7].SetResource(resource->LoadIm("Data/Image/Gallary/Str/OutlineDoFStr.png"));
+
+	cameraTutorialStrImage.SetResource(resource->LoadIm("Data/Image/Gallary/Str/CameraTutorialStr.png"));
+	DoFTutorialStrImage.SetResource(resource->LoadIm("Data/Image/Gallary/Str/DoFTutorialStr.png"));
+
+	//背景画像
+
+	skyImage.SetResource(resource->Image("Sky.png"));
 
 	////ぶつかり判定用のコライダー
 	SimpleBoxCollider2D _boxCollider[8];
@@ -110,13 +120,43 @@ void GallaryScene::Load() {
 
 
 
-	camera.Updata();
-	light.Updata();
+	camera.Update();
+	light.Update();
 
 	//fade.Reset();
 
 	flowerShopExModel.SetAllAnimeState(false, 1, 0.2);
 	flowerShopExModel.SetAll(Vector3(-8, 2, 1.8), Vector3(0, 90, 0), Vector3(2, 0.9, 1.5));
+
+	//UIの位置設定
+	Vector2 cameraButtonPos =  Vector2(335, 845);
+	Vector2 enableButtonPos =  Vector2(125, 845);
+
+	Vector2 smallButtonUIScale = Vector2(0.45, 1);
+	Vector2 smallButtonStrUIScale = Vector2(0.75, 0.75);
+
+	wideButtonImage[(int)Button::CAMERA].SetAll(cameraButtonPos, smallButtonUIScale);
+	cameraStrImage.SetAll(cameraButtonPos, smallButtonStrUIScale);
+
+	wideButtonImage[(int)Button::ENABLE].SetAll(enableButtonPos, smallButtonUIScale);
+	enableUIStrImage.SetAll(enableButtonPos, smallButtonStrUIScale);
+
+	Vector2 shaderButtonPos = Vector2(230, 930);
+	wideButtonImage[(int)Button::SHADER].SetAll(shaderButtonPos);
+	for (int i = 0; i < (int)PreviewShader::MAX; i++) {
+		shaderStrImages[i].SetAll(shaderButtonPos);
+	}
+
+	Vector2 postEffectButtonPos = Vector2(230, 1030);
+	wideButtonImage[(int)Button::POSTEFFECT].SetAll(postEffectButtonPos);
+	for (int i = 0; i < (int)AddPostEffect::MAX; i++) {
+		postEffectStrImages[i].SetAll(postEffectButtonPos);
+	}
+
+	cameraTutorialStrImage.SetAll(Vector2(270, 770));
+	DoFTutorialStrImage.SetAll(Vector2(270, 720));
+	skyImage.SetAll(Vector2(960, 540));
+
 }
 
 
@@ -124,11 +164,30 @@ void GallaryScene::UnLoad() {
 }
 
 
-void GallaryScene::Updata() {
+void GallaryScene::Update() {
 	GallaryPlayer* player = GallaryPlayer::GetInstance();
 
 	//フォトモード切替
-	if (key->key[DIK_F] == 1) {
+
+
+
+	//UIの表示
+	if (wideButtonImage[(int)Button::ENABLE].Hit(mouse->x, mouse->y) && mouse->left == 1) {
+		enableUI = !enableUI;
+		//UIの透過
+		if (enableUI == false) {
+			float enableButtonMinAlpha = 0.5f;
+			wideButtonImage[(int)Button::ENABLE].SetAlpha(enableButtonMinAlpha);
+			enableUIStrImage.SetAlpha(enableButtonMinAlpha);
+		}
+		//UIの非透過
+		else {
+			wideButtonImage[(int)Button::ENABLE].SetAlpha(1);
+			enableUIStrImage.SetAlpha(1);
+		}
+	}
+	//カメラ切り替え
+	if (wideButtonImage[(int)Button::CAMERA].Hit(mouse->x, mouse->y) && mouse->left == 1) {
 		photoMode = !photoMode;
 
 		if (photoMode) {
@@ -193,15 +252,17 @@ void GallaryScene::Updata() {
 
 	player->Collision(boxCollider, circleCollider, boxColliderEvent);
 
+
+
 	Application::GetInstance()->SetDepthOfField(true, mouse->x, mouse->y);
 
 	//シェーダー切り替え
-	if (key->key[DIK_1] == 1) {
+	if (wideButtonImage[(int)Button::SHADER].Hit(mouse->x, mouse->y) && mouse->left == 1) {
 		shaderNum = (shaderNum + 1) % 2;
 
 	}
 	//ポストエフェクト切り替え
-	if (key->key[DIK_2] == 1) {
+	if (wideButtonImage[(int)Button::POSTEFFECT].Hit(mouse->x, mouse->y) && mouse->left == 1) {
 		postEffectNum = (postEffectNum + 1) % (int)AddPostEffect::MAX;
 
 	}
@@ -210,7 +271,7 @@ void GallaryScene::Updata() {
 
 void GallaryScene::Draw() {
 
-
+	
 
 	auto lowApp = LowApplication::GetInstance();
 	auto lights = Lights::GetInstance();
@@ -225,6 +286,9 @@ void GallaryScene::Draw() {
 	//通常の描画
 	lowApp->DrawOnRenderTarget(Application::GetInstance()->GetPostEffectRenderTarget());
 
+	//空の描画
+	skyImage.Draw();
+
 	switch (shaderNum) {
 	case 0:
 		flowerShopExModel.ModelObject::Draw();
@@ -236,19 +300,35 @@ void GallaryScene::Draw() {
 		break;
 	}
 
+	camera.Update();
+	light.Update();
 
-
-
-
-	camera.Updata();
-	light.Updata();
-
-	
-	ImGui::Begin("FPS");                          //ウィンドウ名になる
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-	ImGui::End();
 }
 
 void GallaryScene::DrawNonePostEffect() {
 
+	wideButtonImage[(int)Button::ENABLE].Draw();
+	enableUIStrImage.Draw();
+
+	if (enableUI) {
+		for (int i = 0; i < (int)Button::MAX; i++) {
+			if (i == (int)Button::ENABLE) {
+				continue;
+			}
+			wideButtonImage[i].Draw();
+		}
+
+		cameraStrImage.Draw();
+
+		shaderStrImages[shaderNum].Draw();
+		postEffectStrImages[postEffectNum].Draw();
+
+		if (photoMode) {
+			cameraTutorialStrImage.Draw();
+		}
+		if (postEffectNum == (int)AddPostEffect::DEPTHOFFIELD ||
+			postEffectNum == (int)AddPostEffect::OUTLINE_DEPTHOFFIELD) {
+			DoFTutorialStrImage.Draw();
+		}
+	}
 }

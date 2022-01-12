@@ -29,6 +29,7 @@ bool FBX::Load(string _modelPath, string _texturePath) {
 
 	LoadMeshs();
 
+	
 	LoadAnimations();
 
 	if (CreateVertexBuffer() == false)
@@ -91,8 +92,8 @@ bool FBX::InitFbxScene() {
 	if (isTrianglate) {
 		converter.Triangulate(fbxScene, true);
 	}
-
 	meshNum = fbxScene->GetSrcObjectCount<FbxMesh>();//メッシュ数をキャッシュしておく
+
 	return true;
 }
 
@@ -101,12 +102,13 @@ void FBX::LoadMaterials(string _textureFolderPath) {
 	int material_num = fbxScene->GetSrcObjectCount<FbxSurfaceMaterial>();
 	for (int i = 0; i < material_num; i++)
 	{
-		FbxSurfaceMaterial* material = fbxScene->GetSrcObject<FbxSurfaceMaterial>(i);
+		material = fbxScene->GetSrcObject<FbxSurfaceMaterial>(i);
 		LoadMaterial(material, _textureFolderPath);//TODO 中身の修理
 		materialBufferHeap[material->GetName()].Create();//ヒープの作成
-		materialBufferHeap[material->GetName()].buffer = materials[material->GetName()];
+		materialBufferHeap[material->GetName()].buffer = &materials[material->GetName()];
 		//テクスチャのヒープを作成
 		textureBufferHeap[material->GetName()].CreateShaderResourceBufferHeap(materialLinks[material->GetName()]);
+		
 	}
 }
 void FBX::LoadMaterial(FbxSurfaceMaterial* material, string _texturePath)
@@ -195,7 +197,7 @@ void FBX::LoadMaterial(FbxSurfaceMaterial* material, string _texturePath)
 
 	// テクスチャ読み込み
 	prop = material->FindProperty(FbxSurfaceMaterial::sDiffuse);
-	FbxFileTexture* texture = nullptr;
+	texture = nullptr;
 	std::string keyword;
 	int texture_num = prop.GetSrcObjectCount<FbxFileTexture>();
 	if (texture_num > 0)
@@ -232,9 +234,7 @@ bool FBX::LoadTexture(FbxFileTexture* texture, std::string& keyword, string _tex
 
 	// ファイル分解
 	char buffer[256];
-	ZeroMemory(buffer, sizeof(char) * 256);
-	memcpy(buffer, file_path.c_str(), sizeof(char) * 256);
-
+	sprintf_s(buffer, file_path.c_str());
 	// 記号統一
 	Replace('\\', '/', buffer);
 	std::vector<std::string> split_list;
@@ -318,6 +318,7 @@ bool FBX::LoadTexture(FbxFileTexture* texture, std::string& keyword, string _tex
 
 	keyword = file_name;
 	fbxsdk::FbxFree(file_name);
+
 	return true;
 }
 
@@ -366,7 +367,7 @@ void FBX::LoadVertices(MeshData& mesh_data, FbxMesh* mesh)
 	for (int i = 0; i < polygon_vertex_count; i++)
 	{
 		CustomVertex vertex;
-		// インデックスバッファから頂点番号を取得
+		// インデックスバッファから頂&点番号を取得
 		int index = indices[i];
 
 		// 頂点座標リストから座標を取得する
@@ -376,6 +377,9 @@ void FBX::LoadVertices(MeshData& mesh_data, FbxMesh* mesh)
 
 		mesh_data.m_Vertices.push_back(vertex);
 	}
+
+
+
 }
 void FBX::LoadNormals(MeshData& mesh_data, FbxMesh* mesh)
 {
@@ -403,6 +407,7 @@ void FBX::LoadColors(MeshData& mesh_data, FbxMesh* mesh)
 
 	if (vertex_colors == nullptr)
 	{
+		vertex_colors->Destroy();
 		return;
 	}
 	FbxLayerElement::EMappingMode mapping_mode = vertex_colors->GetMappingMode();
@@ -419,13 +424,14 @@ void FBX::LoadColors(MeshData& mesh_data, FbxMesh* mesh)
 			{
 				int id = indeces.GetAt(i);
 				FbxColor color = colors.GetAt(id);
-				mesh_data.m_Vertices[i].Color.Alpha = (float)color.mAlpha;
-				mesh_data.m_Vertices[i].Color.Red = (float)color.mRed;
-				mesh_data.m_Vertices[i].Color.Green = (float)color.mGreen;
-				mesh_data.m_Vertices[i].Color.Blue = (float)color.mBlue;
+				mesh_data.m_Vertices[i].Color.A = (float)color.mAlpha;
+				mesh_data.m_Vertices[i].Color.R = (float)color.mRed;
+				mesh_data.m_Vertices[i].Color.G = (float)color.mGreen;
+				mesh_data.m_Vertices[i].Color.B = (float)color.mBlue;
 			}
 		}
 	}
+	vertex_colors->Destroy();
 }
 void FBX::LoadUV(MeshData& mesh_data, FbxMesh* mesh)
 {
@@ -456,9 +462,9 @@ void FBX::SetMaterialName(MeshData& mesh_data, FbxMesh* mesh)
 	}
 
 	// Mesh側のマテリアル情報を取得
-	FbxLayerElementMaterial* material = mesh->GetElementMaterial(0);
-	int index = material->GetIndexArray().GetAt(0);
-	FbxSurfaceMaterial* surface_material = mesh->GetNode()->GetSrcObject<FbxSurfaceMaterial>(index);
+	materialElements = mesh->GetElementMaterial(0);
+	int index = materialElements->GetIndexArray().GetAt(0);
+	surface_material = mesh->GetNode()->GetSrcObject<FbxSurfaceMaterial>(index);
 	if (surface_material != nullptr)
 	{
 		mesh_data.m_MaterialName = surface_material->GetName();
@@ -467,6 +473,8 @@ void FBX::SetMaterialName(MeshData& mesh_data, FbxMesh* mesh)
 	{
 		mesh_data.m_MaterialName = "";
 	}
+
+
 }
 
 void FBX::LoadAnimations() {
@@ -637,37 +645,48 @@ void FBX::LoadWeight() {
 
 bool FBX::CreateVertexBuffer()
 {
+
 	auto device = LowApplication::GetInstance()->GetDevice();
+	int _meshNum = 0;
+	vertBuff.resize(meshList.size());
 	for (auto& mesh : meshList)
 	{
-		ID3D12Resource* vertBuff = nullptr;
+		vertBuff[_meshNum] = nullptr;
 
 		D3D12_HEAP_PROPERTIES tmpProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 
 		D3D12_RESOURCE_DESC tmpDesc = CD3DX12_RESOURCE_DESC::Buffer(mesh.m_Vertices.size() * sizeof(CustomVertex));
+		//頂点のヒープを作成する。。。メモリを食っているから削除したい
 		auto result = device->CreateCommittedResource(
 			&tmpProp,
 			D3D12_HEAP_FLAG_NONE,
 			&tmpDesc,
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
-			IID_PPV_ARGS(&vertBuff));
+			IID_PPV_ARGS(&vertBuff[_meshNum]));
+		
 		if (FAILED(result)) {
 			MessageBox(NULL, TEXT("頂点バッファの生成に失敗しました"), TEXT("FbxError"), MB_OK | MB_ICONERROR);
 			return false;
 		}
+
+
 		////頂点情報をコピー
 		CustomVertex* vertMap = nullptr;
-		result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+		result = vertBuff[_meshNum]->Map(0, nullptr, (void**)&vertMap);
 		std::copy(std::begin(mesh.m_Vertices), std::end(mesh.m_Vertices), vertMap);
-		vertBuff->Unmap(0, nullptr);
+		vertBuff[_meshNum]->Unmap(0, nullptr);
 		if (FAILED(result)) {
 			MessageBox(NULL, TEXT("頂点バッファの生成に失敗しました"), TEXT("FbxError"), MB_OK | MB_ICONERROR);
 			return false;
 		}
-		mesh.m_VertexBuffer.BufferLocation = vertBuff->GetGPUVirtualAddress();//バッファの仮想アドレス
+		mesh.m_VertexBuffer.BufferLocation = vertBuff[_meshNum]->GetGPUVirtualAddress();//バッファの仮想アドレス
 		mesh.m_VertexBuffer.SizeInBytes = static_cast<UINT>(mesh.m_Vertices.size() * sizeof(CustomVertex));//全バイト数
 		mesh.m_VertexBuffer.StrideInBytes = sizeof(CustomVertex);//1頂点あたりのバイト数
+
+		meshNum++;
+		
+
 	}
 
 	return true;
@@ -676,10 +695,13 @@ bool FBX::CreateVertexBuffer()
 bool FBX::CreateIndexBuffer()
 {
 	auto device = LowApplication::GetInstance()->GetDevice();
+	
+	idxBuff.resize(meshList.size());
 
+	int _meshNum = 0;
 	for (auto& mesh : meshList)
 	{
-		ID3D12Resource* idxBuff = nullptr;
+		idxBuff[_meshNum] = nullptr;
 
 		D3D12_HEAP_PROPERTIES tmpProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 		D3D12_RESOURCE_DESC   tmpDesc = CD3DX12_RESOURCE_DESC::Buffer(mesh.m_Indices.size() * sizeof(UINT));
@@ -690,25 +712,27 @@ bool FBX::CreateIndexBuffer()
 			&tmpDesc,
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
-			IID_PPV_ARGS(&idxBuff));
+			IID_PPV_ARGS(&idxBuff[_meshNum]));
 		if (FAILED(result)) {
 			MessageBox(NULL, TEXT("インデクスバッファの生成に失敗しました"), TEXT("FbxError"), MB_OK | MB_ICONERROR);
 			return false;
 		}
 		////作ったバッファにインデックスデータをコピー
 		UINT* mappedIdx = nullptr;
-		result=idxBuff->Map(0, nullptr, (void**)&mappedIdx);
+		result=idxBuff[_meshNum]->Map(0, nullptr, (void**)&mappedIdx);
 		std::copy(std::begin(mesh.m_Indices), std::end(mesh.m_Indices), mappedIdx);
 
-		idxBuff->Unmap(0, nullptr);
+		idxBuff[_meshNum]->Unmap(0, nullptr);
 		if (FAILED(result)) {
 			MessageBox(NULL, TEXT("インデクスバッファの生成に失敗しました"), TEXT("FbxError"), MB_OK | MB_ICONERROR);
 			return false;
 		}
 		//インデックスバッファビューを作成
-		mesh.m_IndexBuffer.BufferLocation = idxBuff->GetGPUVirtualAddress();
+		mesh.m_IndexBuffer.BufferLocation = idxBuff[_meshNum]->GetGPUVirtualAddress();
 		mesh.m_IndexBuffer.Format = DXGI_FORMAT_R32_UINT;
 		mesh.m_IndexBuffer.SizeInBytes = static_cast<UINT>(mesh.m_Indices.size() * sizeof(UINT));
+
+		meshNum++;
 	}
 
 	return true;
@@ -815,3 +839,102 @@ void FBX::Draw(
 
 
 
+FBX::~FBX() {
+
+
+	loadTextureLambda.clear();
+	materials.clear();
+
+	animeMat.clear();
+	timeMax.clear();
+	materialPointerName.clear();
+	materialIndexName.clear();
+
+	while (meshList.size()) {
+		meshList[meshList.size() - 1].m_VertexBuffer.BufferLocation=NULL;
+		meshList[meshList.size() - 1].m_VertexBuffer.SizeInBytes=NULL;
+		meshList[meshList.size() - 1].m_VertexBuffer.StrideInBytes=NULL;
+		
+		meshList[meshList.size() - 1].m_IndexBuffer.BufferLocation=NULL;
+		meshList[meshList.size() - 1].m_IndexBuffer.SizeInBytes=NULL;
+
+		while (meshList[meshList.size() - 1].m_Vertices.size()) {
+			meshList[meshList.size() - 1].m_Vertices.pop_back();
+		}
+		while (meshList[meshList.size() - 1].m_Indices.size()) {
+			meshList[meshList.size() - 1].m_Indices.pop_back();
+		}
+		meshList.pop_back();
+	}
+
+
+	while (textures.size()) {
+		auto itr = textures.begin();
+		itr->second->Release();
+		textures.erase(itr);
+	}
+	while (materialLinks.size()) {
+		auto itr = materialLinks.begin();
+		itr->second->Release();
+		materialLinks.erase(itr);
+	}
+	if (FrameTime != nullptr) {
+		delete FrameTime;
+		delete timeCount;
+		delete start;
+		delete stop;
+	}
+	while (fMesh.size()) {
+		fMesh[fMesh.size() - 1]->Destroy();
+		fMesh.pop_back();
+	}
+	//ちょっと危険かも
+	if (inputLayout != nullptr) {
+		inputLayout=nullptr;
+	}
+	while (materialBufferHeap.size()) {
+		auto itr = materialBufferHeap.begin();
+		itr->second.Destroy();
+		materialBufferHeap.erase(itr);
+	}
+	while (textureBufferHeap.size()) {
+		auto itr = textureBufferHeap.begin();
+		itr->second.Destroy();
+		textureBufferHeap.erase(itr);
+	}
+
+	auto cmdList=LowApplication::GetInstance()->GetCommandList();
+
+	while (vertBuff.size()) {
+		if (vertBuff[vertBuff.size() - 1] != nullptr) {
+
+			vertBuff[vertBuff.size() - 1]->Release();
+			
+		}
+		vertBuff.pop_back();
+	}
+	while (idxBuff.size()) {
+		if (idxBuff[idxBuff.size() - 1] != nullptr) {
+
+			idxBuff[idxBuff.size() - 1]->Release();
+		}
+		idxBuff.pop_back();
+	}
+
+	//適当に削除処理を書いてあります
+	material->Destroy();
+	texture->Destroy();
+
+
+
+	//delete vertices;
+	//delete indices;
+	//materialElements->Destroy();
+	//surface_material->Destroy();
+	//FBXImpoter系は最後にこの順番でないと削除できません
+	fbxScene->Destroy();
+	fbxImporter->Destroy();
+	fbxManager->Destroy();
+
+
+}

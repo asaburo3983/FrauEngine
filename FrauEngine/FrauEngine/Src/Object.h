@@ -17,7 +17,7 @@ namespace frauEngine {
 
 		bool* GetImGuiEnable() { return &imgui; };
 		virtual void DrawImGUI() = 0;
-		virtual void Updata() = 0;
+		virtual void Update() = 0;
 
 	};
 }

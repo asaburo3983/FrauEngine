@@ -4,55 +4,154 @@
 
 Player::Player() {
 	KEY = KeyInput::GetInstance();
+	
 }
-void Player::Setup(ModelExtendObject* _resource) {
-	resource = _resource;
+void Player::Initialize(float _moveSpeed, float _rotaSpeed) {
+	auto resource = Resource::GetInstance();
 
-	resource->SetScale(Vector3(0.03f, 0.03f, 0.03f));
-	resource->SetAngle(Vector3(0, 180, 0));
-	resource->SetPos(Vector3(1, -3.9f, -2));
+	//プレイヤーモデルの用意
+	model.Initialize(resource->Model("Frau.fbx"), resource->Shader("VertexShader_Anim.hlsl"), resource->Shader("PixelShader_Toon.hlsl"), nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_FRONT);
+	model.InitializeSub(ModelType::SHADOW, resource->Shader("VertexShader_AnimShadow.hlsl"), resource->Shader("PixelShader_Shadow.hlsl"));
+	LoadMaterialLinker("Data/Model/Frau/MatLink/Frau.matlink", "Data/Model/Frau/MatLink/Material/", "Data/Model/Frau/Tex/", &model);
+
+	auto vertexShaderBillBoard = resource->Shader("VertexShader_BillBoard.hlsl");
+	auto pixelShaderBillBoard = resource->Shader("PixelShader_BillBoard.hlsl");
+
+	//ビルボード用のモデルを用意
+	ideaFrame.SetBillboard(true);
+	ideaFrame.Initialize(
+		resource->Model("Idea_Frame.fbx"),
+		vertexShaderBillBoard,
+		pixelShaderBillBoard
+	);
+
+	for (int i = 0; i < (int)IdeaNum::MAX; i++) {
+		ideaStr[i].SetBillboard(true);
+	}
+	ideaStr[(int)IdeaNum::BUY].Initialize(
+		resource->Model("Idea_Buy.fbx"),
+		vertexShaderBillBoard,
+		pixelShaderBillBoard
+	);
+	ideaStr[(int)IdeaNum::EXIT].Initialize(
+		resource->Model("Idea_Exit.fbx"),
+		vertexShaderBillBoard,
+		pixelShaderBillBoard
+	);
+	ideaStr[(int)IdeaNum::OPEN_SHOP].Initialize(
+		resource->Model("Idea_OpenShop.fbx"),
+		vertexShaderBillBoard,
+		pixelShaderBillBoard
+	);
+	ideaStr[(int)IdeaNum::PLANTER].Initialize(
+		resource->Model("Idea_Planter.fbx"),
+		vertexShaderBillBoard,
+		pixelShaderBillBoard
+	);
+	ideaStr[(int)IdeaNum::JOIN_SHOP].Initialize(
+		resource->Model("Idea_JoinShop.fbx"),
+		vertexShaderBillBoard,
+		pixelShaderBillBoard
+	);
+	//
+
+	model.SetScale(Vector3(0.03f, 0.03f, 0.03f));
+	model.SetAngle(Vector3(0, 180, 0));
+	SetStartPos();
+
+	moveSpeed = _moveSpeed;
+	rotaSpeed = _rotaSpeed;
+
+}
+void Player::MoveStage() {
+	SetStartPos();
+}
+void Player::SetStartPos() {
+	Stage* stage = Stage::GetInstance();
+	switch (stage->GetStageNum()) {
+	case (int)StageNum::FLOWER_SHOP:
+		model.SetPos(Vector3(-2.55, -3.9f, -2));
+		model.SetAngle(Vector3(0, 0, 0));
+		break;
+	case (int)StageNum::HANDY_SHOP:
+		model.SetPos(Vector3(-2.55, -3.9f, -2));
+		model.SetAngle(Vector3(0, 0, 0));
+		break;
+	case (int)StageNum::MAGIC_SHOP:
+		model.SetPos(Vector3(1.85, -3.9f, -1.2));
+		model.SetAngle(Vector3(0, 0, 0));
+		break;
+	case (int)StageNum::MAP:
+		//出口ごとに違う場所へ
+		switch (stage->GetStageNumOld()) {
+		case (int)StageNum::FLOWER_SHOP:
+			model.SetPos(Vector3(4.75, -3.9f, -8.3));
+			break;
+		case (int)StageNum::HANDY_SHOP:
+			model.SetPos(Vector3(8.1, 1.45, 2.45));
+			break;
+		case (int)StageNum::MAGIC_SHOP:
+			model.SetPos(Vector3(-13.0, 1.45, 2.45));
+			break;
+		}
+		
+		
+		model.SetAngle(Vector3(0, 180, 0));
+		break;
+	}
 }
 
+void Player::Update() {
+	if (isAnimation) {
+		AnimationControl();
+	}
+	if (isMove) {
+		Move();
+	}
+	if (isCollision) {
+		Collision();
+	}
+}
 void Player::AnimationControl() {
 	if (KEY->key[DIK_A] > 0 ||
 		KEY->key[DIK_D] > 0 ||
 		KEY->key[DIK_W] > 0 ||
 		KEY->key[DIK_S] > 0) {
-		resource->SetAnimeNum(2);
-		resource->SetAnimeSpeed(0.4f);
+		model.SetAnimeNum(2);
+		model.SetAnimeSpeed(0.4f);
 	}
 	else {
-		resource->SetAnimeNum(1);
-		resource->SetAnimeSpeed(0.3f);
+		model.SetAnimeNum(1);
+		model.SetAnimeSpeed(0.3f);
 	}
 }
-void Player::Move(float _moveSpeed,float _rotaSpeed) {
-	posOld = resource->GetPos();
+void Player::Move() {
+	posOld = model.GetPos();
 	Vector3 pos;
 	Vector3 angle;
 	
-	pos = resource->GetPos();
-	angle = resource->GetAngle();
+	pos = model.GetPos();
+	angle = model.GetAngle();
 
 	float target=-1,targetX=-1, targetY=-1;
 	if (KEY->key[DIK_A] > 0) {
-		 pos.X-= _moveSpeed;
+		 pos.X-= moveSpeed;
 		 targetY = 270;
 	}
 	else if (KEY->key[DIK_D] > 0) {
-		pos.X += _moveSpeed;
+		pos.X += moveSpeed;
 		targetY = 90;
 	}	
 
 	if (KEY->key[DIK_W] > 0) {
-		pos.Z += _moveSpeed;
+		pos.Z += moveSpeed;
 		targetX = 0;
 		if (angle.Y > 180) {
 			targetX = 360;
 		}
 	}
 	else if (KEY->key[DIK_S] > 0.0f) {
-		pos.Z -= _moveSpeed;	
+		pos.Z -= moveSpeed;	
 		targetX = 180;
 	}
 	//向きの計算
@@ -80,19 +179,19 @@ void Player::Move(float _moveSpeed,float _rotaSpeed) {
 		if (target > angle.Y) {
 			float tmp = target - angle.Y;
 			if (tmp <= 180) {
-				angle.Y += _rotaSpeed;
+				angle.Y += rotaSpeed;
 			}
 			else {
-				angle.Y -= _rotaSpeed;
+				angle.Y -= rotaSpeed;
 			}
 		}
 		else if (target < angle.Y) {
 			int tmp = angle.Y - target;
 			if (tmp < 180) {
-				angle.Y -= _rotaSpeed;
+				angle.Y -= rotaSpeed;
 			}
 			else {
-				angle.Y += _rotaSpeed;
+				angle.Y += rotaSpeed;
 			}
 		}
 		if (angle.Y < 0) {
@@ -102,23 +201,23 @@ void Player::Move(float _moveSpeed,float _rotaSpeed) {
 			angle.Y = 0;
 		}
 	}
-	resource->SetPos(pos);
-	resource->SetAngle(angle);
+	model.SetPos(pos);
+	model.SetAngle(angle);
 
 }
-
-void Player::Collision(vector<SimpleBoxCollider2D> _boxCollider, vector<SimpleCircleCollider2D> _circleCollider, vector<SimpleBoxCollider2D> _boxColliderEvent) {
+void Player::Collision() {
+	Stage* stage = Stage::GetInstance();
 	//当たり判定処理
-	for (int i = 0; i < _boxCollider.size(); i++) {
+	for (int i = 0; i < stage->boxCollider.size(); i++) {
 		Vector3 tmp;
 		bool moveBack[2] = { false,false };
 
-		if (_boxCollider[i].HitX(GetPos().X) &&
-			_boxCollider[i].HitY(GetPosOld().Z)) {
+		if (stage->boxCollider[i].HitX(GetPos().X) &&
+			stage->boxCollider[i].HitY(GetPosOld().Z)) {
 			moveBack[0] = true;
 		}
-		if (_boxCollider[i].HitX(GetPosOld().X) &&
-			_boxCollider[i].HitY(GetPos().Z)) {
+		if (stage->boxCollider[i].HitX(GetPosOld().X) &&
+			stage->boxCollider[i].HitY(GetPos().Z)) {
 			moveBack[1] = true;
 		}
 		if (moveBack[0] == true) {
@@ -128,13 +227,13 @@ void Player::Collision(vector<SimpleBoxCollider2D> _boxCollider, vector<SimpleCi
 			MoveBackZ();
 		}
 	}
-	for (int i = 0; i < _circleCollider.size(); i++) {
+	for (int i = 0; i < stage->circleCollider.size(); i++) {
 		Vector3 tmp;
 		bool moveBack[2] = { false,false };
-		if (_circleCollider[i].Hit(Vector2(GetPos().X, GetPosOld().Z), 1)) {
+		if (stage->circleCollider[i].Hit(Vector2(GetPos().X, GetPosOld().Z), 1)) {
 			moveBack[0] = true;
 		}
-		if (_circleCollider[i].Hit(Vector2(GetPosOld().X, GetPos().Z), 1)) {
+		if (stage->circleCollider[i].Hit(Vector2(GetPosOld().X, GetPos().Z), 1)) {
 			moveBack[1] = true;
 		}
 		if (moveBack[0] == true) {
@@ -145,44 +244,70 @@ void Player::Collision(vector<SimpleBoxCollider2D> _boxCollider, vector<SimpleCi
 		}
 	}
 
+	//当たり判定処理スロープ
+	for (int i = 0; i < stage->slopeCollider.size(); i++) {
+		Vector2 pos;
+		pos.X = GetPos().X;
+		pos.Y = GetPos().Z;
+
+		//スロープを上下する処理
+		if (stage->slopeCollider[i].Hit(pos)) {
+			Vector3 tmp = GetPos();
+			tmp.Y = stage->slopeCollider[i].HitProcess(pos);		
+			model.SetPos(tmp);
+		}
+	}
 	//当たり判定処理　イベント
-	for (int i = 0; i < _boxColliderEvent.size(); i++) {
-		if (_boxColliderEvent[i].Hit(Vector2(GetPos().X, GetPos().Z))) {
-			eventNum = i + 1;
+	for (int i = 0; i < stage->boxColliderEvent.size(); i++) {
+		if (stage->boxColliderEvent[i].Hit(Vector2(GetPos().X, GetPos().Z))) {
+			eventNum = stage->boxColliderEvent[i].GetEventNum();
+
 			break;
 		}
-		eventNum = 0;
+		eventNum = -1;
 	}
 
 }
+
+
 void Player::DrawShadow() {
 
-	resource->SetAllAnimeState(true, resource->GetAnimeNum(), resource->GetAnimeSpeed());
-	resource->SetAll(resource->GetPos(), resource->GetAngle(), resource->GetScale());
-	resource->Draw(ModelType::SHADOW);
+	model.SetAllAnimeState(true, model.GetAnimeNum(),  model.GetAnimeSpeed());
+	model.SetAll(model.GetPos(), model.GetAngle(), model.GetScale());
+	model.Draw(ModelType::SHADOW);
 }
 void Player::Draw() {
-	
-	resource->ModelObject::Draw();
-}
 
-Vector3 Player::GetPos() {
-	return resource->GetPos();
-}
-Vector3 Player::GetPosOld() {
-	return posOld;
-}
+	model.ModelObject::Draw();
 
-int Player::GetEventNum() {
-	return eventNum;
+
 }
-void Player::MoveBackX() {
-	Vector3 posOldX = resource->GetPos();
-	posOldX.X = posOld.X;
-	resource->SetPos(posOldX);
-}
-void Player::MoveBackZ() {
-	Vector3 posOldZ = resource->GetPos();
-	posOldZ.Z = posOld.Z;
-	resource->SetPos(posOldZ);
+void Player::DrawBillBoard() {
+
+	if (eventNum != -1) {
+		int eventNumTmp = eventNum;
+
+		Vector3 pos = GetPos();
+		pos.Y += 5.0f;
+		pos.X += 2.0;
+		ideaFrame.SetAll(pos, Vector3(0, 0, 0), Vector3(1.5, 1, 1));
+
+		ideaFrame.Draw();
+
+		//イベント上では違う処理だが表示するものは一緒
+		switch (eventNum) {
+		case (int)EventNum::BUY_HANDYSHOP:
+		case (int)EventNum::BUY_MAGICSHOP:
+			eventNumTmp = (int)IdeaNum::BUY;
+			break;
+		case (int)EventNum::JOIN_FLOWERSHOP:
+		case (int)EventNum::JOIN_HANDYSHOP:
+		case (int)EventNum::JOIN_MAGICSHOP:
+			eventNumTmp = (int)IdeaNum::JOIN_SHOP;
+			break;
+		}
+\
+		ideaStr[eventNumTmp].SetAll(pos, Vector3(0, 180.0f, 0), Vector3(1.0, 0.77, 1));
+		ideaStr[eventNumTmp].Draw();
+	}
 }

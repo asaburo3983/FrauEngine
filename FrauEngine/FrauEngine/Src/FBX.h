@@ -37,6 +37,7 @@ namespace frauEngine {
 	class FBX {
 	public:
 		FBX();
+		~FBX();
 	private:
 		using LoadTextureLambda = std::function<HRESULT(const std::wstring path, DirectX::TexMetadata*, DirectX::ScratchImage&)>;
 		map<std::string, LoadTextureLambda> loadTextureLambda;
@@ -45,21 +46,31 @@ namespace frauEngine {
 
 		std::string modelPath;
 
-		FbxManager* fbxManager;
+		FbxManager*  fbxManager;
 		FbxImporter* fbxImporter;
-		FbxScene* fbxScene;
+		FbxScene*    fbxScene;
 
 		//マテリアル関係
+		//適当に書いてる
+		FbxFileTexture* texture;
+		FbxSurfaceMaterial* material;
+		vector<ID3D12Resource*> vertBuff;
+		vector<ID3D12Resource*> idxBuff;
+
+		
+		FbxLayerElementMaterial* materialElements;
+		FbxSurfaceMaterial* surface_material;
+
 		std::map<std::string, frauEngine::MaterialBuffer> materials;
 		map<string, ID3D12Resource*> textures;
 		map<string, ID3D12Resource*> materialLinks;
 
 		//アニメーションで利用
 		int animeNumMax = 0;
-		FbxTime* FrameTime;
-		FbxTime* timeCount;
-		FbxTime* start;
-		FbxTime* stop;
+		FbxTime* FrameTime=nullptr;
+		FbxTime* timeCount = nullptr;
+		FbxTime* start = nullptr;
+		FbxTime* stop = nullptr;
 		int nowAnimeNum = -1;
 		std::vector<FbxMesh*> fMesh;
 
@@ -71,7 +82,7 @@ namespace frauEngine {
 
 		std::vector<MeshData> meshList;
 
-		D3D12_INPUT_ELEMENT_DESC* inputLayout;
+		D3D12_INPUT_ELEMENT_DESC* inputLayout=nullptr;
 
 		//マテリアルのポインタ位置を保存しておく
 		map<std::string, int> materialPointerName;

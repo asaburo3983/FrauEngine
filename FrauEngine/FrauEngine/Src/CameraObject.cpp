@@ -37,8 +37,10 @@ void CameraObject::SetAll(Vector3 _pos, Vector3 _angle) {
 	angle = _angle;
 
 }
-
-void CameraObject::Updata() {
+Vector3 CameraObject::GetScreenPos(Vector3 _pos) {
+	return Camera::GetInstance()->GetScreenPos(_pos);
+}
+void CameraObject::Update() {
 
 	DrawImGUI();
 	if (enable == false) {

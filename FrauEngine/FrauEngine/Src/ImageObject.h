@@ -36,11 +36,13 @@ namespace frauEngine {
 		bool GetTurnLR() { return turnLR; };
 		bool GetTurnUD() { return turnUD; };
 		bool GetCenter() { return center; }
+		UINT GetWidth() { return resource->GetWidth(); };
+		UINT GetHeight() { return resource->GetHeight(); };
 
 		void SetAll(Vector2 _pos = Vector2(0, 0), Vector2 _scale = Vector2(1, 1), float _angle = 0.0f, float _alpha = 1.0f);
 
 		void DrawImGUI();
-		void Updata();
+		void Update();
 		void Draw();
 		bool Hit(int _x, int _y);
 	};

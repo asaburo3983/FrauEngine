@@ -68,9 +68,45 @@
 
 #pragma comment(lib, "DirectXTK12.lib")
 
+
 namespace frauEngine {
 
-	//’è‹`
+
+
+	class Font {
+	
+		int pixelSize = 24;
+		float allSize = 1;
+	public:
+		std::unique_ptr <DirectX::SpriteFont> font;
+		void DrawString(std::string _str = "Test", Vector2 _pos = Vector2{ 0,0 }, float _scale = 1.0f, Color _color = Color{ 0,0,0,1 }, bool _center = false, float _angle = 0);
+		void DrawString(std::string _str, Vector2 _pos , float _scale, Color _color, Vector2  _anchor, float _angle=0);
+		
+		void SetAllSize(float _size) { allSize = _size; }
+	};
+	enum class FontList {
+		MEIRIO,
+		AKAZUKIN,
+		MAX
+	};
+	class Fonts {
+	public:
+		static Fonts* GetInstance()
+		{
+			static Fonts def;
+			return &def;
+		}
+		Font* GetFont(int _fontNum) { 
+				return &font[_fontNum];	
+		}
+	public:
+		Font font[(int)FontList::MAX];
+		const wchar_t* fontPass[(int)FontList::MAX]={
+			L"Data/Font/meirio.spritefont",
+			L"Data/Font/akazukin.spritefont"
+		};
+	};
+
 	class ManagerDXTK {
 	public:
 		static ManagerDXTK* GetInstance()
@@ -84,15 +120,16 @@ namespace frauEngine {
 		void SetImageEX(float ex = 1.0f);
 		float GetImageEX();
 	public:
-		std::unique_ptr<DirectX::SpriteBatch> sprites;
-		std::unique_ptr<DirectX::CommonStates> commonStates;
-		std::unique_ptr<DirectX::GraphicsMemory> graphicsMemory;
+		std::unique_ptr<DirectX::SpriteBatch>		sprites;
+		std::unique_ptr<DirectX::CommonStates>		commonStates;
+		std::unique_ptr<DirectX::GraphicsMemory>	graphicsMemory;
 
+		std::unique_ptr<DirectX::DescriptorHeap>    resourceDescriptors;
+	
 	private:
 		float imageExtend = 1;
 
 	};
-
 	class Image2D {
 	private:
 		

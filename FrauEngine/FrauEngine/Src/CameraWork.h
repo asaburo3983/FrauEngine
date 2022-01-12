@@ -1,17 +1,40 @@
 #pragma once
 
+#include "Application.h"
+
 #include "CameraObject.h"
+#include "Player.h"
 using namespace frauEngine;
 
 class CameraWork {
 private:
-	CameraObject* resource;
+	int moveNumOld = 0;
+	int moveNum = 0;
 
-	Vector3 pos;
+	CameraObject camera;
 	
+	std::vector<Vector3> pos;
+	std::vector <Vector3> target;
+
+
+	float lerpCount = 0.0f;
+	float lerpSpeed = 0.01f;
+
+	bool playerTarget = false;
 public:
-	void Setup(CameraObject* _resource);
-	void Move(Vector3 _stopPos, Vector3 _speed);
+	static CameraWork* GetInstance() {
+		static CameraWork cw;
+		return &cw;
+	}
+	void Initialize();
+	void SetMoveNum(int _moveNum);
+	void SetPlayerTarget(bool _enable) { playerTarget = _enable; }
 	void Updata();
 
+	void SetLerpSpeed(float _speed) { lerpSpeed = _speed; }
+
+	CameraObject* GetCamera() { return &camera;}
+private:
+	void Move();
+	void PlayerTarget();
 };

@@ -5,7 +5,7 @@
 #include "Loading.h"
 #include "Fade.h"
 
-
+#include "MainGameCommonProcess.h"
 using namespace frauEngine;
 
 
@@ -45,12 +45,12 @@ private:
 public:
 
 	void LoadFrontLoad();
-	void LoadInUpdata();
+	void LoadInUpdate();
 	void LoadInDraw();
 
 	void StaticLoad();
 	void Load();
-	void Updata();
+	void Update();
 	void Draw();
 	void DrawNonePostEffect();
 	void UnLoad();

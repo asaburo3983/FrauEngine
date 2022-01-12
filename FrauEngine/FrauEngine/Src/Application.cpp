@@ -62,7 +62,7 @@ void Application::SetSceneList(std::string _str, Scene* _scene) {
 	sceneList[_str] = _scene;
 }
 void frauEngine::Application::Load(Scene* _scene) {
-
+	
 	loadTime = 0;
 	loaded = false;
 
@@ -84,7 +84,7 @@ void frauEngine::Application::Load(Scene* _scene) {
 	loadSceneThread.join();
 }
 void Application::Load(string _nextScene) {
-
+	
 	loadTime = 0;
 	loaded = false;
 
@@ -130,13 +130,16 @@ void frauEngine::Application::Loop() {
 		}
 		UpdateInput();//入力処理更新	
 
-		scene->StartUpdata();
+		Time::GetInstance()->Update();//簡易時間加算用クラスの処理
 
-		scene->Updata();
+		scene->StartUpdate();
+
+		scene->Update();
 
 		scene->Draw();
 		
-		scene->EndUpdata();
+		scene->EndUpdate();
+
 
 		//被写界深度用ブラーテクスチャ
 		if (depthOfField) {
@@ -145,6 +148,8 @@ void frauEngine::Application::Loop() {
 
 			blurEffect.Draw();
 		}
+
+
 		lowApp->DrawOnScreen();
 
 		//被写界深度対応描画
@@ -157,9 +162,10 @@ void frauEngine::Application::Loop() {
 		//ポストエフェクトなしのシーンからの描画
 		scene->DrawNonePostEffect();
 
-		if (frauEngine::LowApplication::GetInstance()->GetDebugMode()) {
+
+		if (LowApplication::GetInstance()->GetDebugMode()) {
 			scene->DrawObjectList();
-			frauEngine::ManagerImGui::GetInstance()->DrawFinish();//ImGUIループ枚処理
+			ManagerImGui::GetInstance()->DrawFinish();//ImGUIループ枚処理
 		}
 		lowApp->DrawFinish();
 		frauEngine::ManagerDXTK::GetInstance()->DrawFinish();
@@ -167,6 +173,7 @@ void frauEngine::Application::Loop() {
 		//シーン移動
 		if (scene->loadScene) {
 			Load(scene->nextScene);
+			scene->loadScene = false;
 		}
 		//終了処理
 		if (scene->gameEnd) {
@@ -196,12 +203,12 @@ void frauEngine::Application::LoadLoop() {
 
 		UpdateInput();//入力処理更新	
 
-		scene->StartUpdata();
+		scene->StartUpdate();
 
-		scene->LoadInUpdata();
+		scene->LoadInUpdate();
 		scene->LoadInDraw();
 
-		scene->EndUpdata();
+		scene->EndUpdate();
 
 		if (depthOfField) {
 			lowApp->DrawOnRenderTargetNoDepth(blurEffect.GetRenderTargetHeap().Get());
@@ -217,8 +224,6 @@ void frauEngine::Application::LoadLoop() {
 		else {
 			postEffect.Draw();
 		}
-		//ポストエフェクトなしのシーンからの描画
-		scene->DrawNonePostEffect();
 
 		lowApp->DrawFinish();
 
@@ -232,12 +237,15 @@ void frauEngine::Application::LoadLoop() {
 	}
 }
 void frauEngine:: Application::LoadScene() {
+	
 	if (loadTime == 0) {
+		
 		if (scene->GetStaticLoad()) {
 			scene->StaticLoad();
 			scene->SetStaticLoadOFF();
 		}
 		scene->Load();//継承したロード
+		
 	}
 	loadTime = 1;
 	loaded = true;

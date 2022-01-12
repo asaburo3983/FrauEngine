@@ -61,9 +61,6 @@ void ShaderResourceBufferHeap::CreateShaderResourceBufferHeap(std::string _fileP
 
 	std::string root_path = _filePath;
 
-	//std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
-	//std::wstring wstr_file_name = cv.from_bytes(_filePath);//‚¢‚ë‚¢‚ëˆ—‚µ‚½‚ª‚ß‚ñ‚Ç‚­‚³‚¢‚Ì‚Åƒtƒ‹ƒpƒX‚ğ“Ë‚Á‚Ş
-
 	// •¶š‰»‚¯‘Îô
 	DirectX::TexMetadata meta{};
 	DirectX::ScratchImage img;

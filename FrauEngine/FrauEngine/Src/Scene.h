@@ -25,8 +25,8 @@ namespace frauEngine {
 		void SetStaticLoadOFF();
 
 		void Init();
-		void StartUpdata();//シーンでの共通処理
-		void EndUpdata();
+		void StartUpdate();//シーンでの共通処理
+		void EndUpdate();
 
 		void SetObjectList(Object* _object, const char* _name);
 		void DrawObjectList();
@@ -34,12 +34,12 @@ namespace frauEngine {
 		void LoadScene(std::string _str);
 
 		virtual void LoadFrontLoad() = 0;
-		virtual void LoadInUpdata() = 0;
+		virtual void LoadInUpdate() = 0;
 		virtual void LoadInDraw() = 0;
 
 		virtual void StaticLoad() = 0;
 		virtual void Load() = 0;
-		virtual void Updata() = 0;
+		virtual void Update() = 0;
 		virtual void Draw() = 0;
 		virtual void DrawNonePostEffect() = 0;
 		virtual void UnLoad() = 0;

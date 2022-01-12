@@ -26,7 +26,7 @@ Sound_MP3* Resource::LoadSound(const char* _filepath) {
 	sound[strEnd] = new frauEngine::Sound_MP3();
 	sound[strEnd]->Load(_filepath);
 
-	return sound[_filepath];
+	return sound[strEnd];
 }
 FBX* Resource::LoadModel(std::string _filepath, std::string _texpath) {
 
@@ -39,7 +39,7 @@ FBX* Resource::LoadModel(std::string _filepath, std::string _texpath) {
 	model[strEnd] = new frauEngine::FBX();
 	model[strEnd]->Load(_filepath, _texpath);
 
-	return model[_filepath];
+	return model[strEnd];
 }
 Effect* Resource::LoadEffect(const char* _filepath) {
 	char16_t ustr[256];
@@ -54,7 +54,7 @@ Effect* Resource::LoadEffect(const char* _filepath) {
 	effect[strEnd] = new frauEngine::Effect();
 	effect[strEnd]->Load(ustr);
 
-	return effect[_filepath];
+	return effect[strEnd];
 }
 Shader* Resource::LoadShader(frauEngine::ShaderType _shaderType, const char* _filepath) {
 
@@ -71,28 +71,38 @@ Shader* Resource::LoadShader(frauEngine::ShaderType _shaderType, const char* _fi
 }
 void Resource::UnLoadIm(std::string _filepath) {
 	auto itr = image.find(_filepath);
-	if (itr != image.end())         // キーの要素が存在している場合
+	if (itr != image.end()) {         // キーの要素が存在している場合
+		delete image[_filepath];
 		image.erase(itr);
+	}
 }
 void Resource::UnLoadSound(std::string _filepath) {
 	auto itr = sound.find(_filepath);
-	if (itr != sound.end())         // キーの要素が存在している場合
+	if (itr != sound.end()) {
+		delete sound[_filepath];
 		sound.erase(itr);
+	}
 }
 void Resource::UnLoadModel(std::string _filepath) {
 	auto itr = model.find(_filepath);
-	if (itr != model.end())         // キーの要素が存在している場合
+	if (itr != model.end()) {
+		delete model[_filepath];
 		model.erase(itr);
+	}
 }
 void Resource::UnLoadEffect(std::string _filepath) {
 	auto itr = effect.find(_filepath);
-	if (itr != effect.end())         // キーの要素が存在している場合
+	if (itr != effect.end()) {
+		delete effect[_filepath];
 		effect.erase(itr);
+	}
 }
 void Resource::UnLoadShader(std::string _filepath) {
 	auto itr = shader.find(_filepath);
-	if (itr != shader.end())         // キーの要素が存在している場合
+	if (itr != shader.end()) {
+		delete shader[_filepath];
 		shader.erase(itr);
+	}
 }
 void Resource::AllDelete() {
 

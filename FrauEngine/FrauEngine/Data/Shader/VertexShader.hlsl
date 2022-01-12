@@ -18,9 +18,11 @@ VS_OUT main(VS_IN input) {
 	pos = input.pos;
 	normal = input.normal;
 
+
 	//í∏ì_ÇÃç¿ïWï‘ä“
 	output.pos = mul(World, pos);
 	output.worldPos = output.pos;
+
 	output.pos = mul(CameraView, output.pos);
 	output.pos = mul(CameraProjection, output.pos);
 

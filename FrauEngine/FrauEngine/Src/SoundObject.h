@@ -27,7 +27,7 @@ namespace frauEngine {
 		float GetVolume() { return volume; };
 
 		void DrawImGUI();
-		void Updata();
+		void Update();
 		void Draw();
 	};
 }

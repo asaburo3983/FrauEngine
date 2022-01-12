@@ -8,10 +8,10 @@ void Scene::Init() {
 	mouse = MouseInput::GetInstance();
 	resource = Resource::GetInstance();
 }
-void Scene::StartUpdata() {
+void Scene::StartUpdate() {
 
 }
-void Scene::EndUpdata() {
+void Scene::EndUpdate() {
 
 }
 
@@ -37,4 +37,5 @@ void Scene::SetStaticLoadOFF() {
 void Scene::LoadScene(std::string _str) {
 	loadScene = true;
 	nextScene = _str;
+	
 }

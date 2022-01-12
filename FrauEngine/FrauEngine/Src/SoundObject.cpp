@@ -50,7 +50,7 @@ void SoundObject::DrawImGUI() {
 
 	ImGui::End();
 }
-void SoundObject::Updata() {
+void SoundObject::Update() {
 	if (enable == false) {
 		Stop();
 		return;

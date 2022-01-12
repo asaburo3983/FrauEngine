@@ -11,7 +11,12 @@
 #include "GallaryPlayer.h"
 
 using namespace frauEngine;
-
+enum class Button {
+	CAMERA,ENABLE,SHADER,POSTEFFECT,MAX
+};
+enum class PreviewShader {
+	PBR,TOON,MAX
+};
 class GallaryScene : public Scene {
 private:
 	Loading loading;
@@ -29,6 +34,19 @@ private:
 	std::vector<SimpleCircleCollider2D> circleCollider;
 	std::vector <SimpleBoxCollider2D> boxColliderEvent;
 
+	ImageObject wideButtonImage[4];
+	ImageObject cameraStrImage;
+	ImageObject enableUIStrImage;
+
+	ImageObject shaderStrImages[2];
+	ImageObject postEffectStrImages[(int)AddPostEffect::MAX];
+
+	ImageObject cameraTutorialStrImage;
+	ImageObject DoFTutorialStrImage;
+	ImageObject skyImage;
+
+	bool enableUI = true;
+
 	bool photoMode = false;
 
 	int shaderNum = 0;
@@ -36,12 +54,12 @@ private:
 public:
 
 	void LoadFrontLoad();
-	void LoadInUpdata();
+	void LoadInUpdate();
 	void LoadInDraw();
 
 	void StaticLoad();
 	void Load();
-	void Updata();
+	void Update();
 	void Draw();
 	void DrawNonePostEffect();
 	void UnLoad();

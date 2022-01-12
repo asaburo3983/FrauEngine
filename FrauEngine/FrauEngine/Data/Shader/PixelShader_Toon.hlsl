@@ -170,7 +170,7 @@ float4 main(VS_OUT input) : SV_TARGET{
        }
    }
    //ソフトシャドウ追加
-   lig *= shadowRate;
+   //lig *= shadowRate;
 
    lig += lig * pointLight;// ポイントライトを加算 //先にPBRの理解を完了させるほうがいい
    lig += lig * spotLight;//スポットライトを加算
@@ -185,7 +185,7 @@ float4 main(VS_OUT input) : SV_TARGET{
        float4 tex_toon = texAnother1.Sample(smp, float2(1.0f - lig.r, 0.5));
        finalColor.xyz *= tex_toon;
    }
-   //finalColor.xyz *= shadowRate;
+   finalColor.xyz *= shadowRate;
    finalColor.a = tex_color.a;
 
    return finalColor;

@@ -1,52 +1,50 @@
 
 #include "TitleScene.h"
 
-
-#include <cmath>
 //ロード前のデータロード　マルチスレッドで使うデータなどの初期化
 void TitleScene::LoadFrontLoad() {
-	//loading.Reset();
+	Loading::GetInstance()->Reset();
 }
 //ロード中の処理
-void TitleScene::LoadInUpdata() {
-	//loading.Updata();
+void TitleScene::LoadInUpdate() {
+	Loading::GetInstance()->Updata();
 }
 void TitleScene::LoadInDraw() {
-	//loading.Draw();
+	Loading::GetInstance()->Draw();
 }
 
 void TitleScene::StaticLoad() {
-	
-	resource->LoadShader(ShaderType::VS, "Data/Shader/VertexShader.hlsl");
-	resource->LoadShader(ShaderType::VS, "Data/Shader/VertexShader_Shadow.hlsl");
 
-	resource->LoadShader(ShaderType::VS, "Data/Shader/VertexShader_Anim.hlsl");
-	resource->LoadShader(ShaderType::VS, "Data/Shader/VertexShader_AnimShadow.hlsl");
+	CommonDataLoad();
 
-	resource->LoadShader(ShaderType::PS, "Data/Shader/PixelShader.hlsl");
-	resource->LoadShader(ShaderType::PS, "Data/Shader/PixelShader_Shadow.hlsl");
-	resource->LoadShader(ShaderType::PS, "Data/Shader/PixelShader_Toon.hlsl");
-
-	resource->LoadModel("Data/Model/Frau/Frau.fbx", "Data/Model/Frau/Tex/");
-	resource->LoadModel("Data/Model/FlowerShop/FlowerShop.fbx", "Data/Model/FlowerShop/Tex/");
+	auto WhiteTex = resource->Image("WhiteTex.png");
+	fade.SetResource(WhiteTex);
+}
 
 
-	titleFront.SetResource(resource->LoadIm("Data/Image/Title/TitleFront.png"));
+void TitleScene::Load() {
+
+
+	//メモリ不足が起こったのでシーン内のメモリは４GBまでに抑えるため、毎回ロード、アンロードする
+	auto TitleFront = resource->LoadIm("Data/Image/Title/TitleFront.png");
+	auto TitleBack = resource->LoadIm("Data/Image/Title/TitleBack.png");
+	auto TitleCursor = resource->LoadIm("Data/Image/Title/TitleCursor.png");
+	auto StartStr = resource->LoadIm("Data/Image/Title/StartStr.png");
+	auto GallaryStr = resource->LoadIm("Data/Image/Title/GallaryStr.png");
+	auto OptionStr = resource->LoadIm("Data/Image/Title/OptionStr.png");
+	auto ExitStr = resource->LoadIm("Data/Image/Title/ExitStr.png");
+
+	titleFront.SetResource(TitleFront);
 	titleFront.SetAll(Vector2(960, 540), Vector2(1, 1), 0, 1);
 
-	titleBack.SetResource(resource->LoadIm("Data/Image/Title/TitleBack.png"));
+	titleBack.SetResource(TitleBack);
 	titleBack.SetAll(Vector2(960, 540), Vector2(1, 1), 0, 1);
 
-	titleCursor.SetResource(resource->LoadIm("Data/Image/Title/TitleCursor.png"));
-
-	titleStr[0].SetResource(resource->LoadIm("Data/Image/Title/StartStr.png"));
-	titleStr[1].SetResource(resource->LoadIm("Data/Image/Title/GallaryStr.png"));
-	titleStr[2].SetResource(resource->LoadIm("Data/Image/Title/OptionStr.png"));
-	titleStr[3].SetResource(resource->LoadIm("Data/Image/Title/ExitStr.png"));
-
-	fade.SetResource(resource->LoadIm("Data/Image/Global/WhiteTex.png"));
-}
-void TitleScene::Load() {
+	titleCursor.SetResource(TitleCursor);
+	titleStr[0].SetResource(StartStr);
+	titleStr[1].SetResource(GallaryStr);
+	titleStr[2].SetResource(OptionStr);
+	titleStr[3].SetResource(ExitStr);
 
 	fade.Reset();
 
@@ -55,19 +53,27 @@ void TitleScene::Load() {
 
 }
 void TitleScene::UnLoad() {
+	resource->UnLoadIm("TitleFront.png");
+	resource->UnLoadIm("TitleBack.png");
+	resource->UnLoadIm("TitleCursor.png");
+	resource->UnLoadIm("StartStr.png");
+	resource->UnLoadIm("GallaryStr.png");
+	resource->UnLoadIm("OptionStr.png");
+	resource->UnLoadIm("ExitStr.png");
 }
 
-void TitleScene::Updata() {
+void TitleScene::Update() {
+
 
 	//選択肢文字画像の位置設定
 	float hitSelect = false;
 	if (fadeOn == false) {
+		//マウスによる選択
 		for (int i = 0; i < (int)TitleStr::MAX; i++) {
 
 			Vector2 pos = Vector2(std::lerp((float)strImageMoveStartX, (float)strImageMoveEndX, strImageLerp[i]), strImageStartY + strImageDistY * i);
 			titleStr[i].SetAll(pos);
-
-			//マウスによる選択
+			
 			if (titleStr[i].Hit(mouse->x, mouse->y)) {
 				cursorNum = i;
 				hitSelect = true;
@@ -88,8 +94,11 @@ void TitleScene::Updata() {
 	titleCursor.SetAll(cursorPos);
 
 	if (mouse->left && hitSelect) {
+
 		fadeOn = true;
+
 	}
+	//scene移動
 	if (sceneMove) {
 		switch (cursorNum) {
 		case (int)TitleStr::START:
@@ -110,7 +119,7 @@ void TitleScene::Updata() {
 }
  
 void TitleScene::Draw() {
-
+	auto app = Application::GetInstance();
 	titleBack.Draw();
 	
 	titleFront.Draw();
@@ -121,6 +130,9 @@ void TitleScene::Draw() {
 		titleStr[i].Draw();
 	}
 
+	app->SetColorMulti();
+
+	
 }
 void TitleScene::DrawNonePostEffect() {
 	if (fadeOn) {

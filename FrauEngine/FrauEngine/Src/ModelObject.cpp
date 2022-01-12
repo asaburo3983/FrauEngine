@@ -3,6 +3,41 @@
 using namespace frauEngine;
 
 ModelObject::~ModelObject() {
+
+	Destroy();
+
+
+
+}
+void ModelObject::Destroy() {
+	if (pipelineState != nullptr) {
+
+		pipelineState->Release();
+		pipelineState = nullptr;
+
+		rootSignature->Release();		
+		rootSignature = nullptr;
+
+		worldBufferHeap.Destroy();
+		boneBufferHeap.Destroy();
+		utilityBufferHeap.Destroy();
+		for (int i = 0; i < meshMax; i++) {
+			pbrBufferHeap[i].Destroy();
+		}
+		delete pbrBufferHeap;
+
+		for (int i = 0; i < (int)frauEngine::ShaderTextureSlot::MODEL_ANOTHER; i++) {
+			for (int h = 0; h < meshMax; h++) {
+				anotherResourceBufferHeap[i][h].Destroy();
+			}					
+		}
+		//for (int i = 0; i < (int)frauEngine::ShaderTextureSlot::MODEL_ANOTHER; i++) {
+		//	if (anotherResourceBufferHeap[i] != NULL) {
+		//		delete  anotherResourceBufferHeap[i];
+		//	}
+		//}
+		resource = nullptr;
+	}
 }
 void ModelObject::SetResource(frauEngine::FBX* _model) {
 	resource = _model;
@@ -68,6 +103,10 @@ void ModelObject::CreatePipeline() {
 
 	gpipelineDesc = lowApp->GetPipelineStateDesc(PipelineType::DEFAULT);//ひな形を入れておく
 
+	//ビルボードの場合１番手前に描画させる
+	if (billboard) {
+		gpipelineDesc.DepthStencilState.DepthEnable = false;
+	}
 	//ポリゴンの面描画の設定
 	gpipelineDesc.RasterizerState.CullMode = cullMode;
 
@@ -167,10 +206,10 @@ void ModelObject::Initialize(frauEngine::FBX* _model,
 	frauEngine::Shader* _shaderD,
 	D3D12_CULL_MODE _cullMode
 ) {
-	
+	Destroy();
 	
 	SetResource(_model);
-	resource;
+
 	SetShader(
 		_shaderV,
 		_shaderP,
@@ -336,13 +375,16 @@ void ModelObject::DrawImGUI() {
 
 	ImGui::End();
 }
-void ModelObject::Updata() {
+void ModelObject::Update() {
 	if (enable == false) {
 		return;
 	}
 }
 
 void ModelObject::Draw() {
+
+	utilityBufferHeap.buffer->time = Time::GetInstance()->GetTime();
+
 	DrawImGUI();
 	if (enable == false) {
 		return;
@@ -354,8 +396,17 @@ void ModelObject::Draw() {
 	DirectX::XMMATRIX rotate_x = DirectX::XMMatrixRotationX(DirectX::XMConvertToRadians(angle.X));
 	DirectX::XMMATRIX rotate_y = DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(angle.Y));
 	DirectX::XMMATRIX rotate_z = DirectX::XMMatrixRotationZ(DirectX::XMConvertToRadians(angle.Z));
-	worldBufferHeap.buffer->world = scale_mat * rotate_z * rotate_x * rotate_y * translate;
-
+	if (billboard == false) {
+		worldBufferHeap.buffer->world = scale_mat * rotate_z * rotate_x * rotate_y * translate;
+	}
+	else {
+		DirectX::XMMATRIX view=Camera::GetInstance()->GetView();
+		view = DirectX::XMMatrixInverse(nullptr, view);
+		view.r[3].m128_f32[0]=0.0f;
+		view.r[3].m128_f32[1]=0.0f;
+		view.r[3].m128_f32[2]=0.0f;
+		worldBufferHeap.buffer->world = scale_mat * rotate_z * rotate_x * rotate_y * view *  translate;
+	}
 	if (anime&& resource->GetAnimeNumMax()) {
 
 		//ここがアニメーションを設定している

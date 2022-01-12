@@ -80,7 +80,7 @@ void EffectObject::DrawImGUI() {
 
 
 }
-void EffectObject::Updata() {
+void EffectObject::Update() {
 	if (enable == false) {
 		return;
 	}
