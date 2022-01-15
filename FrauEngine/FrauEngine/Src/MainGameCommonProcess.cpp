@@ -136,6 +136,7 @@ void StaticClassSetting() {
 	auto normalUI = NormalUI::GetInstance();
 	auto item = Item::GetInstance();
 	auto planterSystem = PlanterSystem::GetInstance();
+	auto nextDay = NextDay::GetInstance();
 
 	eventManager->Initialize();
 	stage->Initialize();
@@ -148,6 +149,7 @@ void StaticClassSetting() {
 	normalUI->Initialize();
 	item->Initialize("Data/ItemCSV/ItemList.csv");
 	planterSystem->Initialize();
+	nextDay->Initialize();
 }
 void CommonDataLoad() {
 	auto rc = Resource::GetInstance();
@@ -169,6 +171,7 @@ void CommonUpdate() {
 	auto item = Item::GetInstance();
 	auto normalUI = NormalUI::GetInstance();
 	auto planterSystem = PlanterSystem::GetInstance();
+	auto nextDay = NextDay::GetInstance();
 
 	player->Update();
 	stage->Update();
@@ -179,6 +182,7 @@ void CommonUpdate() {
 	item->Update();
 	normalUI->Update();
 	planterSystem->Update();
+	nextDay->Update();
 }
 
 void CommonDraw() {
@@ -190,6 +194,7 @@ void CommonDraw() {
 	auto player = Player::GetInstance();
 	auto stage = Stage::GetInstance();
 	auto planterSystem = PlanterSystem::GetInstance();
+	auto nextDay = NextDay::GetInstance();
 
 	//影の描画
 	lowApp->DrawOnDepth(Lights::GetInstance()->depthHeap, Lights::GetInstance()->shadowTexSize);
@@ -205,7 +210,7 @@ void CommonDraw() {
 	player->Draw();
 	player->DrawBillBoard();
 
-	
+	nextDay->Draw();
 	//ポストエフェクト用の処理
 	app->SetDepthOfField(true);
 	app->SetAddEffect((int)AddPostEffect::BLUR);
@@ -221,6 +226,7 @@ void CommonDrawNonePostEffect() {
 	auto app = Application::GetInstance();
 	auto normalUI = NormalUI::GetInstance();
 	auto planterSystem = PlanterSystem::GetInstance();
+	auto nextDay = NextDay::GetInstance();
 
 	normalUI->Draw();
 
@@ -232,7 +238,7 @@ void CommonDrawNonePostEffect() {
 
 
 
-	app->SetColorMulti(Color(1.0f - eventManager->GetFadeCount()));
+	app->SetColorMulti(Color(1.0f - eventManager->GetFadeCount()-nextDay->GetFade()));
 
 	ImGui::Begin("FPS");                          //ウィンドウ名になる
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);

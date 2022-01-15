@@ -1,6 +1,7 @@
 #pragma once
 #include "Application.h"
 #include "Objects.h"
+#include "NovelSystem.h"
 
 using namespace frauEngine;
 
@@ -20,8 +21,8 @@ public:
 	void Update();
 	void Draw();
 
-	bool GetUsed(int _num) { return used[_num]; }
 	float GetAlpha() { return alpha; }
+	bool GetEnd(int _num) { return end[_num]; }
 private:
 	void LoadPage(std::string* strs);
 	void TurnPage();
@@ -32,6 +33,7 @@ private:
 
 	bool enable = false;
 	bool used[TUTORIAL_MAX];
+	bool end[TUTORIAL_MAX];
 	CSV csv[TUTORIAL_MAX];
 
 

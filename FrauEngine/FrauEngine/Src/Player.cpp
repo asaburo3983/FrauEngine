@@ -112,17 +112,47 @@ void Player::Update() {
 		Collision();
 	}
 }
+#include "PlanterSystem.h"
+
 void Player::AnimationControl() {
-	if (KEY->key[DIK_A] > 0 ||
-		KEY->key[DIK_D] > 0 ||
-		KEY->key[DIK_W] > 0 ||
-		KEY->key[DIK_S] > 0) {
-		model.SetAnimeNum(2);
-		model.SetAnimeSpeed(0.4f);
+
+	//しゃがみモーション
+	auto planter = PlanterSystem::GetInstance();
+	if (planter->GetEnable()) {
+		if (sitAnimCount < sitAnimCountMax) {
+			model.SetAnimeNum(3);
+			model.SetAnimeSpeed(0.3f);
+			sitAnimCount++;
+		}
+		else {
+			model.SetAnimeNum(4);
+			model.SetAnimeSpeed(0.3f);
+		}
 	}
 	else {
-		model.SetAnimeNum(1);
-		model.SetAnimeSpeed(0.3f);
+		if (sitAnimCount>0) {			
+			if (model.GetAnimeNum() == 4) {
+				model.SetAnimeNum(3);
+				model.SetAnimeSpeed(-0.3f);
+				model.SetAnimeTime(sitAnimCountMax * 0.3);
+			}
+			sitAnimCount--;
+		}
+		else {
+			//歩きモーション
+			if (KEY->key[DIK_A] > 0 ||
+				KEY->key[DIK_D] > 0 ||
+				KEY->key[DIK_W] > 0 ||
+				KEY->key[DIK_S] > 0) {			
+				model.SetAnimeNum(2);
+				model.SetAnimeSpeed(0.4f);
+			}
+			//待機モーション
+			else {			
+				model.SetAnimeNum(1);
+				model.SetAnimeSpeed(0.3f);
+			}
+		}
 	}
 }
 void Player::Move() {

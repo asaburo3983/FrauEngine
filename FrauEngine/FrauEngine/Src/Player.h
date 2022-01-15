@@ -40,6 +40,8 @@ private:
 	float moveSpeed;
 	float rotaSpeed;
 
+	int sitAnimCount = 0;
+	const int sitAnimCountMax = 60;
 public:
 	static Player* GetInstance() {
 		static Player player;
@@ -60,6 +62,7 @@ public:
 	void IsCollision(bool _enable) { isCollision = _enable; }
 
 	void SetPos(Vector3 _pos) { model.SetPos(_pos); }
+	void SetAngle(Vector3 _angle) { model.SetAngle(_angle); }
 	Vector3 GetPos() { return model.GetPos(); }
 	Vector3 GetPosOld(){ return posOld; }
 	int GetEventNum(){ return eventNum; }

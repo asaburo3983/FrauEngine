@@ -3,12 +3,14 @@
 
 void EventManager::Initialize() {
 	days = 1;
-
 	fade = false;
 	fadeSpeed = 0.05f;
 	fadeCount = 0.0f;
 }
 void EventManager::StartDays() {
+	if (!isStartDays) {
+		return;
+	}
 	//日にちが変わった時だけに発生するイベント
 	Player* player = Player::GetInstance();
 	NovelSystem* novelSystem = NovelSystem::GetInstance();
@@ -18,19 +20,34 @@ void EventManager::StartDays() {
 	switch (days) {
 	case 1:
 		player->SetPos(Vector3(4.5, -3.9, 5.0));
+		player->SetAngle(Vector3(0, 270, 0));
 		novelSystem->SetEnable(true, 0);
 		camera->SetMoveNum(1);
 		item->AddItem("マジックプランター", 1);//追加
+		if (LowApplication::GetInstance()->GetDebugMode()) {
+			item->AddItem("マジックプランター", 2);//追加
+			item->AddItem("マソハーブの種", 10);//追加
+			item->AddItem("タネポポの種", 10);//追加
+			item->AddItem("ベランダーの種", 10);//追加
+			item->AddItem("パンダジーの種", 10);//追加
+			item->AddItem("バララバの種", 10);//追加
+			item->AddItem("シュガーステムの種", 10);//追加
+			item->AddItem("コスモの種", 10);//追加
+
+		}
+
 		break;
 	case 2:
-		novelSystem->EndNovel();
 		break;
 	}
 	
 	isStartDays = false;
 }
-void EventManager::EndDays() {
+void EventManager::AddDays() {
 	days++;
+}
+void EventManager::EndDays() {
+	isStartDays = true;
 }
 void EventManager::FieldEvent() {
 	Player* player = Player::GetInstance();
@@ -39,6 +56,7 @@ void EventManager::FieldEvent() {
 	auto handyShop = HandyShop::GetInstance();
 	auto magicShop = MagicShop::GetInstance();
 	auto palnterSystem = PlanterSystem::GetInstance();
+	auto nextDay = NextDay::GetInstance();
 
 	int eventNum = player->GetEventNum();
 
@@ -57,6 +75,10 @@ void EventManager::FieldEvent() {
 			palnterSystem->SetEnable(true);
 			break;
 		case (int)EventNum::OPEN_SHOP:
+			//日付をまたぐ処理、確認入れる
+			if (nextDay->GetProcessEnable() == false) {
+				nextDay->SetEnable(true);
+			}
 			break;
 		case (int)EventNum::BUY_HANDYSHOP:
 			if (handyShop->GetEnable() == false) {
@@ -111,28 +133,48 @@ void EventManager::FieldEvent() {
 	}
 
 }
+void EventManager::JoinTutorial() {
+	NovelSystem* novelSystem = NovelSystem::GetInstance();
+	TutorialSystem* tutorialSystem = TutorialSystem::GetInstance();
+	Player* player = Player::GetInstance();
+	Stage* stage = Stage::GetInstance();
 
+	//マップ移動をしたときに表示するチュートリアル
+	switch (stage->GetStageNum()) {
+	case (int)StageNum::FLOWER_SHOP:
+		//操作方法のチュートリアル
+		tutorialSystem->SetEnable(true, 0);
+		//インベントリの開き方のチュートリアル
+		if (tutorialSystem->GetEnd(0)) {
+			tutorialSystem->SetEnable(true, 1);
+		}
+		//プランターの使い方チュートリアル
+		if (tutorialSystem->GetEnd(1)) {
+			tutorialSystem->SetEnable(true, 2);
+		}
+
+		break;
+	case (int)StageNum::MAP:
+		break;
+	case (int)StageNum::HANDY_SHOP:
+	case (int)StageNum::MAGIC_SHOP:
+		//ショップシステムのチュートリアル	
+		tutorialSystem->SetEnable(true, 3);
+		break;
+	}
+
+}
 void EventManager::Update() {
 	CameraWork* camera = CameraWork::GetInstance();
 	NovelSystem* novelSystem = NovelSystem::GetInstance();
 	TutorialSystem* tutorialSystem = TutorialSystem::GetInstance();
 	Stage* stage = Stage::GetInstance();
 
-	bool events = true;
-	if (events) {
-		if (isStartDays) {
-			StartDays();
-		}
-		switch (days) {
-		case 1:
-			//ノベルが終了していて０番のチュートリアルが１度も行われていないとき０番のチュートリアルを行う
-			if (novelSystem->GetEnable() == false && tutorialSystem->GetUsed(0) == false) {
-				tutorialSystem->SetEnable(true, 0);
-			}
-			break;
-		}
-	}
-	
+
+	StartDays();
+
+	JoinTutorial();
+
 	FieldEvent();
 
 	//マップの時のみカメラは追従させる

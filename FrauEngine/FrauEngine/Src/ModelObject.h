@@ -115,7 +115,7 @@ namespace frauEngine {
 		void SetAnime(bool _anime);
 		void SetAnimeNum(int _animeNum);
 		void SetAnimeSpeed(float _animeSpeed);
-
+		void SetAnimeTime(int _frame);
 		void SetAllAnimeState(bool _anime, int _animeNum, float _animeSpeed);
 
 		

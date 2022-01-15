@@ -31,11 +31,6 @@ void ModelObject::Destroy() {
 				anotherResourceBufferHeap[i][h].Destroy();
 			}					
 		}
-		//for (int i = 0; i < (int)frauEngine::ShaderTextureSlot::MODEL_ANOTHER; i++) {
-		//	if (anotherResourceBufferHeap[i] != NULL) {
-		//		delete  anotherResourceBufferHeap[i];
-		//	}
-		//}
 		resource = nullptr;
 	}
 }
@@ -326,6 +321,11 @@ void ModelObject::SetAnimeNum(int _animeNum) {
 		return;
 	}
 	animeNum = _animeNum;
+	//デフォルトではアニメーションを変化させるとフレームも０にする
+	if (animeNum != animeNumOld) {
+		animeNumOld = animeNum;//古いアニメ番号を保存
+		animeCount = 0;//アニメの時間を最初のフレームにする
+	}
 }
 
 void ModelObject::SetAnimeSpeed(float _animeSpeed) {
@@ -344,7 +344,15 @@ void ModelObject::SetAllAnimeState(bool _anime, int _animeNum, float _animeSpeed
 	SetAnimeSpeed(_animeSpeed);
 
 }
-
+void ModelObject::SetAnimeTime(int _frame) {
+	if (_frame < 0) {
+		_frame = 0;
+	}
+	if (_frame > resource->GetAnimeTimeMax(animeNum)) {
+		_frame = resource->GetAnimeTimeMax(animeNum);
+	}
+	animeCount = _frame;
+}
 void ModelObject::DrawImGUI() {
 
 	if (imgui == false) {
@@ -409,17 +417,17 @@ void ModelObject::Draw() {
 	}
 	if (anime&& resource->GetAnimeNumMax()) {
 
-		//ここがアニメーションを設定している
-		if (animeNum != animeNumOld) {
-			animeNumOld = animeNum;//古いアニメ番号を保存
-			animeCount = 0;
-		}
 		//FBXリソース側でボーンマトリクスの代入を行う
 		resource->GetBoneMatrix(boneBufferHeap.buffer, animeNum, (int)animeCount);
 		//時間経過
 		animeCount += animeSpeed;
+		//ループ
 		if (animeCount >= resource->GetAnimeTimeMax(animeNum)) {
 			animeCount = 0;
+		}
+		//逆ループ
+		if (animeCount < 0 ) {
+			animeCount = resource->GetAnimeTimeMax(animeNum)-1;
 		}
 	}
 	//GPUに必要なデータを送って描画する

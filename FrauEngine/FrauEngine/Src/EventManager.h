@@ -14,6 +14,7 @@
 #include "MagicShop.h"
 #include "Item.h"
 #include "PlanterSystem.h"
+#include "NextDay.h"
 
 class EventManager {
 public:
@@ -36,7 +37,10 @@ public:
 	int GetDays() { return days; }
 
 	void StartDays();
+	void AddDays();
 	void EndDays();
+
+	void JoinTutorial();
 
 	float GetFadeCount() { return fadeCount; }
 private:
@@ -51,4 +55,5 @@ private:
 	bool fade = false;
 	float fadeSpeed = 0.05f;
 	float fadeCount = 0.0f;
+
 };

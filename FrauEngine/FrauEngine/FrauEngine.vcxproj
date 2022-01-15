@@ -192,6 +192,7 @@
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\MainGameCommonProcess.cpp" />
     <ClCompile Include="Src\MapScene.cpp" />
+    <ClCompile Include="Src\NextDay.cpp" />
     <ClCompile Include="Src\NormalUI.cpp" />
     <ClCompile Include="Src\PlanterSystem.cpp" />
     <ClCompile Include="Src\Shop.cpp" />
@@ -240,6 +241,7 @@
     <ClInclude Include="Src\MagicShopScene.h" />
     <ClInclude Include="Src\MainGameCommonProcess.h" />
     <ClInclude Include="Src\MapScene.h" />
+    <ClInclude Include="Src\NextDay.h" />
     <ClInclude Include="Src\NormalUI.h" />
     <ClInclude Include="Src\PlanterSystem.h" />
     <ClInclude Include="Src\Shop.h" />

@@ -39,7 +39,7 @@ public:
 	}
 	void AddItem(std::string str, int _add) {
 		item[str] += _add;
-		//TODO ひどい処理なので余裕のある時に直す
+		//TODO　itemをマップで持つのはひどい処理なので余裕のある時に直す
 		for (int i = 0; i < 19; i++) {
 			int tmp = GetItemNum(i);
 			if (tmp > 0) {

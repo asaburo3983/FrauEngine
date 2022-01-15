@@ -15,6 +15,7 @@
 #include "TutorialSystem.h"
 #include "NormalUI.h"
 #include "PlanterSystem.h"
+#include "NextDay.h"
 
 using namespace frauEngine;
 

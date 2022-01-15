@@ -246,7 +246,7 @@ void Image2D::Draw(int _x,int _y,float _scaleX,float _scaleY,float _angle,float 
 		, GetTextureSize(texture.Get()),
 		XMFLOAT2(x, y),
 		rect,
-		DirectX::Colors::White * _alpha,
+		DirectX::Colors::White * _alpha * def->GetAllImageMultiAlpha(),
 		_angle / 180.0 * 3.1415,
 		DirectX::SimpleMath::Vector2(width / 2, height / 2) * _center,
 		XMFLOAT2(scaleX,scaleY),

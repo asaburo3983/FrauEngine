@@ -119,6 +119,12 @@ namespace frauEngine {
 		void DrawFinish();
 		void SetImageEX(float ex = 1.0f);
 		float GetImageEX();
+		float GetAllImageMultiAlpha() {
+			return allImageMultiAlpha;
+		}
+		void SetAllImageMultiAlpha(float _alpha) {
+			allImageMultiAlpha = _alpha;
+		}
 	public:
 		std::unique_ptr<DirectX::SpriteBatch>		sprites;
 		std::unique_ptr<DirectX::CommonStates>		commonStates;
@@ -128,7 +134,7 @@ namespace frauEngine {
 	
 	private:
 		float imageExtend = 1;
-
+		float allImageMultiAlpha = 1.0f;
 	};
 	class Image2D {
 	private:

@@ -30,6 +30,26 @@ namespace frauEngine {
 
 		bool GetEnable() { return enable; };
 		Vector2 GetPos() { return pos; };
+		Vector2 GetPosLerp(Vector2 _lerp) {
+			Vector2 ret;
+			float minX = pos.X - (float)GetWidth() / 2.0 * scale.X;
+			float maxX = pos.X + (float)GetWidth() / 2.0 * scale.X;
+
+			float minY = pos.Y - (float)GetHeight() / 2.0 * scale.Y;		
+			float maxY = pos.Y + (float)GetHeight() / 2.0 * scale.Y;
+
+			if (center == false) {
+				minX = pos.X;
+				minY = pos.Y;
+				maxX = pos.X + GetWidth() * scale.X;
+				maxY = pos.Y + GetHeight() * scale.Y;
+			}
+
+			ret.X = std::lerp(minX, maxX, _lerp.X);
+			ret.Y = std::lerp(minY, maxY, _lerp.Y);
+
+			return ret;
+		}
 		Vector2 GetScale() { return scale; };
 		float GetAngle() { return angle; };
 		float GetAlpha() { return alpha; };

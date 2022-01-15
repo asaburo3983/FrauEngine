@@ -169,6 +169,9 @@
     <Filter Include="ソース ファイル\InGame\Scenes\Class\PlanterSystem">
       <UniqueIdentifier>{b0308dad-e33f-4391-a46c-f96c4b348db5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\InGame\Scenes\Class\NextDay">
+      <UniqueIdentifier>{45df4bbe-c154-481a-9a08-34de1b1e387f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\imgui.cpp">
@@ -350,6 +353,9 @@
     </ClCompile>
     <ClCompile Include="Src\PlanterSystem.cpp">
       <Filter>ソース ファイル\InGame\Scenes\Class\PlanterSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\NextDay.cpp">
+      <Filter>ソース ファイル\InGame\Scenes\Class\NextDay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -541,6 +547,9 @@
     </ClInclude>
     <ClInclude Include="Src\PlanterSystem.h">
       <Filter>ソース ファイル\InGame\Scenes\Class\PlanterSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\NextDay.h">
+      <Filter>ソース ファイル\InGame\Scenes\Class\NextDay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

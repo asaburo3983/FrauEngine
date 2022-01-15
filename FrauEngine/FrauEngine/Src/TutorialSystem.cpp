@@ -12,11 +12,21 @@ void TutorialSystem::Initialize() {
 
 }
 void TutorialSystem::SetEnable(bool _enable, int _num) {
-	enable = _enable;
-	num = _num;
-	page = 1;
-	LoadPage(text);
-	used[num] = true;
+	auto novel = NovelSystem::GetInstance();
+	if (_enable && used[num] == false && novel->GetEnable() == false) {
+		enable = _enable;
+		num = _num;
+		page = 1;
+		LoadPage(text);
+		used[num] = true;
+	}
+	else if (_enable == false) {
+		enable = _enable;
+		num = _num;
+		page = 1;
+		LoadPage(text);
+		end[num] = true;
+	}
 }
 void TutorialSystem::LoadPage(string* strs) {
 	for (int i = 0; i < ROW_MAX; i++) {
