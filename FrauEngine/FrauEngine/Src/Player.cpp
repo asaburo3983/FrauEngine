@@ -1,6 +1,7 @@
 
 #include "Player.h"
-
+#include "PlanterSystem.h"
+#include "SoundManager.h"
 
 Player::Player() {
 	KEY = KeyInput::GetInstance();
@@ -112,9 +113,10 @@ void Player::Update() {
 		Collision();
 	}
 }
-#include "PlanterSystem.h"
+
 
 void Player::AnimationControl() {
+	auto sound = SoundManager::GetInstance();
 
 	//しゃがみモーション
 	auto planter = PlanterSystem::GetInstance();
@@ -146,11 +148,18 @@ void Player::AnimationControl() {
 				KEY->key[DIK_S] > 0) {			
 				model.SetAnimeNum(2);
 				model.SetAnimeSpeed(0.4f);
+				
+				walkSoundCount++;
+				if (walkSoundCount > walkSoundCountMax) {
+					walkSoundCount = 0;
+					sound->GetSE(SoundList_SE::WALK)->Play();
+				}
 			}
 			//待機モーション
 			else {			
 				model.SetAnimeNum(1);
 				model.SetAnimeSpeed(0.3f);
+				walkSoundCount = 0;
 			}
 		}
 	}

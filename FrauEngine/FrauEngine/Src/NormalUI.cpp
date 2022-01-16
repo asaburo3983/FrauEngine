@@ -70,6 +70,11 @@ void NormalUI::Update() {
 		inventory = !inventory;
 		selectItemNum = 0;
 	}
+	//閉じるときだけ右クリックでもできる
+	if (mouse->right == 1&& inventory == true) {
+			inventory = false;
+			selectItemNum = 0;
+	}
 	//フェード処理
 	if (inventory) {
 		if (inventoryAlpha < 1.0f) {

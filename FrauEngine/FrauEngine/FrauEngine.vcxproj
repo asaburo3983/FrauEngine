@@ -197,6 +197,7 @@
     <ClCompile Include="Src\PlanterSystem.cpp" />
     <ClCompile Include="Src\Shop.cpp" />
     <ClCompile Include="Src\SlopeCollider.cpp" />
+    <ClCompile Include="Src\SoundManager.cpp" />
     <ClCompile Include="Src\Stage.cpp" />
     <ClCompile Include="Src\MaterialLinkerData.cpp" />
     <ClCompile Include="Src\ModelObject.cpp" />
@@ -246,6 +247,7 @@
     <ClInclude Include="Src\PlanterSystem.h" />
     <ClInclude Include="Src\Shop.h" />
     <ClInclude Include="Src\SlopeCollider.h" />
+    <ClInclude Include="Src\SoundManager.h" />
     <ClInclude Include="Src\Stage.h" />
     <ClInclude Include="Src\ConstantBuffer.h" />
     <ClInclude Include="Src\DXTK.h" />

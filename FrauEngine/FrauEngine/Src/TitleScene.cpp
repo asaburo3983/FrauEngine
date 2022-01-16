@@ -63,7 +63,8 @@ void TitleScene::UnLoad() {
 }
 
 void TitleScene::Update() {
-
+	auto sound = SoundManager::GetInstance();
+	sound->GetBGM(SoundList_BGM::TITLE)->Play();
 
 	//‘I‘ðŽˆ•¶Žš‰æ‘œ‚ÌˆÊ’uÝ’è
 	float hitSelect = false;
@@ -94,12 +95,13 @@ void TitleScene::Update() {
 	titleCursor.SetAll(cursorPos);
 
 	if (mouse->left && hitSelect) {
-
+		sound->GetSE(SoundList_SE::ENTER)->Play();
 		fadeOn = true;
 
 	}
 	//sceneˆÚ“®
 	if (sceneMove) {
+		sound->GetBGM(SoundList_BGM::TITLE)->Stop();
 		switch (cursorNum) {
 		case (int)TitleStr::START:
 			LoadScene("FlowerShop");
@@ -108,7 +110,6 @@ void TitleScene::Update() {
 			LoadScene("Gallary");
 			break;
 		case (int)TitleStr::OPTION:
-
 			break;
 		case (int)TitleStr::EXIT:
 			gameEnd = true;
@@ -120,6 +121,10 @@ void TitleScene::Update() {
  
 void TitleScene::Draw() {
 	auto app = Application::GetInstance();
+	
+
+	
+
 	titleBack.Draw();
 	
 	titleFront.Draw();

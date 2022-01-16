@@ -61,7 +61,7 @@ private:
 	PointLightParam		  pointLightParam[POINT_LIGHT];
 	SpotLightParam		  spotLightParam[SPOT_LIGHT];
 
-	int stageNumOld = 0;
+	int stageNumOld = -1;
 	int stageNum;
 public:
 	void Initialize();

@@ -13,11 +13,45 @@ void SoundObject::SetLoop(bool _loop) {
 }
 void SoundObject::SetVolume(float _volume) {
 	if (imgui == true) {
-		resource->Volume(volume);
+		resource->Volume(volume * volumeMulti);
 		return;
 	}
 	volume = _volume;
-	resource->Volume(volume);
+	resource->Volume(volume * volumeMulti);
+}
+void SoundObject::AddVolume(float _volume) {
+	if (imgui == true) {
+		resource->Volume(volume * volumeMulti);
+		return;
+	}
+	if (_volume > 0 && volume < 1.0f) {
+		volume += _volume;
+	}
+	else if (_volume < 0 && volume > 0) {
+		volume += _volume;
+	}
+	resource->Volume(volume * volumeMulti);
+}
+void SoundObject::SetVolumeMulti(float _volume) {
+	if (imgui == true) {
+		resource->Volume(volume * volumeMulti);
+		return;
+	}
+	volumeMulti = _volume;
+	resource->Volume(volume * volumeMulti);
+}
+void SoundObject::AddVolumeMulti(float _volume) {
+	if (imgui == true) {
+		resource->Volume(volume * volumeMulti);
+		return;
+	}
+	if (_volume > 0 && volumeMulti < 1.0f) {
+		volumeMulti += _volume;
+	}
+	else if(_volume < 0 && volumeMulti > 0){
+		volumeMulti += _volume;
+	}
+	resource->Volume(volume * volumeMulti);
 }
 void SoundObject::SetAll(bool _loop, float _volume) {
 	if (imgui == true) {

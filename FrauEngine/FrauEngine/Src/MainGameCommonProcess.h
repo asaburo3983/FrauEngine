@@ -16,6 +16,7 @@
 #include "NormalUI.h"
 #include "PlanterSystem.h"
 #include "NextDay.h"
+#include "SoundManager.h"
 
 using namespace frauEngine;
 

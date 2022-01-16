@@ -1,4 +1,5 @@
 #include "Shop.h"
+#include "SoundManager.h"
 
 void Shop::SetEnable(bool _enable) {
 	auto player = Player::GetInstance();
@@ -125,7 +126,7 @@ void Shop::SelectBuyNum() {
 void Shop::Buy() {
 	auto mouse = MouseInput::GetInstance();
 	auto item = Item::GetInstance();
-
+	auto sound = SoundManager::GetInstance();
 	if (mouse->left == 1) {
 		if (buyButton.Hit(mouse->x, mouse->y)) {
 			if (item->GetMoney() < allPrice) {
@@ -137,6 +138,7 @@ void Shop::Buy() {
 				item->AddItem(itemName[selectNum], buyNum);
 				item->AddMoney(-allPrice);
 				state = State::BUY;
+				sound->GetSE(SoundList_SE::BUY)->Play();;
 			}
 
 		}

@@ -110,6 +110,13 @@ void LoadIm() {
 	//チュートリアル関連
 	rc->LoadIm("Data/Image/Tutorial/TutorialFrame.png");
 
+	rc->LoadIm("Data/Image/Tutorial/Tutorial0_0.png");
+	rc->LoadIm("Data/Image/Tutorial/Tutorial0_1.png");
+	rc->LoadIm("Data/Image/Tutorial/Tutorial1_0.png");
+	rc->LoadIm("Data/Image/Tutorial/Tutorial2_0.png");
+	rc->LoadIm("Data/Image/Tutorial/Tutorial2_1.png");
+	rc->LoadIm("Data/Image/Tutorial/Tutorial3_0.png");
+
 	//ノーマルUI関連
 	rc->LoadIm("Data/Image/NormalUI/DayBase.png");
 	
@@ -123,6 +130,25 @@ void LoadIm() {
 }
 void LoadSound() {
 	auto rc = Resource::GetInstance();
+	//BGM
+	rc->LoadSound("Data/Sound/BGM/Title_BGM.mp3");
+	rc->LoadSound("Data/Sound/BGM/FlowerShop_BGM.mp3");
+	rc->LoadSound("Data/Sound/BGM/Map_BGM.mp3");
+	rc->LoadSound("Data/Sound/BGM/HandyShop_BGM.mp3");
+	rc->LoadSound("Data/Sound/BGM/MagicShop_BGM.mp3");
+	rc->LoadSound("Data/Sound/BGM/HappyEnd_BGM.mp3");
+	rc->LoadSound("Data/Sound/BGM/BadEnd_BGM.mp3");
+	rc->LoadSound("Data/Sound/BGM/ShindyTheme_BGM.mp3");
+	rc->LoadSound("Data/Sound/BGM/HandyTheme_BGM.mp3");
+	//SE
+	rc->LoadSound("Data/Sound/SE/Buy_SE.mp3");
+	rc->LoadSound("Data/Sound/SE/Cancel_SE.mp3");
+	rc->LoadSound("Data/Sound/SE/CursorMove_SE.mp3");
+	rc->LoadSound("Data/Sound/SE/Door_SE.mp3");
+	rc->LoadSound("Data/Sound/SE/Enter_SE.mp3");
+	rc->LoadSound("Data/Sound/SE/Morning_SE.mp3");
+	rc->LoadSound("Data/Sound/SE/Walk_SE.mp3");
+	
 }
 void StaticClassSetting() {
 	Player* player = Player::GetInstance();
@@ -137,6 +163,7 @@ void StaticClassSetting() {
 	auto item = Item::GetInstance();
 	auto planterSystem = PlanterSystem::GetInstance();
 	auto nextDay = NextDay::GetInstance();
+	auto soundManager = SoundManager::GetInstance();
 
 	eventManager->Initialize();
 	stage->Initialize();
@@ -150,6 +177,7 @@ void StaticClassSetting() {
 	item->Initialize("Data/ItemCSV/ItemList.csv");
 	planterSystem->Initialize();
 	nextDay->Initialize();
+	soundManager->Initialize();
 }
 void CommonDataLoad() {
 	auto rc = Resource::GetInstance();
@@ -158,6 +186,7 @@ void CommonDataLoad() {
 	LoadIm();
 	LoadShader();
 	LoadModel();
+	LoadSound();
 
 	StaticClassSetting();
 }
@@ -173,6 +202,11 @@ void CommonUpdate() {
 	auto planterSystem = PlanterSystem::GetInstance();
 	auto nextDay = NextDay::GetInstance();
 
+	auto sound = SoundManager::GetInstance();
+
+
+
+
 	player->Update();
 	stage->Update();
 	camera->Updata();
@@ -183,6 +217,62 @@ void CommonUpdate() {
 	normalUI->Update();
 	planterSystem->Update();
 	nextDay->Update();
+
+	//BGM
+	if (novelSystem->GetEnable()) {
+		//BGMを再生する
+		switch (stage->GetStageNum()) {
+		case (int)StageNum::FLOWER_SHOP:
+			sound->StopFade(SoundList_BGM::FLOWER_SHOP);
+			break;
+		case (int)StageNum::HANDY_SHOP:
+			sound->StopFade(SoundList_BGM::HANDY_SHOP);
+			break;
+		case (int)StageNum::MAGIC_SHOP:
+			sound->StopFade(SoundList_BGM::MAGIC_SHOP);
+			break;
+		case (int)StageNum::MAP:
+			sound->StopFade(SoundList_BGM::MAP);
+			break;
+		}
+	}
+	else {
+		//BGMを再生する
+		switch (stage->GetStageNum()) {
+		case (int)StageNum::FLOWER_SHOP:
+			sound->PlayFade(SoundList_BGM::FLOWER_SHOP);
+			break;
+		case (int)StageNum::HANDY_SHOP:
+			sound->PlayFade(SoundList_BGM::HANDY_SHOP);
+			break;
+		case (int)StageNum::MAGIC_SHOP:
+			sound->PlayFade(SoundList_BGM::MAGIC_SHOP);
+			break;
+		case (int)StageNum::MAP:
+			sound->PlayFade(SoundList_BGM::MAP);
+			break;
+		}
+		//BGMを止める
+		switch (stage->GetStageNumOld()) {
+		case (int)StageNum::FLOWER_SHOP:
+			if (stage->GetStageNumOld() != stage->GetStageNum()) {
+				sound->StopFade(SoundList_BGM::FLOWER_SHOP);
+			}
+			break;
+		case (int)StageNum::HANDY_SHOP:
+			sound->StopFade(SoundList_BGM::HANDY_SHOP);
+			break;
+		case (int)StageNum::MAGIC_SHOP:
+			sound->StopFade(SoundList_BGM::MAGIC_SHOP);
+			break;
+		case (int)StageNum::MAP:
+			sound->StopFade(SoundList_BGM::MAP);
+			break;
+		}
+
+	}
+
+
 }
 
 void CommonDraw() {
@@ -240,7 +330,7 @@ void CommonDrawNonePostEffect() {
 
 	app->SetColorMulti(Color(1.0f - eventManager->GetFadeCount()-nextDay->GetFade()));
 
-	ImGui::Begin("FPS");                          //ウィンドウ名になる
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-	ImGui::End();
+	//ImGui::Begin("FPS");                          //ウィンドウ名になる
+	//ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	//ImGui::End();
 }

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Debug\FrauEngine.exe</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Debug\PixelShader_BillBoard.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Debug\PixelShader_Texture.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Debug\PixelShader_Water.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Debug\VertexShader_BillBoard.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Debug\PixelShader_Toon.cso</FullPath>
+    </ContentFile>
+  </ContentFiles>
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

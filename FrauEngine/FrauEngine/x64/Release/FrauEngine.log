@@ -1,0 +1,44 @@
+﻿  EventManager.cpp
+  TitleScene.cpp
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\Utility.h(94,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\EventManager.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\Utility.h(97,28): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\EventManager.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\Utility.h(100,27): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\EventManager.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\input.h(85,24): warning C4244: '=': 'long' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\EventManager.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\input.h(86,24): warning C4244: '=': 'long' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\EventManager.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\input.h(87,24): warning C4244: '=': 'long' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\EventManager.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\input.h(89,16): warning C4244: '=': 'long' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\EventManager.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\input.h(90,16): warning C4244: '=': 'long' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\EventManager.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\Utility.h(94,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\TitleScene.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\Utility.h(97,28): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\TitleScene.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\Utility.h(100,27): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\TitleScene.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\input.h(85,24): warning C4244: '=': 'long' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\TitleScene.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\input.h(86,24): warning C4244: '=': 'long' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\TitleScene.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\input.h(87,24): warning C4244: '=': 'long' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\TitleScene.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\input.h(89,16): warning C4244: '=': 'long' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\TitleScene.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\input.h(90,16): warning C4244: '=': 'long' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\TitleScene.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\FBX.h(117,20): warning C4267: 'return': 'size_t' から 'int' に変換しました。データが失われているかもしれません。 (ソース ファイルをコンパイルしています Src\EventManager.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\FBX.h(117,20): warning C4267: 'return': 'size_t' から 'int' に変換しました。データが失われているかもしれません。 (ソース ファイルをコンパイルしています Src\TitleScene.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\ImageObject.h(35,15): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\EventManager.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\ImageObject.h(36,15): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\EventManager.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\ImageObject.h(38,15): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\EventManager.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\ImageObject.h(39,15): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\EventManager.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\Item.h(63,1): warning C4267: 'return': 'size_t' から 'int' に変換しました。データが失われているかもしれません。 (ソース ファイルをコンパイルしています Src\EventManager.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\ImageObject.h(35,15): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\TitleScene.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\ImageObject.h(36,15): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\TitleScene.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\ImageObject.h(38,15): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\TitleScene.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\ImageObject.h(39,15): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。 (ソース ファイルをコンパイルしています Src\TitleScene.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\Shop.h(60,25): warning C4305: '初期化中': 'double' から 'const float' へ切り詰めます。 (ソース ファイルをコンパイルしています Src\EventManager.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\Item.h(63,1): warning C4267: 'return': 'size_t' から 'int' に変換しました。データが失われているかもしれません。 (ソース ファイルをコンパイルしています Src\TitleScene.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\EventManager.cpp(25,41): warning C4305: '引数': 'double' から 'float' へ切り詰めます。
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\Shop.h(60,25): warning C4305: '初期化中': 'double' から 'const float' へ切り詰めます。 (ソース ファイルをコンパイルしています Src\TitleScene.cpp)
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\TitleScene.cpp(75,121): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\TitleScene.cpp(78,39): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\TitleScene.cpp(78,29): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\TitleScene.cpp(94,54): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\FrauEngine\Src\TitleScene.cpp(94,30): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+  コード生成しています。
+  3 of 5866 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    45 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  FrauEngine.vcxproj -> C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\FrauEngine.exe

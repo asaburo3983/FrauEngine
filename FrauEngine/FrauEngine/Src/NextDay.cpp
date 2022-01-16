@@ -32,6 +32,7 @@ void NextDay::Update() {
 		if (fade < 1) {
 			fade += fadeSpeed;
 		}
+		//ボタンで確認事項を決定
 		if (mouse->left == 1) {
 			if (yes.Hit(mouse->x, mouse->y)) {
 				night = true;
@@ -41,6 +42,11 @@ void NextDay::Update() {
 				SetEnable(false);
 				processEnable = false;
 			}
+		}
+		//右クリックでもキャンセルが可能
+		if (mouse->right == 1) {
+			SetEnable(false);
+			processEnable = false;
 		}
 	}
 	else {

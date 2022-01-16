@@ -172,6 +172,9 @@
     <Filter Include="ソース ファイル\InGame\Scenes\Class\NextDay">
       <UniqueIdentifier>{45df4bbe-c154-481a-9a08-34de1b1e387f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\InGame\Scenes\Class\SoundManager">
+      <UniqueIdentifier>{4a08d6c2-e438-4179-9bcc-0d4d0535320b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\imgui.cpp">
@@ -356,6 +359,9 @@
     </ClCompile>
     <ClCompile Include="Src\NextDay.cpp">
       <Filter>ソース ファイル\InGame\Scenes\Class\NextDay</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SoundManager.cpp">
+      <Filter>ソース ファイル\InGame\Scenes\Class\SoundManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -550,6 +556,9 @@
     </ClInclude>
     <ClInclude Include="Src\NextDay.h">
       <Filter>ソース ファイル\InGame\Scenes\Class\NextDay</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\SoundManager.h">
+      <Filter>ソース ファイル\InGame\Scenes\Class\SoundManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

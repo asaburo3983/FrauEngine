@@ -6,8 +6,7 @@
 using namespace frauEngine;
 
 enum {
-	TUTORIAL_MAX = 1,
-	PAGE_MAX = 2,//挿絵の最大数
+	TUTORIAL_MAX = 4,
 	ROW_MAX = 2,//1ページの段落の最大数
 };
 class TutorialSystem {
@@ -40,7 +39,7 @@ private:
 
 	float alpha = 0.0f;
 	const float alphaSpeed = 0.05f;
-
+	string title;
 	string textOld[ROW_MAX];
 	string text[ROW_MAX];
 
@@ -48,6 +47,6 @@ private:
 	const Vector2 illustPos = Vector2(960, 540);
 
 	ImageObject frame;
-	ImageObject illust[TUTORIAL_MAX][PAGE_MAX];
+	std::vector<ImageObject> illust[TUTORIAL_MAX];
 
 };

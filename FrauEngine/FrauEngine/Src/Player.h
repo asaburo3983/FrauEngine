@@ -42,6 +42,10 @@ private:
 
 	int sitAnimCount = 0;
 	const int sitAnimCountMax = 60;
+
+	int walkSoundCount = 0;
+	const int walkSoundCountMax = 30;
+
 public:
 	static Player* GetInstance() {
 		static Player player;

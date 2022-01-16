@@ -1,4 +1,5 @@
 #include "EventManager.h"
+#include "SoundManager.h"
 
 
 void EventManager::Initialize() {
@@ -8,6 +9,7 @@ void EventManager::Initialize() {
 	fadeCount = 0.0f;
 }
 void EventManager::StartDays() {
+	
 	if (!isStartDays) {
 		return;
 	}
@@ -16,6 +18,7 @@ void EventManager::StartDays() {
 	NovelSystem* novelSystem = NovelSystem::GetInstance();
 	CameraWork* camera = CameraWork::GetInstance();
 	auto item = Item::GetInstance();
+	auto sound = SoundManager::GetInstance();
 
 	switch (days) {
 	case 1:
@@ -24,6 +27,7 @@ void EventManager::StartDays() {
 		novelSystem->SetEnable(true, 0);
 		camera->SetMoveNum(1);
 		item->AddItem("マジックプランター", 1);//追加
+		item->AddItem("マソハーブの種", 3);
 		if (LowApplication::GetInstance()->GetDebugMode()) {
 			item->AddItem("マジックプランター", 2);//追加
 			item->AddItem("マソハーブの種", 10);//追加
@@ -40,7 +44,10 @@ void EventManager::StartDays() {
 	case 2:
 		break;
 	}
-	
+	//SEを流す
+	if (days != 1) {
+		//sound->GetSE(SoundList_SE::MORNING)->Play();
+	}
 	isStartDays = false;
 }
 void EventManager::AddDays() {
@@ -57,6 +64,7 @@ void EventManager::FieldEvent() {
 	auto magicShop = MagicShop::GetInstance();
 	auto palnterSystem = PlanterSystem::GetInstance();
 	auto nextDay = NextDay::GetInstance();
+	auto sound = SoundManager::GetInstance();
 
 	int eventNum = player->GetEventNum();
 
@@ -70,6 +78,7 @@ void EventManager::FieldEvent() {
 		case (int)EventNum::JOIN_HANDYSHOP:
 		case (int)EventNum::JOIN_MAGICSHOP:
 			fade = true;
+			sound->GetSE(SoundList_SE::DOOR)->Play();;
 			break;
 		case (int)EventNum::PLANTER:
 			palnterSystem->SetEnable(true);
@@ -144,22 +153,22 @@ void EventManager::JoinTutorial() {
 	case (int)StageNum::FLOWER_SHOP:
 		//操作方法のチュートリアル
 		tutorialSystem->SetEnable(true, 0);
-		//インベントリの開き方のチュートリアル
-		if (tutorialSystem->GetEnd(0)) {
-			tutorialSystem->SetEnable(true, 1);
-		}
+
 		//プランターの使い方チュートリアル
 		if (tutorialSystem->GetEnd(1)) {
 			tutorialSystem->SetEnable(true, 2);
 		}
-
+		//カウンターの使い方チュートリアル
+		if (tutorialSystem->GetEnd(2)) {
+			tutorialSystem->SetEnable(true, 3);
+		}
 		break;
 	case (int)StageNum::MAP:
 		break;
 	case (int)StageNum::HANDY_SHOP:
 	case (int)StageNum::MAGIC_SHOP:
 		//ショップシステムのチュートリアル	
-		tutorialSystem->SetEnable(true, 3);
+		tutorialSystem->SetEnable(true, 1);
 		break;
 	}
 

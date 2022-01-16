@@ -1,5 +1,5 @@
 #include "NovelSystem.h"
-
+#include "SoundManager.h"
 void NovelSystem::Initialize() {
 	resource = Resource::GetInstance();
 
@@ -121,17 +121,31 @@ void NovelSystem::TurnPage() {
 	}
 }
 void NovelSystem::Update() {
-	
+	auto sound = SoundManager::GetInstance();
+
 	if (enable) {
 		if (count < countMax) {
 			count++;
 		}
 
 		TurnPage();
+
+		if (scenario.leftCharaNum < 8) {
+			sound->PlayFade(SoundList_BGM::SHINDY_THEME);
+		}
+		else {
+			sound->PlayFade(SoundList_BGM::HANDY_THEME);
+		}
 	}
 	else {
 		if (count >0 ) {
 			count--;
+		}
+		if (scenario.leftCharaNum < 8) {
+			sound->StopFade(SoundList_BGM::SHINDY_THEME);
+		}
+		else {
+			sound->StopFade(SoundList_BGM::HANDY_THEME);
 		}
 	}
 
