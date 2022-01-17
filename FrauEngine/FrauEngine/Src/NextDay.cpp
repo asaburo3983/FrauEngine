@@ -1,5 +1,5 @@
 #include "NextDay.h"
-
+#include "SoundManager.h"
 
 void NextDay::Initialize() {
 
@@ -26,6 +26,7 @@ void NextDay::Update() {
 	auto mouse = MouseInput::GetInstance();
 	auto eventManager = EventManager::GetInstance();
 	auto planterSystem = PlanterSystem::GetInstance();
+	auto sound = SoundManager::GetInstance();
 
 	//確認用の処理
 	if (enable) {
@@ -37,6 +38,7 @@ void NextDay::Update() {
 			if (yes.Hit(mouse->x, mouse->y)) {
 				night = true;
 				SetEnable(false);
+				sound->GetSE(SoundList_SE::NEXTDAY)->Play();
 			}
 			if (no.Hit(mouse->x, mouse->y)) {
 				SetEnable(false);
@@ -56,7 +58,7 @@ void NextDay::Update() {
 	}
 	//次の日に行くフェード		黒いフェード
 	if (night) {
-		if (nightAlpha < 1) {
+		if (nightAlpha < nightAlphaMax) {
 			nightAlpha += fadeSpeed;
 		}
 		else {

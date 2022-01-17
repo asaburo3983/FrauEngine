@@ -45,7 +45,7 @@ public:
 	float GetFadeCount() { return fadeCount; }
 private:
 	void FieldEvent();
-	
+	void GameEndEvent();
 private:
 	Scene* scene;
 

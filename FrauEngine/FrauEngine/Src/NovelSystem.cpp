@@ -55,17 +55,15 @@ void NovelSystem::Initialize() {
 
 }
 void NovelSystem::InitializeScenario() {
-	scenario.csv.resize(5);
-
 	scenario.csv[0].LoadCSV("Data/Scenario/0.csv");
 
 	scenario.leftCharaNumOld = 0;
 	scenario.rightCharaNumOld = 0;
 	LoadPage();
 }
-void NovelSystem::SetEnable(bool _enable, int _scenarioNum) {
+void NovelSystem::SetEnable(bool _enable, ScenarioName _scenario) {
 	enable = _enable;
-	scenario.num = _scenarioNum;
+	scenario.num = (int)_scenario;
 
 	auto player = Player::GetInstance();
 	player->IsMove(!enable);

@@ -64,6 +64,8 @@ void PlanterSystem::Initialize() {
 void PlanterSystem::Update() {
 	auto item = Item::GetInstance();
 	auto mouse = MouseInput::GetInstance();
+	auto player = Player::GetInstance();
+
 	//有効時処理
 	if (enable) {
 		if (alpha < 1.0f) {
@@ -127,14 +129,11 @@ void PlanterSystem::Update() {
 			}
 			
 		}
-		if (mouse->right == 1) {
+		if (mouse->right == 1 && player->GetModel()->GetAnimeNum() == 4) {
 			SetEnable(false);
 		}
 		//描画用の育成失敗率の計算
 		for (int i = 0; i < item->GetItemNum("マジックプランター"); i++) {
-			//バグ率５０％
-			//バグ直しが１０％の時
-			//バグ率が４０％になるように処理する
 			int anser = bug[i] - bugFixSum;
 			if (bugSurface[i] > anser && bugSurface[i] > 0) {
 				bugSurface[i]--;

@@ -6,6 +6,15 @@
 
 using namespace frauEngine;
 
+enum class ScenarioName {
+	SCENARIO_1,
+	SCENARIO_2,
+	SCENARIO_3,
+	SCENARIO_4,
+	HAPPY_END,
+	BAD_END,
+	MAX
+};
 enum class ScenarioDataName {
 	CHARA_NAME,
 	SCENARIO_1,
@@ -25,7 +34,7 @@ public:
 	}
 
 	void Initialize();
-	void SetEnable(bool _enable=true, int _scenarioNum = NULL);
+	void SetEnable(bool _enable=true, ScenarioName _scenario= ScenarioName::SCENARIO_1);
 	void Update();
 	void Draw();
 
@@ -70,7 +79,7 @@ private:
 		const string HANDY_TROUBLE =	"ÉnÉìÉfÉBÅQÇ±Ç‹ÇÈ";
 
 
-		vector<CSV> csv;
+		CSV csv[(int)ScenarioName::MAX];
 		int num = 0;
 		int page = 1;
 

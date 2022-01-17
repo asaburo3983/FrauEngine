@@ -93,13 +93,15 @@ void Shop::Cancel() {
 }
 void Shop::SelectItem() {
 	auto mouse = MouseInput::GetInstance();
-	
+	auto sound = SoundManager::GetInstance();
+
 	if (mouse->left == 1|| mouse->left % 20==1) {
 		for (int i = 0; i < itemValueNum; i++) {
 			if (shopBaseLine[i].Hit(mouse->x, mouse->y)) {
 				selectNum = i;
 				buyNum = 1;
 				state = State::SELECT;
+				sound->GetSE(SoundList_SE::ENTER)->Play();
 				break;
 			}
 		}
@@ -107,21 +109,25 @@ void Shop::SelectItem() {
 }
 void Shop::SelectBuyNum() {
 	auto mouse = MouseInput::GetInstance();
+	auto sound = SoundManager::GetInstance();
+
 	if (mouse->left == 1) {
 		if (rightArrow.Hit(mouse->x, mouse->y)) {
 			buyNum++;
+			sound->GetSE(SoundList_SE::ENTER)->Play();
 		}
 		else if (leftArrow.Hit(mouse->x, mouse->y)) {
 			buyNum--;
+			sound->GetSE(SoundList_SE::ENTER)->Play();
 		}
 		if (buyNum < 1) {
-			buyNum = 99;
+			buyNum = 9;
 		}
-		if (buyNum > 99) {
+		if (buyNum > 9) {
 			buyNum = 1;
 		}
-		allPrice = buyNum * itemParam[selectNum].price;
 	}
+	allPrice = buyNum * itemParam[selectNum].price;
 }
 void Shop::Buy() {
 	auto mouse = MouseInput::GetInstance();
@@ -138,7 +144,7 @@ void Shop::Buy() {
 				item->AddItem(itemName[selectNum], buyNum);
 				item->AddMoney(-allPrice);
 				state = State::BUY;
-				sound->GetSE(SoundList_SE::BUY)->Play();;
+				sound->GetSE(SoundList_SE::BUY)->Play();
 			}
 
 		}

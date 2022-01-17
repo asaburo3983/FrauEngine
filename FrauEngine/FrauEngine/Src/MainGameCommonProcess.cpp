@@ -148,6 +148,7 @@ void LoadSound() {
 	rc->LoadSound("Data/Sound/SE/Enter_SE.mp3");
 	rc->LoadSound("Data/Sound/SE/Morning_SE.mp3");
 	rc->LoadSound("Data/Sound/SE/Walk_SE.mp3");
+	rc->LoadSound("Data/Sound/SE/NextDay_Jingle.mp3");
 	
 }
 void StaticClassSetting() {
@@ -219,6 +220,10 @@ void CommonUpdate() {
 	nextDay->Update();
 
 	//BGM
+	if (nextDay->GetNight()) {
+		sound->GetBGM(SoundList_BGM::FLOWER_SHOP)->SetVolumeMulti(0);
+	}
+
 	if (novelSystem->GetEnable()) {
 		//BGMを再生する
 		switch (stage->GetStageNum()) {
@@ -285,7 +290,7 @@ void CommonDraw() {
 	auto stage = Stage::GetInstance();
 	auto planterSystem = PlanterSystem::GetInstance();
 	auto nextDay = NextDay::GetInstance();
-
+	auto mouse = MouseInput::GetInstance();
 	//影の描画
 	lowApp->DrawOnDepth(Lights::GetInstance()->depthHeap, Lights::GetInstance()->shadowTexSize);
 
@@ -302,8 +307,13 @@ void CommonDraw() {
 
 	nextDay->Draw();
 	//ポストエフェクト用の処理
-	app->SetDepthOfField(true);
-	app->SetAddEffect((int)AddPostEffect::BLUR);
+	app->SetDepthOfField(true,960, 512);
+	if (novelSystem->GetAlphaUI() + tutorialSystem->GetAlpha() <= 0) {
+		app->SetAddEffect((int)AddPostEffect::OUTLINE_DEPTHOFFIELD);
+	}
+	else {
+		app->SetAddEffect((int)AddPostEffect::BLUR);
+	}
 	app->SetBlurPower(novelSystem->GetAlphaUI() + tutorialSystem->GetAlpha());
 }
 

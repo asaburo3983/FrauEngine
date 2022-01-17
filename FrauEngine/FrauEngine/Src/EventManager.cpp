@@ -23,8 +23,8 @@ void EventManager::StartDays() {
 	switch (days) {
 	case 1:
 		player->SetPos(Vector3(4.5, -3.9, 5.0));
-		player->SetAngle(Vector3(0, 270, 0));
-		novelSystem->SetEnable(true, 0);
+		player->SetAngle(Vector3(0, 180, 0));
+		novelSystem->SetEnable(true, ScenarioName::SCENARIO_1);
 		camera->SetMoveNum(1);
 		item->AddItem("マジックプランター", 1);//追加
 		item->AddItem("マソハーブの種", 3);
@@ -37,12 +37,21 @@ void EventManager::StartDays() {
 			item->AddItem("バララバの種", 10);//追加
 			item->AddItem("シュガーステムの種", 10);//追加
 			item->AddItem("コスモの種", 10);//追加
-
 		}
 
 		break;
 	case 2:
 		break;
+	case 31:
+		//100万ラウなければゲームオーバー
+		if (item->GetMoney() < 1000000) {
+			novelSystem->SetEnable(true, ScenarioName::BAD_END);
+		}
+		break;
+	}
+	//100万ラウたまればその時点でクリア
+	if (item->GetMoney() >= 1000000) {
+		novelSystem->SetEnable(true, ScenarioName::HAPPY_END);
 	}
 	//SEを流す
 	if (days != 1) {
@@ -78,25 +87,29 @@ void EventManager::FieldEvent() {
 		case (int)EventNum::JOIN_HANDYSHOP:
 		case (int)EventNum::JOIN_MAGICSHOP:
 			fade = true;
-			sound->GetSE(SoundList_SE::DOOR)->Play();;
+			sound->GetSE(SoundList_SE::DOOR)->Play();
 			break;
 		case (int)EventNum::PLANTER:
 			palnterSystem->SetEnable(true);
+			sound->GetSE(SoundList_SE::ENTER)->Play();
 			break;
 		case (int)EventNum::OPEN_SHOP:
 			//日付をまたぐ処理、確認入れる
 			if (nextDay->GetProcessEnable() == false) {
 				nextDay->SetEnable(true);
+				sound->GetSE(SoundList_SE::ENTER)->Play();
 			}
 			break;
 		case (int)EventNum::BUY_HANDYSHOP:
 			if (handyShop->GetEnable() == false) {
 				handyShop->SetEnable(true);
+				sound->GetSE(SoundList_SE::ENTER)->Play();
 			}
 			break;
 		case (int)EventNum::BUY_MAGICSHOP:
 			if (magicShop->GetEnable() == false) {
 				magicShop->SetEnable(true);
+				sound->GetSE(SoundList_SE::ENTER)->Play();
 			}
 			break;
 		}
@@ -173,6 +186,9 @@ void EventManager::JoinTutorial() {
 	}
 
 }
+void EventManager::GameEndEvent() {
+
+}
 void EventManager::Update() {
 	CameraWork* camera = CameraWork::GetInstance();
 	NovelSystem* novelSystem = NovelSystem::GetInstance();
@@ -186,6 +202,7 @@ void EventManager::Update() {
 
 	FieldEvent();
 
+	GameEndEvent();
 	//マップの時のみカメラは追従させる
 	if (stage->GetStageNum() == (int)StageNum::MAP) {
 		camera->SetPlayerTarget(true);

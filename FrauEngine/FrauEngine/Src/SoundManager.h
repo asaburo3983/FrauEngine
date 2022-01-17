@@ -24,6 +24,7 @@ enum class SoundList_SE {
 	ENTER,
 	MORNING,
 	WALK,
+	NEXTDAY,
 	MAX
 };
 

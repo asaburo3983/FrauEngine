@@ -1,4 +1,5 @@
 #include "NormalUI.h"
+#include "SoundManager.h"
 
 void NormalUI::Initialize() {
 	//画像の初期化と初期位置
@@ -53,7 +54,7 @@ void NormalUI::Update() {
 	Item* item = Item::GetInstance();
 	auto key = KeyInput::GetInstance();
 	auto mouse = MouseInput::GetInstance();
-
+	auto sound = SoundManager::GetInstance();
 
 	itemBase.SetAlpha(inventoryAlpha);
 	for (int i = 0; i < 8; i++) {
@@ -69,6 +70,7 @@ void NormalUI::Update() {
 	if (key->key[DIK_E] == 1) {
 		inventory = !inventory;
 		selectItemNum = 0;
+		sound->GetSE(SoundList_SE::ENTER)->Play();
 	}
 	//閉じるときだけ右クリックでもできる
 	if (mouse->right == 1&& inventory == true) {
@@ -80,6 +82,30 @@ void NormalUI::Update() {
 		if (inventoryAlpha < 1.0f) {
 			inventoryAlpha += inventoryAlphaSpeed;
 		}
+		if (mouse->left == 1) {
+			for (int i = 0; i < 7; i++) {
+				if (itemLine[i].Hit(mouse->x, mouse->y)) {
+					selectItemNum = i;
+					sound->GetSE(SoundList_SE::ENTER)->Play();
+					break;
+				}
+			}
+			if (rightArrow.Hit(mouse->x, mouse->y)) {
+				page++;
+				if (page > 3) {
+					page = 1;
+				}
+				sound->GetSE(SoundList_SE::ENTER)->Play();
+			}
+			else if (leftArrow.Hit(mouse->x, mouse->y)) {
+				page--;
+				if (page < 1) {
+					page = 3;
+				}
+				sound->GetSE(SoundList_SE::ENTER)->Play();
+			}
+		}
+
 	}
 	else {
 		if (inventoryAlpha > 0.0f) {
@@ -105,10 +131,12 @@ void NormalUI::Draw() {
 	//日付ベース
 	dayBase.Draw();
 	//日付　文字
-	akazukin->DrawString("4", Vector2(90, 170), 6, Color(107, 72, 46, 1), true);
+	akazukin->DrawString("5", Vector2(90, 170), 6, Color(107, 72, 46, 1), true);
 	char dayStr[50];
 	sprintf_s(dayStr, "%d", eventManager->GetDays());
 	akazukin->DrawString(dayStr, Vector2(190, 230), 5, Color(107, 72, 46, 1), true);
+	sprintf_s(dayStr, "のこり%d日", 31-eventManager->GetDays());
+	akazukin->DrawString(dayStr, Vector2(190, 280), 2.5, Color(200, 20, 20, 1), true);
 
 	if (inventoryAlpha > 0) {
 		//アイテムベース
