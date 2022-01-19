@@ -3,6 +3,7 @@
 
 
 void EventManager::Initialize() {
+	isStartDays = true;
 	days = 1;
 	fade = false;
 	fadeSpeed = 0.05f;
@@ -53,10 +54,6 @@ void EventManager::StartDays() {
 	if (item->GetMoney() >= 1000000) {
 		novelSystem->SetEnable(true, ScenarioName::HAPPY_END);
 	}
-	//SEを流す
-	if (days != 1) {
-		//sound->GetSE(SoundList_SE::MORNING)->Play();
-	}
 	isStartDays = false;
 }
 void EventManager::AddDays() {
@@ -74,6 +71,7 @@ void EventManager::FieldEvent() {
 	auto palnterSystem = PlanterSystem::GetInstance();
 	auto nextDay = NextDay::GetInstance();
 	auto sound = SoundManager::GetInstance();
+	auto novelSystem = NovelSystem::GetInstance();
 
 	int eventNum = player->GetEventNum();
 
@@ -91,11 +89,11 @@ void EventManager::FieldEvent() {
 			break;
 		case (int)EventNum::PLANTER:
 			palnterSystem->SetEnable(true);
-			sound->GetSE(SoundList_SE::ENTER)->Play();
+			
 			break;
 		case (int)EventNum::OPEN_SHOP:
 			//日付をまたぐ処理、確認入れる
-			if (nextDay->GetProcessEnable() == false) {
+			if (nextDay->GetProcessEnable() == false && novelSystem->GetEnable()==false) {
 				nextDay->SetEnable(true);
 				sound->GetSE(SoundList_SE::ENTER)->Play();
 			}
@@ -187,7 +185,12 @@ void EventManager::JoinTutorial() {
 
 }
 void EventManager::GameEndEvent() {
+	NovelSystem* novelSystem = NovelSystem::GetInstance();
 
+	//とりあえず簡素にscene移動する
+	if (novelSystem->GetEnd(ScenarioName::BAD_END) || novelSystem->GetEnd(ScenarioName::HAPPY_END)) {
+		scene->LoadScene("Endroll");
+	}
 }
 void EventManager::Update() {
 	CameraWork* camera = CameraWork::GetInstance();

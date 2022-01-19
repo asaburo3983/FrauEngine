@@ -168,6 +168,7 @@
     <ClCompile Include="Src\DXTK.cpp" />
     <ClCompile Include="Src\EffectObject.cpp" />
     <ClCompile Include="Src\EffekseerDX12.cpp" />
+    <ClCompile Include="Src\EndrollScene.cpp" />
     <ClCompile Include="Src\EventManager.cpp" />
     <ClCompile Include="Src\Fade.cpp" />
     <ClCompile Include="Src\FBX.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="Src\Camera.h" />
     <ClInclude Include="Src\CameraObject.h" />
     <ClInclude Include="Src\CameraWork.h" />
+    <ClInclude Include="Src\EndrollScene.h" />
     <ClInclude Include="Src\EventManager.h" />
     <ClInclude Include="Src\CSV.h" />
     <ClInclude Include="Src\HandyShopScene.h">

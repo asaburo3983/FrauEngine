@@ -23,7 +23,7 @@ private:
 
 	bool night = false;
 	float nightAlpha = 0.0f;
-	float nightAlphaMax = 5.0f;
+	float nightAlphaMax = 7.0f;
 	bool morning = false;
 	float morningAlpha = 0.0f;
 public:
@@ -39,6 +39,8 @@ public:
 	}
 	void SetMorning(bool _enable) { morning = _enable; }
 	bool GetNight() { return night; }
+	bool GetMorning() { return morning; }
+
 	void Initialize();
 	void Update();
 	void Draw();

@@ -13,6 +13,8 @@ void SoundManager::Initialize() {
 	bgm[6].SetResource(rc->Sound("BadEnd_BGM.mp3"));
 	bgm[7].SetResource(rc->Sound("ShindyTheme_BGM.mp3"));
 	bgm[8].SetResource(rc->Sound("HandyTheme_BGM.mp3"));
+	bgm[9].SetResource(rc->Sound("Endroll_BGM.mp3"));
+
 	for (int i = 0; i < (int)SoundList_BGM::MAX; i++) {
 		bgm[i].SetLoop(true);
 	}
@@ -28,6 +30,7 @@ void SoundManager::Initialize() {
 	se[5].SetResource(rc->Sound("Morning_SE.mp3"));
 	se[6].SetResource(rc->Sound("Walk_SE.mp3"));
 	se[7].SetResource(rc->Sound("NextDay_Jingle.mp3"));
+	se[8].SetResource(rc->Sound("TurnPage_SE.mp3"));
 
 	SetVolumeSE(seVolume);
 	SetVolumeSEMulti(seVolumeMulti);

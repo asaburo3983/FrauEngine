@@ -96,6 +96,16 @@ private:
 	int moneySurface = 1000;
 	int money = 1000;
 	std::string moneyStr = "00001000";
+public:
+	void Reset() {
+		std::unordered_map<std::string, int> item;
 
+		for (int i = 0; i < 19; i++) {
+			item[GetItemName(i)] = 0;
+		}
+		moneySurface = 1000;
+		money = 1000;
+		moneyStr = "00001000";
+	}
 
 };

@@ -117,7 +117,7 @@ void Player::Update() {
 
 void Player::AnimationControl() {
 	auto sound = SoundManager::GetInstance();
-
+	
 	//‚µ‚á‚ª‚Ýƒ‚[ƒVƒ‡ƒ“
 	auto planter = PlanterSystem::GetInstance();
 	if (planter->GetEnable()) {
@@ -125,6 +125,7 @@ void Player::AnimationControl() {
 			model.SetAnimeNum(3);
 			model.SetAnimeSpeed(0.3f);
 			sitAnimCount++;
+			
 		}
 		else {
 			model.SetAnimeNum(4);

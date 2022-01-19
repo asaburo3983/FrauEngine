@@ -43,6 +43,14 @@ public:
 	void JoinTutorial();
 
 	float GetFadeCount() { return fadeCount; }
+	void Reset() {
+		isStartDays = true;
+		days = 1;
+
+		fade = false;
+		fadeSpeed = 0.05f;
+		fadeCount = 0.0f;
+	}
 private:
 	void FieldEvent();
 	void GameEndEvent();

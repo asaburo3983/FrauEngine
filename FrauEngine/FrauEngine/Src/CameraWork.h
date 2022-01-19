@@ -34,6 +34,14 @@ public:
 	void SetLerpSpeed(float _speed) { lerpSpeed = _speed; }
 
 	CameraObject* GetCamera() { return &camera;}
+
+	void Reset() {
+		moveNumOld = 0;
+		moveNum = 0;
+		lerpCount = 0.0f;
+		lerpSpeed = 0.01f;
+		playerTarget = false;
+	}
 private:
 	void Move();
 	void PlayerTarget();

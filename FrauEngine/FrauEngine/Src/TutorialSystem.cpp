@@ -27,6 +27,7 @@ void TutorialSystem::Initialize() {
 }
 void TutorialSystem::SetEnable(bool _enable, int _num) {
 	auto novel = NovelSystem::GetInstance();
+	auto player = Player::GetInstance();
 	if (_enable && used[_num] == false && novel->GetEnable() == false) {
 		enable = _enable;
 		num = _num;
@@ -35,6 +36,9 @@ void TutorialSystem::SetEnable(bool _enable, int _num) {
 		used[num] = true;
 
 		title = csv[num].GetString(0, 0);
+
+		player->IsMove(false);
+		
 	}
 	else if (_enable == false) {
 		enable = _enable;
@@ -42,6 +46,7 @@ void TutorialSystem::SetEnable(bool _enable, int _num) {
 		page = 1;
 		LoadPage(text);
 		end[num] = true;
+		player->IsMove(true);
 	}
 }
 void TutorialSystem::LoadPage(string* strs) {

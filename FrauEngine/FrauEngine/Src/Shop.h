@@ -83,7 +83,7 @@ public:
 	int GetBuyNum() { return buyNum; }
 	int GetAllPrice() { return allPrice; }
 	bool GetEnable() { return enable; }
-private:
+protected:
 	void Cancel();
 	void SelectItem();
 	void SelectBuyNum();

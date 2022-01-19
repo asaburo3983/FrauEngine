@@ -14,6 +14,7 @@ enum class SoundList_BGM {
 	BAD_END,
 	SHINDY_THEME,
 	HANDY_THEME,
+	ENDROLL,
 	MAX
 };
 enum class SoundList_SE {
@@ -25,6 +26,7 @@ enum class SoundList_SE {
 	MORNING,
 	WALK,
 	NEXTDAY,
+	TURNPAGE,
 	MAX
 };
 

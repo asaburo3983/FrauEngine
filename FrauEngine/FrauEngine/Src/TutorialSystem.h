@@ -22,6 +22,20 @@ public:
 
 	float GetAlpha() { return alpha; }
 	bool GetEnd(int _num) { return end[_num]; }
+
+	void Reset() {
+		num = 0;
+		page = 1;
+
+		enable = false;
+		for (int i = 0; i < TUTORIAL_MAX;i++) {
+			used[i]=false;
+			end[i]=false;
+		}
+
+		alpha = 0.0f;
+
+	}
 private:
 	void LoadPage(std::string* strs);
 	void TurnPage();

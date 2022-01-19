@@ -55,7 +55,9 @@ void NovelSystem::Initialize() {
 
 }
 void NovelSystem::InitializeScenario() {
-	scenario.csv[0].LoadCSV("Data/Scenario/0.csv");
+	scenario.csv[(int)ScenarioName::SCENARIO_1].LoadCSV("Data/Scenario/0.csv");
+	scenario.csv[(int)ScenarioName::HAPPY_END].LoadCSV("Data/Scenario/HappyEnd.csv");
+	scenario.csv[(int)ScenarioName::BAD_END].LoadCSV("Data/Scenario/BadEnd.csv");
 
 	scenario.leftCharaNumOld = 0;
 	scenario.rightCharaNumOld = 0;
@@ -63,7 +65,7 @@ void NovelSystem::InitializeScenario() {
 }
 void NovelSystem::SetEnable(bool _enable, ScenarioName _scenario) {
 	enable = _enable;
-	scenario.num = (int)_scenario;
+	
 
 	auto player = Player::GetInstance();
 	player->IsMove(!enable);
@@ -72,7 +74,12 @@ void NovelSystem::SetEnable(bool _enable, ScenarioName _scenario) {
 	CameraWork* cameraWork = CameraWork::GetInstance();
 	if (enable == false) {
 		cameraWork->SetMoveNum(0);//通常のカメラ位置に戻す
+		end[scenario.num] = true;
 	}
+	if (_scenario != ScenarioName::MAX) {
+		scenario.num = (int)_scenario;
+	}
+
 }
 
 void NovelSystem::LoadPage() {
@@ -88,7 +95,7 @@ void NovelSystem::LoadPage() {
 }
 void NovelSystem::TurnPage() {
 	auto mouse = MouseInput::GetInstance();
-	
+	auto sound = SoundManager::GetInstance();
 	//テキスト送り
 	if (mouse->left == 1) {
 
@@ -103,6 +110,16 @@ void NovelSystem::TurnPage() {
 
 			scenario.leftCharaNumOld = scenario.ecpression[scenario.str[(int)ScenarioDataName::ECPRESSION_LEFT]];
 			scenario.rightCharaNumOld = scenario.ecpression[scenario.str[(int)ScenarioDataName::ECPRESSION_RIGHT]];
+
+			switch (scenario.num) {
+				break;
+			case (int)ScenarioName::HAPPY_END:
+				sound->GetBGM(SoundList_BGM::HAPPY_END)->Stop();
+				break;
+			case (int)ScenarioName::BAD_END:
+				sound->GetBGM(SoundList_BGM::BAD_END)->Stop();
+				break;
+			}
 		}
 		else {
 			//前のキャラ番号を保存しておく
@@ -112,7 +129,7 @@ void NovelSystem::TurnPage() {
 				scenario.leftCharaNumOld = 0;
 			if (scenario.rightCharaNumOld < 0)
 				scenario.rightCharaNumOld = 0;
-
+			sound->GetSE(SoundList_SE::TURNPAGE)->Play();
 			//ページの読み込み
 			LoadPage();
 		}
@@ -127,23 +144,32 @@ void NovelSystem::Update() {
 		}
 
 		TurnPage();
-
-		if (scenario.leftCharaNum < 8) {
+		switch (scenario.num) {
+		case (int)ScenarioName::SCENARIO_1:
 			sound->PlayFade(SoundList_BGM::SHINDY_THEME);
-		}
-		else {
-			sound->PlayFade(SoundList_BGM::HANDY_THEME);
+			break;
+		case (int)ScenarioName::HAPPY_END:
+			sound->PlayFade(SoundList_BGM::HAPPY_END);
+			break;
+			case (int)ScenarioName::BAD_END:
+		sound->PlayFade(SoundList_BGM::BAD_END);
+			break;
 		}
 	}
 	else {
 		if (count >0 ) {
 			count--;
 		}
-		if (scenario.leftCharaNum < 8) {
+		switch (scenario.num) {
+		case (int)ScenarioName::SCENARIO_1:
 			sound->StopFade(SoundList_BGM::SHINDY_THEME);
-		}
-		else {
-			sound->StopFade(SoundList_BGM::HANDY_THEME);
+			break;
+		case (int)ScenarioName::HAPPY_END:
+			sound->GetBGM(SoundList_BGM::HAPPY_END)->Stop();
+			break;
+		case (int)ScenarioName::BAD_END:
+			sound->GetBGM(SoundList_BGM::BAD_END)->Stop();
+			break;
 		}
 	}
 

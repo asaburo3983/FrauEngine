@@ -125,7 +125,10 @@ float4 main(VS_OUT input) : SV_TARGET{
      if (tex_color.a <= 0.0)discard;//a０値非表示処理
 
     float3 normal = input.normalDLight;
-
+    if (anotherTexture0 == 1) {
+        float4 tex_normal = texAnother0.Sample(smp, input.uv);
+        normal = normalize(normal * tex_normal.xyz);
+    }
     //ソフトシャドウ　生成
     float sm0 = texDepth.Sample(smpSM, input.posSM.xy);
     float sm1 = texDepth.Sample(smpSM, input.posSM.xy + float2(offsetX, 0.0f));

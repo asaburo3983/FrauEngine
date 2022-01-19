@@ -23,7 +23,7 @@ void MagicShopScene::StaticLoad() {
 	SetObjectList(player->GetModel(), "Player");
 	SetObjectList(camera->GetCamera(), "Camera");
 	SetObjectList(stage->GetLight(), "Lights");
-	SetObjectList(stage->GetStageModel(),"MazigSgp");
+	//SetObjectList(stage->GetStageModel(),"MazigSgp");
 }
 
 

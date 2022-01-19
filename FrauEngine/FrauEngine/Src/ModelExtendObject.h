@@ -5,7 +5,6 @@ namespace frauEngine {
 	enum class ModelType {
 		MAIN,
 		SHADOW,
-		SUB1,
 		MAX
 	};
 	class ModelExtendObject : public ModelObject {

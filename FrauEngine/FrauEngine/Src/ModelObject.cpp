@@ -33,6 +33,7 @@ void ModelObject::Destroy() {
 		}
 		resource = nullptr;
 	}
+
 }
 void ModelObject::SetResource(frauEngine::FBX* _model) {
 	resource = _model;
@@ -190,7 +191,7 @@ void ModelObject::CreatePipeline() {
 	gpipelineDesc.pRootSignature = rootSignature;
 
 	lowApp->GetDevice()->CreateGraphicsPipelineState(&gpipelineDesc, IID_PPV_ARGS(&pipelineState));
-	resource;
+
 }
 
 void ModelObject::Initialize(frauEngine::FBX* _model,
@@ -202,7 +203,17 @@ void ModelObject::Initialize(frauEngine::FBX* _model,
 	D3D12_CULL_MODE _cullMode
 ) {
 	Destroy();
-	
+
+	enable = true;
+	pos = Vector3(0, 0, 0);
+	angle= Vector3(0, 0, 0);
+	scale= Vector3(0, 0, 0);
+	anime = false;
+	animeNum = 0;
+	animeNumOld = 0;
+	animeSpeed = 1;
+	animeCount = 0;
+
 	SetResource(_model);
 
 	SetShader(

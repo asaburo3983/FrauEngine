@@ -61,7 +61,10 @@ public:
 	void Draw();
 	void DrawBillBoard();
 
-	void IsMove(bool _enable) { isMove = _enable; }
+	void IsMove(bool _enable) { 
+		isMove = _enable;
+		posOld = model.GetPos();
+	}
 	void IsAnimation(bool _enable) { isAnimation = _enable; }
 	void IsCollision(bool _enable) { isCollision = _enable; }
 
@@ -72,6 +75,17 @@ public:
 	int GetEventNum(){ return eventNum; }
 
 	ModelExtendObject* GetModel() { return &model; };
+
+	void Reset() {
+		eventNum = 0;
+		isMove = true;
+		isAnimation = true;
+		isCollision = true;
+
+		sitAnimCount = 0;
+
+		walkSoundCount = 0;
+	}
 private:
 	void Move();
 	void AnimationControl();

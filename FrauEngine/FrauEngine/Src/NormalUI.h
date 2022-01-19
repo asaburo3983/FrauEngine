@@ -15,6 +15,13 @@ public:
 	void Initialize();
 	void Update();
 	void Draw();
+	void Reset() {
+		//インベントリ描画で必要
+		inventory = false;
+		inventoryAlpha = 0.0f;
+		selectItemNum = 0;
+		page = 1;
+	}
 private:
 
 	ImageObject dayBase;

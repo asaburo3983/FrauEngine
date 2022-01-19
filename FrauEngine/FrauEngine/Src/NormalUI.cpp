@@ -134,7 +134,7 @@ void NormalUI::Draw() {
 	akazukin->DrawString("5", Vector2(90, 170), 6, Color(107, 72, 46, 1), true);
 	char dayStr[50];
 	sprintf_s(dayStr, "%d", eventManager->GetDays());
-	akazukin->DrawString(dayStr, Vector2(190, 230), 5, Color(107, 72, 46, 1), true);
+	akazukin->DrawString(dayStr, Vector2(220, 230), 5, Color(107, 72, 46, 1), true);
 	sprintf_s(dayStr, "‚Ì‚±‚è%d“ú", 31-eventManager->GetDays());
 	akazukin->DrawString(dayStr, Vector2(190, 280), 2.5, Color(200, 20, 20, 1), true);
 

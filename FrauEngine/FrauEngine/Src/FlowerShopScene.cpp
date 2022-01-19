@@ -30,6 +30,7 @@ void FlowerShopScene::StaticLoad() {
 	SetObjectList(camera->GetCamera(), "Camera");
 	SetObjectList(stage->GetLight(), "Lights");
 
+	stage->Load(StageNum::FLOWER_SHOP);
 	stage->MoveStage((int)StageNum::FLOWER_SHOP);
 }
 
@@ -39,7 +40,7 @@ void FlowerShopScene::Load() {
 	eventManager->SetScene(this);
 	
 	stage->Load(StageNum::FLOWER_SHOP);
-	stage->MoveStage((int)StageNum::FLOWER_SHOP);
+	
 
 }
 

@@ -115,24 +115,6 @@
     <Filter Include="ソース ファイル\InGame\Class\Gallary">
       <UniqueIdentifier>{7213ba8f-28b2-46a5-b0ad-149d2e0b4055}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\InGame\Scenes\Gallary">
-      <UniqueIdentifier>{a754300c-7640-4f43-8b8f-a77bd20b1a10}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\InGame\Scenes\MapScene">
-      <UniqueIdentifier>{5772e1d5-6fc5-4c0f-88ea-3fc32c5bf990}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\InGame\Scenes\TitleScene">
-      <UniqueIdentifier>{12812a1a-55f9-4698-a93d-04e9403420ac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\InGame\Scenes\MagicShopScene">
-      <UniqueIdentifier>{48a02790-ae93-460e-8dee-ad3ba82a8a74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\InGame\Scenes\HandyShopScene">
-      <UniqueIdentifier>{2eeb637b-82db-4dd8-8b78-ea381c077569}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\InGame\Scenes\FlowerShopScene">
-      <UniqueIdentifier>{5f3f4e0a-ca2d-46c5-9b1b-e668624b815c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\InGame\Scenes\Class">
       <UniqueIdentifier>{ef09ad3f-c85a-418c-865b-24f1c1223ee4}</UniqueIdentifier>
     </Filter>
@@ -174,6 +156,27 @@
     </Filter>
     <Filter Include="ソース ファイル\InGame\Scenes\Class\SoundManager">
       <UniqueIdentifier>{4a08d6c2-e438-4179-9bcc-0d4d0535320b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Scenes\Scenes">
+      <UniqueIdentifier>{0ba22421-88f0-4f95-997c-831bcb754ae2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Scenes\Scenes\MapScene">
+      <UniqueIdentifier>{5772e1d5-6fc5-4c0f-88ea-3fc32c5bf990}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Scenes\Scenes\HandyShopScene">
+      <UniqueIdentifier>{2eeb637b-82db-4dd8-8b78-ea381c077569}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Scenes\Scenes\MagicShopScene">
+      <UniqueIdentifier>{48a02790-ae93-460e-8dee-ad3ba82a8a74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Scenes\Scenes\FlowerShopScene">
+      <UniqueIdentifier>{5f3f4e0a-ca2d-46c5-9b1b-e668624b815c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Scenes\Scenes\TitleScene">
+      <UniqueIdentifier>{12812a1a-55f9-4698-a93d-04e9403420ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Scenes\Scenes\Gallary">
+      <UniqueIdentifier>{a754300c-7640-4f43-8b8f-a77bd20b1a10}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -289,13 +292,13 @@
       <Filter>ソース ファイル\InGame\Class\Gallary</Filter>
     </ClCompile>
     <ClCompile Include="Src\FlowerShopScene.cpp">
-      <Filter>ソース ファイル\InGame\Scenes\FlowerShopScene</Filter>
+      <Filter>ソース ファイル\InGame\Scenes\Scenes\FlowerShopScene</Filter>
     </ClCompile>
     <ClCompile Include="Src\GallaryScene.cpp">
-      <Filter>ソース ファイル\InGame\Scenes\Gallary</Filter>
+      <Filter>ソース ファイル\InGame\Scenes\Scenes\Gallary</Filter>
     </ClCompile>
     <ClCompile Include="Src\TitleScene.cpp">
-      <Filter>ソース ファイル\InGame\Scenes\TitleScene</Filter>
+      <Filter>ソース ファイル\InGame\Scenes\Scenes\TitleScene</Filter>
     </ClCompile>
     <ClCompile Include="Src\NovelSystem.cpp">
       <Filter>ソース ファイル\InGame\Scenes\Class\NovelSystem</Filter>
@@ -340,13 +343,13 @@
       <Filter>ソース ファイル\InGame\Scenes\Class\NormalUI</Filter>
     </ClCompile>
     <ClCompile Include="Src\MapScene.cpp">
-      <Filter>ソース ファイル\InGame\Scenes\MapScene</Filter>
+      <Filter>ソース ファイル\InGame\Scenes\Scenes\MapScene</Filter>
     </ClCompile>
     <ClCompile Include="Src\HandyShopScene.cpp">
-      <Filter>ソース ファイル\InGame\Scenes\HandyShopScene</Filter>
+      <Filter>ソース ファイル\InGame\Scenes\Scenes\HandyShopScene</Filter>
     </ClCompile>
     <ClCompile Include="Src\MagicShopScene.cpp">
-      <Filter>ソース ファイル\InGame\Scenes\MagicShopScene</Filter>
+      <Filter>ソース ファイル\InGame\Scenes\Scenes\MagicShopScene</Filter>
     </ClCompile>
     <ClCompile Include="Src\MagicShop.cpp">
       <Filter>ソース ファイル\InGame\Scenes\Class\Shop</Filter>
@@ -362,6 +365,9 @@
     </ClCompile>
     <ClCompile Include="Src\SoundManager.cpp">
       <Filter>ソース ファイル\InGame\Scenes\Class\SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EndrollScene.cpp">
+      <Filter>ソース ファイル\InGame\Scenes\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -486,13 +492,13 @@
       <Filter>ソース ファイル\InGame\Class\Gallary</Filter>
     </ClInclude>
     <ClInclude Include="Src\FlowerShopScene.h">
-      <Filter>ソース ファイル\InGame\Scenes\FlowerShopScene</Filter>
+      <Filter>ソース ファイル\InGame\Scenes\Scenes\FlowerShopScene</Filter>
     </ClInclude>
     <ClInclude Include="Src\GallaryScene.h">
-      <Filter>ソース ファイル\InGame\Scenes\Gallary</Filter>
+      <Filter>ソース ファイル\InGame\Scenes\Scenes\Gallary</Filter>
     </ClInclude>
     <ClInclude Include="Src\TitleScene.h">
-      <Filter>ソース ファイル\InGame\Scenes\TitleScene</Filter>
+      <Filter>ソース ファイル\InGame\Scenes\Scenes\TitleScene</Filter>
     </ClInclude>
     <ClInclude Include="Src\NovelSystem.h">
       <Filter>ソース ファイル\InGame\Scenes\Class\NovelSystem</Filter>
@@ -537,13 +543,13 @@
       <Filter>ソース ファイル\InGame\Scenes\Class\NormalUI</Filter>
     </ClInclude>
     <ClInclude Include="Src\MapScene.h">
-      <Filter>ソース ファイル\InGame\Scenes\MapScene</Filter>
+      <Filter>ソース ファイル\InGame\Scenes\Scenes\MapScene</Filter>
     </ClInclude>
     <ClInclude Include="Src\HandyShopScene.h">
-      <Filter>ソース ファイル\InGame\Scenes\HandyShopScene</Filter>
+      <Filter>ソース ファイル\InGame\Scenes\Scenes\HandyShopScene</Filter>
     </ClInclude>
     <ClInclude Include="Src\MagicShopScene.h">
-      <Filter>ソース ファイル\InGame\Scenes\MagicShopScene</Filter>
+      <Filter>ソース ファイル\InGame\Scenes\Scenes\MagicShopScene</Filter>
     </ClInclude>
     <ClInclude Include="Src\MagicShop.h">
       <Filter>ソース ファイル\InGame\Scenes\Class\Shop</Filter>
@@ -559,6 +565,9 @@
     </ClInclude>
     <ClInclude Include="Src\SoundManager.h">
       <Filter>ソース ファイル\InGame\Scenes\Class\SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\EndrollScene.h">
+      <Filter>ソース ファイル\InGame\Scenes\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

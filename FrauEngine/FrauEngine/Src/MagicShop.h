@@ -15,5 +15,8 @@ private:
 
 	ImageObject itemIcon[7];
 	ImageObject npc[4];
+private:
+	void SelectItem();
+	void Buy();
 
 };

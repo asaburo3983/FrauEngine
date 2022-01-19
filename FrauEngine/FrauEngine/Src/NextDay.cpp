@@ -43,12 +43,14 @@ void NextDay::Update() {
 			if (no.Hit(mouse->x, mouse->y)) {
 				SetEnable(false);
 				processEnable = false;
+				sound->GetSE(SoundList_SE::ENTER)->Play();
 			}
 		}
 		//右クリックでもキャンセルが可能
 		if (mouse->right == 1) {
 			SetEnable(false);
 			processEnable = false;
+			sound->GetSE(SoundList_SE::ENTER)->Play();
 		}
 	}
 	else {
@@ -156,7 +158,7 @@ void NextDay::DrawMorning() {
 		if (setItem == -1) {
 			continue;
 		}
-		bool seedGrow = planterSystem->GetGrouSeedEnable(setItem);
+		bool seedGrow = planterSystem->GetGrouSeedEnable(i);
 		string matingSeedStr = "";
 		if (planterSystem->GetMatingSeed(i) != -1) {
 			matingSeedStr = item->GetItemName(planterSystem->GetMatingSeed(i));

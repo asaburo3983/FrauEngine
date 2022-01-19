@@ -49,7 +49,7 @@ public:
 private:
 	ModelExtendObject	  model;
 
-	ModelExtendObject	  npc;
+	ModelObject	  npc;
 
 	ModelObject skyModel;
 	ModelObject waterModel;
@@ -62,8 +62,21 @@ private:
 	SpotLightParam		  spotLightParam[SPOT_LIGHT];
 
 	int stageNumOld = -1;
-	int stageNum;
+	int stageNum=0;
+
+	int boxColliderMax = 0;
+	int circleColliderMax = 0;
+	int boxEventColliderMax = 0;
+	int slopeColliderMax = 0;
 public:
+	void Reset() {
+		stageNumOld = -1;
+		stageNum = 0;
+		boxColliderMax = 0;
+		circleColliderMax = 0;
+		boxEventColliderMax = 0;
+		slopeColliderMax = 0;
+	}
 	void Initialize();
 	void Load(StageNum _stageNum);
 	void MoveStage(int _stageNum);
@@ -74,12 +87,9 @@ public:
 	void DrawShadow();
 
 	LightsObject* GetLight() { return &light; }
-	ModelObject* GetStageModel() { return &model; }
+	//ModelObject* GetStageModel() { return &model; }
 private:
-	int boxColliderMax = 0;
-	int circleColliderMax = 0;
-	int boxEventColliderMax = 0;
-	int slopeColliderMax = 0;
+
 
 	void SetCollisionSize(int _box, int _circle, int _event,int _slope);
 	void SetStageCollisions();

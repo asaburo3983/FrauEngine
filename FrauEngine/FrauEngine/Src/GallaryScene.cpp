@@ -31,20 +31,20 @@ void GallaryScene::StaticLoad() {
 	auto playerModel = resource->Model("Frau.fbx");
 	playerExModel.Initialize(playerModel, vertexShaderAnim, pixelShader, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_FRONT);
 	playerExModel.InitializeSub(ModelType::SHADOW, vertexShaderAnimShadow, pixelShaderShadow);
-	playerExModel.InitializeSub(ModelType::SUB1, vertexShaderAnim, pixelShaderToon, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_FRONT);	
+	//playerExModel.InitializeSub(ModelType::SUB1, vertexShaderAnim, pixelShaderToon, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_FRONT);	
 	//トゥーンマテリアルの設定
-	auto playerSub1 =playerExModel.GetModelObject(ModelType::SUB1);
-	LoadMaterialLinker("Data/Model/Frau/MatLink/Frau.matlink", "Data/Model/Frau/MatLink/Material/", "Data/Model/Frau/Tex/", playerSub1);
+	//auto playerSub1 =playerExModel.GetModelObject(ModelType::SUB1);
+	//LoadMaterialLinker("Data/Model/Frau/MatLink/Frau.matlink", "Data/Model/Frau/MatLink/Material/", "Data/Model/Frau/Tex/", playerSub1);
 	//プレイヤーオブジェクトの設定
 	player->Setup(&playerExModel);
 
 	auto flowerShopModel = resource->Model("FlowerShop.fbx");
 	flowerShopExModel.Initialize(flowerShopModel, vertexShader, pixelShader, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_BACK);
 	flowerShopExModel.InitializeSub(ModelType::SHADOW, vertexShaderShadow, pixelShaderShadow);
-	flowerShopExModel.InitializeSub(ModelType::SUB1, vertexShader, pixelShaderToon, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_BACK);
+	//flowerShopExModel.InitializeSub(ModelType::SUB1, vertexShader, pixelShaderToon, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_BACK);
 	//トゥーンマテリアルの設定
-	auto flowerShopSub1 = flowerShopExModel.GetModelObject(ModelType::SUB1);
-	LoadMaterialLinker("Data/Model/FlowerShop/MatLink/FlowerShop.matlink", "Data/Model/FlowerShop/MatLink/Material/", "Data/Model/FlowerShop/Tex/", flowerShopSub1);
+	//auto flowerShopSub1 = flowerShopExModel.GetModelObject(ModelType::SUB1);
+	//LoadMaterialLinker("Data/Model/FlowerShop/MatLink/FlowerShop.matlink", "Data/Model/FlowerShop/MatLink/Material/", "Data/Model/FlowerShop/Tex/", flowerShopSub1);
 
 
 	//UI
@@ -293,10 +293,6 @@ void GallaryScene::Draw() {
 	case 0:
 		flowerShopExModel.ModelObject::Draw();
 		player->Draw(ModelType::MAIN);
-		break;
-	case 1:
-		flowerShopExModel.Draw(ModelType::SUB1);
-		player->Draw(ModelType::SUB1);
 		break;
 	}
 

@@ -51,6 +51,7 @@ void TitleScene::Load() {
 	fadeOn = false;
 	sceneMove = false;
 
+	CommonReset();
 }
 void TitleScene::UnLoad() {
 	resource->UnLoadIm("TitleFront.png");
@@ -110,6 +111,7 @@ void TitleScene::Update() {
 			LoadScene("Gallary");
 			break;
 		case (int)TitleStr::OPTION:
+			LoadScene("Endroll");
 			break;
 		case (int)TitleStr::EXIT:
 			gameEnd = true;

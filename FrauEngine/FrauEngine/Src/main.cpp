@@ -7,6 +7,7 @@
 #include "HandyShopScene.h"
 #include "MagicShopScene.h"
 #include "MapScene.h"
+#include "EndrollScene.h"
 
 using namespace DirectX;
 using namespace std;
@@ -33,6 +34,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	MapScene mapScene;
 	HandyShopScene handyShopScene;
 	MagicShopScene magicShopScene;
+	EndrollScene endrollScene;
 
 	app->SetSceneList("Title", &titleScene);
 	app->SetSceneList("FlowerShop", &flowerShopScene);
@@ -40,6 +42,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	app->SetSceneList("Map", &mapScene);
 	app->SetSceneList("HandyShop", &handyShopScene);
 	app->SetSceneList("MagicShop", &magicShopScene);
+	app->SetSceneList("Endroll", &endrollScene);
 
 	app->Load(&titleScene);
 

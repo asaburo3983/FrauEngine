@@ -31,18 +31,18 @@ void ModelExtendObject::InitializeSub(ModelType _modelType,
 
 	//		D3D12_CULL_MODE_FRONT
 	//	);
-	case ModelType::SUB1:
-	//case ModelType::SUB2:
-	//case ModelType::SUB3:
-		modelObject[(int)_modelType - 1].Initialize(resource,
-			_shaderV,
-			_shaderP,
-			_shaderG,
-			_shaderH,
-			_shaderD,
-			_cullMode
-		);
-		break;
+	//case ModelType::SUB1:
+	////case ModelType::SUB2:
+	////case ModelType::SUB3:
+	//	modelObject[(int)_modelType - 1].Initialize(resource,
+	//		_shaderV,
+	//		_shaderP,
+	//		_shaderG,
+	//		_shaderH,
+	//		_shaderD,
+	//		_cullMode
+	//	);
+	//	break;
 
 	}
 
@@ -69,13 +69,13 @@ void ModelExtendObject::Draw(ModelType _modelType) {
 	//	modelObject[objectNum].SetScale(scale * outlienScale);
 	//	modelObject[objectNum].Draw();
 	//	break;
-	case ModelType::SUB1:
+	//case ModelType::SUB1:
 	//case ModelType::SUB2:
 	//case ModelType::SUB3:
-		modelObject[objectNum].SetImGuiEnable(false);
-		modelObject[objectNum].SetAll(pos, angle, scale);
-		modelObject[objectNum].SetAllAnimeState(anime, animeNum, animeSpeed);
-		modelObject[objectNum].Draw();
-		break;
+		//modelObject[objectNum].SetImGuiEnable(false);
+		//modelObject[objectNum].SetAll(pos, angle, scale);
+		//modelObject[objectNum].SetAllAnimeState(anime, animeNum, animeSpeed);
+		//modelObject[objectNum].Draw();
+		//break;
 	}
 }

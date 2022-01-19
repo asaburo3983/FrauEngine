@@ -34,7 +34,7 @@ public:
 	}
 
 	void Initialize();
-	void SetEnable(bool _enable=true, ScenarioName _scenario= ScenarioName::SCENARIO_1);
+	void SetEnable(bool _enable=true, ScenarioName _scenario= ScenarioName::MAX);
 	void Update();
 	void Draw();
 
@@ -42,6 +42,14 @@ public:
 	float GetAlphaUI() { return alphaUI; };
 
 	void EndNovel();
+	bool GetEnd(ScenarioName _num) {
+		return end[(int)_num];
+	}
+	void Reset() {
+		enable = false;
+		count = 0;	
+		alphaUI = 0.0f;
+	}
 private:
 	void InitializeScenario();
 
@@ -107,6 +115,6 @@ private:
 	float alphaUI = 0.0f;	//ƒmƒxƒ‹UI‚ÌA’l
 	ImageObject textBase;
 	ImageObject frame[2];
-
+	bool end[(int)ScenarioName::MAX];
 	
 };

@@ -39,14 +39,38 @@ float4 Sharp(float2 _uv) {
 }
 float4 Outline(float2 _uv ,float4 _baseColor) {
 	float offsetU = 1.0f / 1920.0f;
+	float offsetV = 1.0f / 1080.0f;
+
 	float tex_depth = texDepth.Sample(smp, _uv);
 
+	
 	float4 anser = _baseColor;
+	//２ピクセル分のアウトラインを作成
 	float depthL = texDepth.Sample(smp, _uv + float2(-offsetU, 0));
-	float depthAll = depthL;
-	depthAll /= 1.0f;
+	float depthR = texDepth.Sample(smp, _uv + float2(offsetU, 0));
+	float depthU = texDepth.Sample(smp, _uv + float2(0, -offsetV));
+	float depthD = texDepth.Sample(smp, _uv + float2(0, offsetV));
+
+	float depthL2 = texDepth.Sample(smp, _uv + float2(-offsetU*2, 0));
+	float depthR2 = texDepth.Sample(smp, _uv + float2(offsetU*2, 0));
+	float depthU2 = texDepth.Sample(smp, _uv + float2(0, -offsetV*2));
+	float depthD2 = texDepth.Sample(smp, _uv + float2(0, offsetV*2));
+
+	//float depthL2 = texDepth.Sample(smp, _uv + float2(-offsetU*2, 0));
+	//float depthR2 = texDepth.Sample(smp, _uv + float2(offsetU*2, 0));
+
+	float depthAll = 0;
+	depthAll = max(depthL, depthR);
+	depthAll = max(depthAll, depthU);
+	depthAll = max(depthAll, depthD);
+	depthAll = max(depthAll, depthR2);
+	depthAll = max(depthAll, depthL2);
+	depthAll = max(depthAll, depthU2);
+	depthAll = max(depthAll, depthD2);
+
 	float depthOutline = abs(depthAll - tex_depth) * 100;
 	float3 outlineColor = 0.0f;
+
 	outlineColor = lerp(anser.xyz, outlineColor, depthOutline);
 	return float4(outlineColor, 1);
 

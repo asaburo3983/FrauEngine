@@ -1,4 +1,5 @@
 #include "PlanterSystem.h"
+#include "SoundManager.h"
 void PlanterSystem::Reset() {
 	for (int i = 0; i < 3; i++) {
 		planterSetItem[i] = -1;
@@ -15,12 +16,15 @@ void PlanterSystem::Reset() {
 void PlanterSystem::SetEnable(bool _enable) {
 	auto mouse = MouseInput::GetInstance();
 	auto player = Player::GetInstance();
+	auto sound = SoundManager::GetInstance();
 	if (enable == false) {
 		
 		selectItemNum = -1;
+
 	}
 	enable = _enable;
 	player->IsMove(!enable);
+	sound->GetSE(SoundList_SE::ENTER)->Play();
 }
 void PlanterSystem::Initialize() {
 	auto rc = Resource::GetInstance();
@@ -125,6 +129,10 @@ void PlanterSystem::Update() {
 					bugSurface[i] = bug[i];
 					bugFix[i] = item->GetNotBug(num);
 					bugFixSum = bugFix[0] + bugFix[1] + bugFix[2];
+					//アイテム「バグフィックス」がある場合虫の付きやすさを５％下げる
+					if (item->GetItemNum(13) >= 1) {
+						bugFixSum += item->GetItemNum(13) * 5;
+					}
 				}
 			}
 			
@@ -261,16 +269,16 @@ void PlanterSystem::Mating(int a, int b) {
 			planterSetItem[b] == 0) {
 			matingSeed[i] = 7;
 		}
-		if (planterSetItem[0] == 1 &&
-			planterSetItem[1] == 2) {
+		if (planterSetItem[a] == 1 &&
+			planterSetItem[b] == 2) {
 			matingSeed[i] = 8;
 		}
-		if (planterSetItem[0] == 4 &&
-			planterSetItem[1] == 4) {
+		if (planterSetItem[a] == 4 &&
+			planterSetItem[b] == 4) {
 			matingSeed[i] = 9;
 		}
-		if (planterSetItem[0] == 3 &&
-			planterSetItem[1] == 5) {
+		if (planterSetItem[a] == 3 &&
+			planterSetItem[b] == 5) {
 			matingSeed[i] = 10;
 		}
 		break;
@@ -303,7 +311,7 @@ void PlanterSystem::SeedGrow() {
 
 	//アイテムを減らす処理
 	for (int i = 0; i < 3; i++) {
-		if (planterSetItem[i] == -1) {
+		if (planterSetItem[i] == -1 ) {
 			continue;
 		}
 		item->AddItem(item->GetItemName(planterSetItem[i]), -1);
@@ -311,12 +319,13 @@ void PlanterSystem::SeedGrow() {
 
 	//お金を増やす
 	GetMoney();
+	item->AddMoney(100);
 }
 void PlanterSystem::GetMoney() {
 	auto item = Item::GetInstance();
 
 	for (int i = 0; i < 3; i++) {
-		if (planterSetItem[i] == -1) {
+		if (planterSetItem[i] == -1 || growSeed[i] == false) {
 			continue;
 		}
 		item->AddMoney(item->GetSell(planterSetItem[i]));
@@ -345,6 +354,7 @@ void PlanterSystem::SeedMating() {
 	}
 	if (item->GetItemNum("マジックプランター") == 2) {	
 		Mating(0, 1);
+		Mating(1, 0);
 		//たねぽぽ、らんぽぽ
 		for (int h = 0; h < 2; h++) {
 			for (int i = 0; i < 3; i++) {

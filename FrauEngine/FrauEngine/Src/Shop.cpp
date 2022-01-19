@@ -66,14 +66,18 @@ void Shop::Initialize(std::string _itemCSVPath, std::string _textCSVPath) {
 }
 void Shop::Cancel() {
 	auto mouse = MouseInput::GetInstance();
+	auto sound = SoundManager::GetInstance();
+
 	if (mouse->right == 1) {
 		switch (state) {
 		case State::NORMAL:
 			state = State::BYE;
 			mouse->right++;
+			sound->GetSE(SoundList_SE::ENTER)->Play();
 			break;
 		case State::SELECT:
 			state = State::NORMAL;
+			sound->GetSE(SoundList_SE::ENTER)->Play();
 			break;
 		}
 	}
@@ -82,9 +86,11 @@ void Shop::Cancel() {
 		case State::BUY:
 		case State::NOT_MONEY:
 			state = State::NORMAL;
+			sound->GetSE(SoundList_SE::ENTER)->Play();
 			break;
 		case State::BYE:
 			SetEnable(false);
+			sound->GetSE(SoundList_SE::ENTER)->Play();
 			break;
 		}
 
@@ -110,7 +116,6 @@ void Shop::SelectItem() {
 void Shop::SelectBuyNum() {
 	auto mouse = MouseInput::GetInstance();
 	auto sound = SoundManager::GetInstance();
-
 	if (mouse->left == 1) {
 		if (rightArrow.Hit(mouse->x, mouse->y)) {
 			buyNum++;

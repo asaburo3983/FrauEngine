@@ -27,3 +27,5 @@ void CommonUpdate();
 void CommonDraw();
 
 void CommonDrawNonePostEffect();
+
+void CommonReset();

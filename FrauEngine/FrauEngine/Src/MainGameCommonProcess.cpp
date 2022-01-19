@@ -38,6 +38,7 @@ void LoadModel() {
 	rc->LoadModel("Data/Model/Idea_Billboard/Idea_JoinShop.fbx", "Data/Model/Idea_Billboard/Tex/");
 
 	rc->LoadModel("Data/Model/MagicShop/MagicShop.fbx", "Data/Model/MagicShop/Tex/");
+	rc->LoadModel("Data/Model/Christa/Christa.fbx", "Data/Model/Christa/Tex/");
 
 	rc->LoadModel("Data/Model/FlowerShop/FlowerShop.fbx", "Data/Model/FlowerShop/Tex/");
 	rc->LoadModel("Data/Model/Planter/MagicPlanter.fbx", "Data/Model/Planter/Tex/");
@@ -140,6 +141,8 @@ void LoadSound() {
 	rc->LoadSound("Data/Sound/BGM/BadEnd_BGM.mp3");
 	rc->LoadSound("Data/Sound/BGM/ShindyTheme_BGM.mp3");
 	rc->LoadSound("Data/Sound/BGM/HandyTheme_BGM.mp3");
+	rc->LoadSound("Data/Sound/BGM/Endroll_BGM.mp3");
+
 	//SE
 	rc->LoadSound("Data/Sound/SE/Buy_SE.mp3");
 	rc->LoadSound("Data/Sound/SE/Cancel_SE.mp3");
@@ -149,6 +152,7 @@ void LoadSound() {
 	rc->LoadSound("Data/Sound/SE/Morning_SE.mp3");
 	rc->LoadSound("Data/Sound/SE/Walk_SE.mp3");
 	rc->LoadSound("Data/Sound/SE/NextDay_Jingle.mp3");
+	rc->LoadSound("Data/Sound/SE/TurnPage_SE.mp3");
 	
 }
 void StaticClassSetting() {
@@ -220,7 +224,7 @@ void CommonUpdate() {
 	nextDay->Update();
 
 	//BGM
-	if (nextDay->GetNight()) {
+	if (nextDay->GetNight()|| nextDay->GetMorning()) {
 		sound->GetBGM(SoundList_BGM::FLOWER_SHOP)->SetVolumeMulti(0);
 	}
 
@@ -336,11 +340,32 @@ void CommonDrawNonePostEffect() {
 
 	tutorialSystem->Draw();
 
-
-
 	app->SetColorMulti(Color(1.0f - eventManager->GetFadeCount()-nextDay->GetFade()));
 
-	//ImGui::Begin("FPS");                          //ウィンドウ名になる
-	//ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-	//ImGui::End();
+}
+
+void CommonReset() {
+	Player* player = Player::GetInstance();
+	Stage* stage = Stage::GetInstance();
+	CameraWork* camera = CameraWork::GetInstance();
+	NovelSystem* novelSystem = NovelSystem::GetInstance();
+	TutorialSystem* tutorialSystem = TutorialSystem::GetInstance();
+	EventManager* eventManager = EventManager::GetInstance();
+	HandyShop* handyShop = HandyShop::GetInstance();
+	MagicShop* magicShop = MagicShop::GetInstance();
+	auto normalUI = NormalUI::GetInstance();
+	auto item = Item::GetInstance();
+	auto planterSystem = PlanterSystem::GetInstance();
+	auto nextDay = NextDay::GetInstance();
+	auto soundManager = SoundManager::GetInstance();
+
+	eventManager->Reset();
+	stage->Reset();
+	player->Reset();
+	camera->Reset();
+	novelSystem->Reset();
+	tutorialSystem->Reset();
+	normalUI->Reset();
+	item->Reset();
+	planterSystem->Reset();
 }
