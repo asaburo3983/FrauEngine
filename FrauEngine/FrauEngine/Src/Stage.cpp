@@ -52,7 +52,7 @@ void Stage::Load(StageNum _stageNum) {
 		LoadMaterialLinker("Data/Model/FlowerShop/MatLink/FlowerShop.matlink", "Data/Model/FlowerShop/MatLink/Material/", "Data/Model/FlowerShop/Tex/", &model);
 		model.SetAll(Vector3(-8, 2, 1.8), Vector3(0, 90, 0), Vector3(2, 0.9, 1.5));
 		
-		directionalLightParam.pos = Vector3(12, 25, -21);
+		directionalLightParam.pos = Vector3(12, 25, -21) / 2.0f;
 		directionalLightParam.target = Vector3(0, 0, 0);
 		directionalLightParam.up = Vector3(0, 1, 0);
 		directionalLightParam.fov = 45;
@@ -61,7 +61,7 @@ void Stage::Load(StageNum _stageNum) {
 		break;
 	case StageNum::HANDY_SHOP:
 		//なんでも屋
-		model.Initialize(resource->Model("HandyShop.fbx"), vertexShader, pixelShader/*Toon*/, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_BACK);
+		model.Initialize(resource->Model("HandyShop.fbx"), vertexShader, pixelShader, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_BACK);
 		model.InitializeSub(ModelType::SHADOW, vertexShaderShadow, pixelShaderShadow);
 		LoadMaterialLinker("Data/Model/HandyShop/MatLink/HandyShop.matlink", "Data/Model/HandyShop/MatLink/Material/", "Data/Model/HandyShop/Tex/", &model);
 		model.SetAll(Vector3(-8, 2, 1.8), Vector3(0, 90, 0), Vector3(2, 0.9, 1.5));
@@ -71,7 +71,7 @@ void Stage::Load(StageNum _stageNum) {
 		npc.SetAll(Vector3(0.2, -4.8, 4), Vector3(0, 205, 0), Vector3(0.03f, 0.03f, 0.03f));
 		npc.SetAllAnimeState(true, 1, 0.3);
 		//Dライト設定
-		directionalLightParam.pos = Vector3(12, 25, -21);
+		directionalLightParam.pos = Vector3(12, 25, -21) / 2.0f;
 		directionalLightParam.target = Vector3(0, 0, 0);
 		directionalLightParam.up = Vector3(0, 1, 0);
 		directionalLightParam.fov = 45;
@@ -80,7 +80,7 @@ void Stage::Load(StageNum _stageNum) {
 		break;
 	case StageNum::MAGIC_SHOP:
 		//マジックショップ
-		model.Initialize(resource->Model("MagicShop.fbx"), vertexShader, pixelShaderToon, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_BACK);
+		model.Initialize(resource->Model("MagicShop.fbx"), vertexShader, pixelShader, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_BACK);
 		model.InitializeSub(ModelType::SHADOW, vertexShaderShadow, pixelShaderShadow);
 		//LoadMaterialLinker("Data/Model/FlowerShop/MatLink/FlowerShop.matlink", "Data/Model/FlowerShop/MatLink/Material/", "Data/Model/FlowerShop/Tex/", &model[(int)StageNum::FLOWER_SHOP]);
 		model.SetAll(Vector3(0.1, 1.5, 4.8), Vector3(-90, 180, 0), Vector3(0.11, 0.1, 0.11));
@@ -90,7 +90,7 @@ void Stage::Load(StageNum _stageNum) {
 		npc.SetAll(Vector3(-6.5, -3.9, 0), Vector3(0, 90, 0), Vector3(0.027f, 0.027f, 0.027f));
 		npc.SetAllAnimeState(true, 1, 0.1);
 
-		directionalLightParam.pos = Vector3(12, 25, -21);
+		directionalLightParam.pos = Vector3(12, 25, -21) / 2.0f;
 		directionalLightParam.target = Vector3(0, 0, 0);
 		directionalLightParam.up = Vector3(0, 1, 0);
 		directionalLightParam.fov = 45;
@@ -261,7 +261,7 @@ void Stage::SetLights() {
 	for (int i = 0; i < SPOT_LIGHT; i++) {
 		light.SetSpotLight(i, spotLightParam[i]);
 	}
-	light.SetAmbientLight(0.5);
+	light.SetAmbientLight(0.75);
 }
 void Stage::Update() {
 	auto player = Player::GetInstance();

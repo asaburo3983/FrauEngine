@@ -55,20 +55,7 @@ float4 main(PeraType input) : SV_TARGET{
 
 		return anser;
 	}
-	//色反転
-	if (0) {
-		return float4(float3(1.0, 1.0, 1.0) - tex_color.rgb, 1);
-	}
 
-	//色調を減らす　レトロ
-	if (0) {
-		return float4(tex_color.rgb - fmod(tex_color.rgb, 1.0f/6.0f) , 1);
-	}
-	//彩度をあげる
-	if (0) {
-		return tex_color*1.1f;
-	
-	}
 	//色見を変える
 	if (0) {
 		//赤め

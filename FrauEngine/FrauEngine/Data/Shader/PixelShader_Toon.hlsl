@@ -104,24 +104,44 @@ float4 main(VS_OUT input) : SV_TARGET{
     float offsetX = 1.5f / 1920.0f;
     float offsetY = 1.5f / 1080.0f;
 
+    float offsetShadowX = 1.0f / 2048.0f * 1.5f;
+    float offsetShadowY = 1.0f / 2048.0f * 1.5f;
     //テクスチャカラー
     float4 tex_color = tex.Sample(smp, input.uv);
     if (tex_color.a <= 0.0)discard;//a０値非表示処理
 
-   float3 normal = input.normal;
+    float3 normal = normalize(input.normalDLight);
    if (anotherTexture0 == 1) {
        float4 tex_normal = texAnother0.Sample(smp, input.uv);
        normal = normalize(normal * tex_normal.xyz);
     }
 
-   //ソフトシャドウ　生成
    float sm0 = texDepth.Sample(smpSM, input.posSM.xy);
-   float shadowRate = 0.0f;
-   float zShadoBuffar = input.posSM.z;
-   //簡単なシャドウ
-   shadowRate = 1;
-   if (zShadoBuffar > sm0) {
-       shadowRate = 0.5f;
+   float zShadowBuffar = input.posSM.z;
+   float shadowRate = 1.0f;
+
+   //ソフトシャドウ　生成 描画上ほぼ完璧なソフトシャドウ（高負荷）
+   float smZ[4][4];
+   for (int i = 1; i <= 4; i++) {
+       //縦横４ピクセルずつ判定して影をぼかす
+       smZ[0][i - 1] = texDepth.Sample(smpSM, input.posSM.xy + float2(offsetShadowX * i, 0.0f));
+       smZ[1][i - 1] = texDepth.Sample(smpSM, input.posSM.xy + float2(-offsetShadowX * i, 0.0f));
+       smZ[3][i - 1] = texDepth.Sample(smpSM, input.posSM.xy + float2(0.0f, offsetShadowY * i));
+       smZ[2][i - 1] = texDepth.Sample(smpSM, input.posSM.xy + float2(0.0f, offsetShadowY * i));
+   }
+
+   if (zShadowBuffar > sm0) {
+       shadowRate = 0.6;//一番濃い影状態
+
+       float max = 1.0 - shadowRate;
+       float weight = max / 16.0f;
+       for (int i = 0; i < 4; i++) {
+           for (int h = 0; h < 4; h++) {
+               if (zShadowBuffar < smZ[i][h]) {
+                   shadowRate += weight;
+               }
+           }
+       }
    }
 
    //PBR処理
@@ -169,10 +189,10 @@ float4 main(VS_OUT input) : SV_TARGET{
            shadowRate = 1;
        }
    }
-   //ソフトシャドウ追加
-   //lig *= shadowRate;
 
-   lig += lig * pointLight;// ポイントライトを加算 //先にPBRの理解を完了させるほうがいい
+   //ソフトシャドウはトゥーン処理の後
+
+   lig += lig * pointLight;// ポイントライトを加算
    lig += lig * spotLight;//スポットライトを加算
 
 
@@ -181,11 +201,23 @@ float4 main(VS_OUT input) : SV_TARGET{
    //トゥーン処理
    if (anotherTexture1 == 1) {
        finalColor = tex_color;
+       //finalColor.xyz = lig;
 
-       float4 tex_toon = texAnother1.Sample(smp, float2(1.0f - lig.r, 0.5));
+       float toon = 0;
+       toon = 1.0f - lig.r;
+       if (toon < 0) {
+           toon = 0;
+       }
+       if (toon > 1) {
+           toon = 1;
+       }
+
+       float4 tex_toon = texAnother1.Sample(smp, float2(toon, 0.5));
        finalColor.xyz *= tex_toon;
+       //ソフトシャドウ追加
+       finalColor.xyz *= shadowRate;
    }
-   finalColor.xyz *= shadowRate;
+  //finalColor.xyz *= shadowRate;
    finalColor.a = tex_color.a;
 
    return finalColor;

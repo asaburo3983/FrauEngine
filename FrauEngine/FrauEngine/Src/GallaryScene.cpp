@@ -108,7 +108,7 @@ void GallaryScene::Load() {
 	camera.SetUp(Vector3(0, 1, 0));
 	camera.SetFov(45);
 
-	directionalLightParam.pos = Vector3(12, 25, -21);
+	directionalLightParam.pos = Vector3(12 / 2, 25.0f / 3.0f, -21 / 2);
 	directionalLightParam.target = Vector3(0, 0, 0);
 	directionalLightParam.up = Vector3(0, 1, 0);
 	directionalLightParam.fov = 45;
@@ -116,14 +116,11 @@ void GallaryScene::Load() {
 	directionalLightParam.color = Vector3(1, 1, 1);
 
 	light.SetDirectionalLight(directionalLightParam);
-	light.SetAmbientLight(0.5);
-
+	light.SetAmbientLight(0.75);
 
 
 	camera.Update();
 	light.Update();
-
-	//fade.Reset();
 
 	flowerShopExModel.SetAllAnimeState(false, 1, 0.2);
 	flowerShopExModel.SetAll(Vector3(-8, 2, 1.8), Vector3(0, 90, 0), Vector3(2, 0.9, 1.5));
@@ -166,10 +163,12 @@ void GallaryScene::UnLoad() {
 
 void GallaryScene::Update() {
 	GallaryPlayer* player = GallaryPlayer::GetInstance();
-
+	auto app = Application::GetInstance();
 	//フォトモード切替
 
-
+	if (mouse->right == 1) {
+		LoadScene("Title");
+	}
 
 	//UIの表示
 	if (wideButtonImage[(int)Button::ENABLE].Hit(mouse->x, mouse->y) && mouse->left == 1) {
@@ -264,7 +263,7 @@ void GallaryScene::Update() {
 	//ポストエフェクト切り替え
 	if (wideButtonImage[(int)Button::POSTEFFECT].Hit(mouse->x, mouse->y) && mouse->left == 1) {
 		postEffectNum = (postEffectNum + 1) % (int)AddPostEffect::MAX;
-
+		app->SetBlurPower(1);
 	}
 	Application::GetInstance()->SetAddEffect(postEffectNum);
 }

@@ -25,7 +25,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	
 	auto app = Application::GetInstance();
 	app->Init("FrauBouquet", wx, wy, true);
-	LowApplication::GetInstance()->SetDebugMode(false);
+	//LowApplication::GetInstance()->SetDebugMode(false);
+	LowApplication::GetInstance()->SetDebugMode(true);
 
 	Loading::GetInstance()->Initialize();
 	TitleScene titleScene;

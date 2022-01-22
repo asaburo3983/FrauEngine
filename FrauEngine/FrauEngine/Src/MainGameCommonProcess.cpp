@@ -311,7 +311,7 @@ void CommonDraw() {
 
 	nextDay->Draw();
 	//ポストエフェクト用の処理
-	app->SetDepthOfField(true,960, 512);
+	app->SetDepthOfField(true,960, 540);
 	if (novelSystem->GetAlphaUI() + tutorialSystem->GetAlpha() <= 0) {
 		app->SetAddEffect((int)AddPostEffect::OUTLINE_DEPTHOFFIELD);
 	}

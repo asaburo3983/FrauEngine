@@ -120,46 +120,55 @@ float4 main(VS_OUT input) : SV_TARGET{
     float offsetX = 1.5f / 1920.0f;
     float offsetY = 1.5f / 1080.0f;
 
+    float offsetShadowX = 1.0f / 2048.0f*1.5f;
+    float offsetShadowY = 1.0f / 2048.0f*1.5f;
+
      //テクスチャカラー
      float4 tex_color = tex.Sample(smp, input.uv);
      if (tex_color.a <= 0.0)discard;//a０値非表示処理
 
-    float3 normal = input.normalDLight;
+    float3 normal = normalize(input.normalDLight);
     if (anotherTexture0 == 1) {
         float4 tex_normal = texAnother0.Sample(smp, input.uv);
         normal = normalize(normal * tex_normal.xyz);
     }
-    //ソフトシャドウ　生成
+    
     float sm0 = texDepth.Sample(smpSM, input.posSM.xy);
-    float sm1 = texDepth.Sample(smpSM, input.posSM.xy + float2(offsetX, 0.0f));
-    float sm2 = texDepth.Sample(smpSM, input.posSM.xy + float2(offsetX, offsetY));
-    float sm3 = texDepth.Sample(smpSM, input.posSM.xy + float2(0.0f, offsetY));
+    float zShadowBuffar = input.posSM.z;
+    float shadowRate = 1.0f;
 
-    float shadowRate = 0.0f;
+    //ソフトシャドウ　生成 描画上ほぼ完璧なソフトシャドウ（高負荷）
+    float smZ[4][4];
+    for (int i = 1; i <= 4; i++) {
+        //縦横４ピクセルずつ判定して影をぼかす
+         smZ[0][i - 1] = texDepth.Sample(smpSM, input.posSM.xy + float2(offsetShadowX*i, 0.0f));
+         smZ[1][i - 1] = texDepth.Sample(smpSM, input.posSM.xy + float2(-offsetShadowX * i, 0.0f));
+         smZ[3][i - 1] = texDepth.Sample(smpSM, input.posSM.xy + float2(0.0f, offsetShadowY * i));
+         smZ[2][i - 1] = texDepth.Sample(smpSM, input.posSM.xy + float2(0.0f, offsetShadowY * i));
+    }
 
-    float zShadoBuffar = input.posSM.z;
-    if (zShadoBuffar < sm0) {
-        shadowRate += 1.0f;
-    }
-    if (zShadoBuffar < sm1) {
-        shadowRate += 1.0f;
-    }
-    if (zShadoBuffar < sm2) {
-        shadowRate += 1.0f;
-    }
-    if (zShadoBuffar < sm3) {
-        shadowRate += 1.0f;
-    }
-    shadowRate /= 4.0f;
+    if (zShadowBuffar > sm0) {
+        shadowRate = 0.6;//一番濃い影状態
 
-    if (shadowRate == 0.0f) {
-        shadowRate += 0.25f;//最低の黒さ
+        float max = 1.0 - shadowRate;
+        float weight = max / 16.0f;
+        for (int i = 0; i < 4; i++) {
+            for (int h = 0; h < 4; h++) {
+                if (zShadowBuffar < smZ[i][h]) {
+                    shadowRate += weight;
+                }
+            }
+        }
     }
-    //簡単なシャドウ
-    shadowRate = 1;
-    if (zShadoBuffar > sm0) {
-        shadowRate = 0.5f;
-    }
+
+    //一番簡単なシャドウ
+    //shadowRate = 1;
+    //if (zShadowBuffar > sm0) {
+    //    shadowRate = 0.7f;
+    //}
+
+
+
 
 
     //PBR処理
@@ -171,14 +180,14 @@ float4 main(VS_OUT input) : SV_TARGET{
     // 視線に向かって伸びるベクトルを計算する
     float3 toEye = normalize(CameraPos - input.posDLight);
 
-    float diffuseFromFresnel = CalcDiffuseFromFresnel(normal, -DLightVector, toEye, smooth);
+    float diffuseFromFresnel = CalcDiffuseFromFresnel(normal, -normalize(DLightVector), toEye, smooth);
 
-    float NdotL = saturate(dot(normal, -DLightVector));
+    float NdotL = saturate(dot(normal, -normalize(DLightVector)));
     float3 lambertDiffuse = DLightColor * NdotL / PI;
 
-    float3 diffuse =  diffuseFromFresnel * lambertDiffuse;
+    float3 diffuse = diffuseFromFresnel*lambertDiffuse;
 
-    float spec = CookTorranceSpecular(-DLightVector, toEye, normal, _metallic) * DLightColor;
+    float spec = CookTorranceSpecular(-normalize(DLightVector), toEye, normal, _metallic) * DLightColor;
 
     spec *= lerp(float3(1.0f, 1.0f, 1.0f), specColor, _metallic);
 

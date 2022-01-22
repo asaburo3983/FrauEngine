@@ -49,9 +49,7 @@ void ShaderResourceBufferHeap::CreateShaderResourceBufferHeap(std::string _fileP
 
 	// ファイル分解
 	char buffer[256];
-	ZeroMemory(buffer, sizeof(char) * 256);
-	memcpy(buffer, file_path.c_str(), sizeof(char) * 256);
-
+	sprintf_s(buffer, file_path.c_str());
 	// 記号統一
 	Replace('\\', '/', buffer);
 	std::vector<std::string> split_list;//分割した文字列が入る

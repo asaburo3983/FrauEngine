@@ -11,7 +11,7 @@ namespace frauEngine {
 		ID3D12DescriptorHeap* depthHeap;//深度データのヒープ
 		ID3D12DescriptorHeap* depthSRVHeap;//深度テククチャのヒープ
 
-		int shadowTexSize = 4096;
+		int shadowTexSize = 2048;
 
 	public:
 		static Lights* GetInstance() {
