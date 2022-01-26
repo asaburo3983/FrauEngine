@@ -18,6 +18,8 @@ private:
 	ImageObject titleFront;
 	ImageObject titleBack;
 	ImageObject titleCursor;
+	ImageObject titleCloud;
+
 	enum class TitleStr {
 		START = 0,
 		GALLARY = 1,

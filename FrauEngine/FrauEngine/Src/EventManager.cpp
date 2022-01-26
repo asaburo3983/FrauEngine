@@ -25,7 +25,7 @@ void EventManager::StartDays() {
 	case 1:
 		player->SetPos(Vector3(4.5, -3.9, 5.0));
 		player->SetAngle(Vector3(0, 180, 0));
-		novelSystem->SetEnable(true, ScenarioName::SCENARIO_1);
+		novelSystem->SetEnable(true, ScenarioName::PROLOGUE);
 		camera->SetMoveNum(1);
 		item->AddItem("マジックプランター", 1);//追加
 		item->AddItem("マソハーブの種", 3);
@@ -42,6 +42,22 @@ void EventManager::StartDays() {
 
 		break;
 	case 2:
+		break;
+	case 4:
+		if (novelSystem->GetEnd(ScenarioName::HANDYSHOP_JOIN) &&
+			novelSystem->GetEnd(ScenarioName::MAGICSHOP_JOIN)) {
+			novelSystem->SetEnable(true, ScenarioName::HANDY_EVENT1);
+		}
+		break;
+	case 11:
+		if (novelSystem->GetEnd(ScenarioName::HANDY_EVENT1)) {
+			novelSystem->SetEnable(true, ScenarioName::MAGIC_EVENT1);
+		}
+		break;
+	case 17:
+		if (novelSystem->GetEnd(ScenarioName::MAGIC_EVENT1)) {
+			novelSystem->SetEnable(true, ScenarioName::HANDY_EVENT2);
+		}
 		break;
 	case 31:
 		//100万ラウなければゲームオーバー
@@ -135,6 +151,9 @@ void EventManager::FieldEvent() {
 			
 			scene->LoadScene("Map");
 			stage->MoveStage((int)StageNum::MAP);
+
+		
+
 			break;
 		case (int)EventNum::JOIN_FLOWERSHOP:
 			
@@ -144,10 +163,14 @@ void EventManager::FieldEvent() {
 		case (int)EventNum::JOIN_HANDYSHOP:
 			scene->LoadScene("HandyShop");
 			stage->MoveStage((int)StageNum::HANDY_SHOP);
+
+			
 			break;
 		case (int)EventNum::JOIN_MAGICSHOP:
 			scene->LoadScene("MagicShop");
 			stage->MoveStage((int)StageNum::MAGIC_SHOP);
+
+			
 			break;
 		}
 	}
@@ -177,9 +200,14 @@ void EventManager::JoinTutorial() {
 	case (int)StageNum::MAP:
 		break;
 	case (int)StageNum::HANDY_SHOP:
-	case (int)StageNum::MAGIC_SHOP:
-		//ショップシステムのチュートリアル	
+		novelSystem->SetEnable(true, ScenarioName::HANDYSHOP_JOIN);
 		tutorialSystem->SetEnable(true, 1);
+		
+		break;
+	case (int)StageNum::MAGIC_SHOP:
+		novelSystem->SetEnable(true, ScenarioName::MAGICSHOP_JOIN);
+		tutorialSystem->SetEnable(true, 1);
+		
 		break;
 	}
 

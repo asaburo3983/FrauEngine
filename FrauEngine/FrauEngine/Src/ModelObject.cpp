@@ -49,10 +49,10 @@ void ModelObject::SetResource(frauEngine::FBX* _model) {
 	for (int i = 0; i < (int)frauEngine::ShaderTextureSlot::MODEL_ANOTHER; i++) {
 		anotherResourceBufferHeap[i] = new frauEngine::ShaderResourceBufferHeap[meshMax];
 	}
-
+	anotherResourceEnableOrigine.resize(meshMax);
 	for (int i = 0; i < meshMax; i++) {
 		pbrBufferHeap[i].Create();
-		
+		anotherResourceEnableOrigine[i].resize((int)ShaderTextureSlot::MODEL_ANOTHER);
 	}
 }
 
@@ -234,6 +234,7 @@ void ModelObject::SetAnotherTexture(int _meshNum, std::string _filePath, int _nu
 
 
 	pbrBufferHeap[_meshNum].buffer->anotherTexture[_num] = true;
+	anotherResourceEnableOrigine[_meshNum][_num] = true;
 }
 
 

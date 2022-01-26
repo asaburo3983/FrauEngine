@@ -2,30 +2,30 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\ryose\Desktop\GitHubClone\FrauEngine\FrauEngine\x64\Release\FrauEngine.exe</FullPath>
+      <FullPath>C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\FrauEngine.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\ryose\Desktop\GitHubClone\FrauEngine\FrauEngine\x64\Release\PixelShader_BillBoard.cso</FullPath>
+      <FullPath>C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\PixelShader_BillBoard.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\ryose\Desktop\GitHubClone\FrauEngine\FrauEngine\x64\Release\PixelShader_Texture.cso</FullPath>
+      <FullPath>C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\PixelShader_Texture.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\ryose\Desktop\GitHubClone\FrauEngine\FrauEngine\x64\Release\PixelShader_Water.cso</FullPath>
+      <FullPath>C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\PixelShader_Water.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\ryose\Desktop\GitHubClone\FrauEngine\FrauEngine\x64\Release\VertexShader_BillBoard.cso</FullPath>
+      <FullPath>C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\VertexShader_BillBoard.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\ryose\Desktop\GitHubClone\FrauEngine\FrauEngine\x64\Release\PixelShader_DepthOfField.cso</FullPath>
+      <FullPath>C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\PixelShader_DepthOfField.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\ryose\Desktop\GitHubClone\FrauEngine\FrauEngine\x64\Release\PixelShader_PostEffect.cso</FullPath>
+      <FullPath>C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\PixelShader_PostEffect.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\ryose\Desktop\GitHubClone\FrauEngine\FrauEngine\x64\Release\PixelShader_Toon.cso</FullPath>
+      <FullPath>C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\PixelShader_Toon.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

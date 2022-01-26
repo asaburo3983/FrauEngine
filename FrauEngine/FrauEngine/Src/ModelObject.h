@@ -36,7 +36,7 @@ namespace frauEngine {
 		frauEngine::PBRBufferHeap* pbrBufferHeap;
 
 		frauEngine::ShaderResourceBufferHeap* anotherResourceBufferHeap[(int)frauEngine::ShaderTextureSlot::MODEL_ANOTHER];
-
+		std::vector<vector<bool>> anotherResourceEnableOrigine;
 
 
 	public:
@@ -121,6 +121,16 @@ namespace frauEngine {
 		
 		void SetBillboard(bool _enable) { billboard = _enable; };
 
+		void SetAnotherResourceEnable(int _num,bool _enable) {
+			if (_num >= (int)frauEngine::ShaderTextureSlot::MODEL_ANOTHER) {
+				return;
+			}
+			for (int i = 0; i < meshMax; i++) {
+				if (_enable==false|| anotherResourceEnableOrigine[i][_num] == true) {
+					pbrBufferHeap[i].buffer->anotherTexture[_num] = _enable;
+				}
+			}
+		}
 		ID3D12PipelineState* GetPipelineState() { return pipelineState; };
 		ID3D12RootSignature* GetRootSignature() { return rootSignature; };
 		Vector3 GetPos() { return pos; };

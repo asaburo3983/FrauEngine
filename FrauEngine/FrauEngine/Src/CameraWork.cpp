@@ -21,6 +21,12 @@ void CameraWork::Initialize() {
 	//導入のカメラワーク
 	pos[1] = Vector3(2, 1, -2);
 	target[1] = Vector3(7, 0, 10);
+	//購入＿ハンディのカメラワーク
+	pos[1] = Vector3(2, 1, -2);
+	target[1] = Vector3(0, 3.9, 10);
+	//購入＿マジックのカメラワーク
+	pos[1] = Vector3(2, 1, -2);
+	target[1] = Vector3(7, 0, 10);
 
 
 }
@@ -53,9 +59,58 @@ void CameraWork::PlayerTarget() {
 	camera.SetPos(pos);
 	camera.SetTarget(target);
 }
+void CameraWork::SetPhotoMode(bool _enable) {
+	auto player = Player::GetInstance();
+
+	photoMode = _enable; 
+	//フォトモード有効にしたときだけカメラの位置を変更
+	if (_enable) {
+		Vector3 targetPos = player->GetPos();
+		targetPos.Y += 3.5f;
+		Vector3 cameraPos = player->GetPos();
+		cameraPos.Y += 3.5f;
+		cameraPos.Z -= 5;
+		camera.SetPos(cameraPos);
+		camera.SetTarget(targetPos);
+	}
+}
+void CameraWork::PhotoMode() {
+	auto player = Player::GetInstance();
+	auto key = KeyInput::GetInstance();
+
+	float cameraSpeed = 0.05f;
+	Vector2 cameraMaxDist = { 3.0f ,3.0f };
+	Vector3 cameraPos = camera.GetPos();
+	//キーボードによる移動処理
+	if (key->key[DIK_UP] >= 1) {
+		if (cameraPos.Y < camera.GetTarget().Y + cameraMaxDist.Y) {
+			cameraPos.Y += cameraSpeed;
+		}
+	}
+	if (key->key[DIK_DOWN] >= 1) {
+		if (cameraPos.Y > camera.GetTarget().Y - cameraMaxDist.Y) {
+			cameraPos.Y -= cameraSpeed;
+		}
+	}
+	if (key->key[DIK_RIGHT] >= 1) {
+		if (cameraPos.X < camera.GetTarget().X + cameraMaxDist.X) {
+			cameraPos.X += cameraSpeed;
+		}
+	}
+	if (key->key[DIK_LEFT] >= 1) {
+		if (cameraPos.X > camera.GetTarget().X - cameraMaxDist.X) {
+			cameraPos.X -= cameraSpeed;
+		}
+	}
+
+	camera.SetPos(cameraPos);
+}
 void CameraWork::Updata() {
 
-	if (playerTarget) {
+	if (photoMode) {
+		PhotoMode();
+	}
+	else  if (playerTarget) {
 		PlayerTarget();
 	}
 	else {

@@ -214,10 +214,24 @@ float4 main(VS_OUT input) : SV_TARGET{
 
        float4 tex_toon = texAnother1.Sample(smp, float2(toon, 0.5));
        finalColor.xyz *= tex_toon;
-       //ソフトシャドウ追加
-       finalColor.xyz *= shadowRate;
+
    }
-  //finalColor.xyz *= shadowRate;
+   //鏡面反射
+   //加算
+   float sphereMapU = normal.x / 2 + 0.5f;
+   float sphereMapV = normal.y / 2 + 0.5f;
+   if (anotherTexture4 == 1) {
+       float3 sphereMap = texAnother4.Sample(smp, float2(sphereMapU, sphereMapV)).xyz;
+       finalColor.xyz += sphereMap * ((1.0f - roufhness) / 2.0f + metallic / 2.0f);
+   }
+   //乗算
+   if (anotherTexture5 == 1) {
+       float3 sphereMap = texAnother5.Sample(smp, float2(sphereMapU, sphereMapV)).xyz;
+       finalColor.xyz *= sphereMap * ((1.0f - roufhness) / 2.0f + metallic / 2.0f);
+   }
+   //ソフトシャドウ追加
+   finalColor.xyz *= shadowRate;
+
    finalColor.a = tex_color.a;
 
    return finalColor;

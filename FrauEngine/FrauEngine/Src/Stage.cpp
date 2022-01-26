@@ -61,7 +61,7 @@ void Stage::Load(StageNum _stageNum) {
 		break;
 	case StageNum::HANDY_SHOP:
 		//なんでも屋
-		model.Initialize(resource->Model("HandyShop.fbx"), vertexShader, pixelShader, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_BACK);
+		model.Initialize(resource->Model("HandyShop.fbx"), vertexShader, pixelShaderToon, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_BACK);
 		model.InitializeSub(ModelType::SHADOW, vertexShaderShadow, pixelShaderShadow);
 		LoadMaterialLinker("Data/Model/HandyShop/MatLink/HandyShop.matlink", "Data/Model/HandyShop/MatLink/Material/", "Data/Model/HandyShop/Tex/", &model);
 		model.SetAll(Vector3(-8, 2, 1.8), Vector3(0, 90, 0), Vector3(2, 0.9, 1.5));
@@ -80,9 +80,9 @@ void Stage::Load(StageNum _stageNum) {
 		break;
 	case StageNum::MAGIC_SHOP:
 		//マジックショップ
-		model.Initialize(resource->Model("MagicShop.fbx"), vertexShader, pixelShader, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_BACK);
+		model.Initialize(resource->Model("MagicShop.fbx"), vertexShader, pixelShaderToon, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_BACK);
 		model.InitializeSub(ModelType::SHADOW, vertexShaderShadow, pixelShaderShadow);
-		//LoadMaterialLinker("Data/Model/FlowerShop/MatLink/FlowerShop.matlink", "Data/Model/FlowerShop/MatLink/Material/", "Data/Model/FlowerShop/Tex/", &model[(int)StageNum::FLOWER_SHOP]);
+		LoadMaterialLinker("Data/Model/MagicShop/MatLink/MagicShop.matlink", "Data/Model/MagicShop/MatLink/Material/", "Data/Model/MagicShop/Tex/", &model);
 		model.SetAll(Vector3(0.1, 1.5, 4.8), Vector3(-90, 180, 0), Vector3(0.11, 0.1, 0.11));
 		////NPC初期化
 		npc.Initialize(resource->Model("Christa.fbx"), vertexShaderAnim, pixelShader);
@@ -99,10 +99,9 @@ void Stage::Load(StageNum _stageNum) {
 		break;
 	case StageNum::MAP:
 		//マップ
-		model.Initialize(resource->Model("Map.fbx"), vertexShader, pixelShader, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_BACK);
+		model.Initialize(resource->Model("Map.fbx"), vertexShader, pixelShaderToon, nullptr, nullptr, nullptr, D3D12_CULL_MODE::D3D12_CULL_MODE_BACK);
 		model.InitializeSub(ModelType::SHADOW, vertexShaderShadow, pixelShaderShadow);
-		LoadMaterialLinker("Data/Model/Map/MatLink/Map.matlink", "Data/Model/Map/MatLink/Material/", "Data/Model/map/Tex/", &model);
-
+		
 		model.SetAll(Vector3(0, -0.45, 0), Vector3(0, 90, 0), Vector3(1, 0.7, 1));
 
 		directionalLightParam.pos = Vector3(12, 25, -21);

@@ -183,6 +183,7 @@ void MagicShop::Draw() {
 				}
 			}
 		}
+		strColor.A *= alpha;
 		//アイテム下線
 		shopBaseLine[i].Draw();
 		//アイテム名

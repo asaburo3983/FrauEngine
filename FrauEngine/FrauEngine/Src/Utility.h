@@ -131,6 +131,7 @@ public:
 	}
 	int GetTime() { return time; }
 	void SetTimeMax(int _max) { timeMax = _max; }
+	int GetTimeMax() { return timeMax; }
 };
 //コンソール画面にフォーマット付き文字列を表示
 void DebugOutputFormatString(const char* format, ...);

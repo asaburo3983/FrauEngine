@@ -112,9 +112,6 @@
     <Filter Include="リソース ファイル\Shader\VS\PostEffect">
       <UniqueIdentifier>{d11fd7db-e21f-4fc9-80d0-b39fc14e709a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\InGame\Class\Gallary">
-      <UniqueIdentifier>{7213ba8f-28b2-46a5-b0ad-149d2e0b4055}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\InGame\Scenes\Class">
       <UniqueIdentifier>{ef09ad3f-c85a-418c-865b-24f1c1223ee4}</UniqueIdentifier>
     </Filter>
@@ -177,6 +174,9 @@
     </Filter>
     <Filter Include="ソース ファイル\InGame\Scenes\Scenes\Gallary">
       <UniqueIdentifier>{a754300c-7640-4f43-8b8f-a77bd20b1a10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Scenes\Scenes\OptionScene">
+      <UniqueIdentifier>{0ae39f6f-97c5-4833-af9b-71c90b76fd83}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -288,9 +288,6 @@
     <ClCompile Include="Src\ModelExtendObject.cpp">
       <Filter>ソース ファイル\FrauEngine\Objects\ModelExtend</Filter>
     </ClCompile>
-    <ClCompile Include="Src\GallaryPlayer.cpp">
-      <Filter>ソース ファイル\InGame\Class\Gallary</Filter>
-    </ClCompile>
     <ClCompile Include="Src\FlowerShopScene.cpp">
       <Filter>ソース ファイル\InGame\Scenes\Scenes\FlowerShopScene</Filter>
     </ClCompile>
@@ -368,6 +365,9 @@
     </ClCompile>
     <ClCompile Include="Src\EndrollScene.cpp">
       <Filter>ソース ファイル\InGame\Scenes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\OptionScene.cpp">
+      <Filter>ソース ファイル\InGame\Scenes\Scenes\OptionScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -488,9 +488,6 @@
     <ClInclude Include="Src\ModelExtendObject.h">
       <Filter>ソース ファイル\FrauEngine\Objects\ModelExtend</Filter>
     </ClInclude>
-    <ClInclude Include="Src\GallaryPlayer.h">
-      <Filter>ソース ファイル\InGame\Class\Gallary</Filter>
-    </ClInclude>
     <ClInclude Include="Src\FlowerShopScene.h">
       <Filter>ソース ファイル\InGame\Scenes\Scenes\FlowerShopScene</Filter>
     </ClInclude>
@@ -568,6 +565,9 @@
     </ClInclude>
     <ClInclude Include="Src\EndrollScene.h">
       <Filter>ソース ファイル\InGame\Scenes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\OptionScene.h">
+      <Filter>ソース ファイル\InGame\Scenes\Scenes\OptionScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

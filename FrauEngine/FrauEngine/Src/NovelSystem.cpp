@@ -55,7 +55,14 @@ void NovelSystem::Initialize() {
 
 }
 void NovelSystem::InitializeScenario() {
-	scenario.csv[(int)ScenarioName::SCENARIO_1].LoadCSV("Data/Scenario/0.csv");
+	scenario.csv[(int)ScenarioName::PROLOGUE].LoadCSV("Data/Scenario/0.csv");
+	scenario.csv[(int)ScenarioName::HANDYSHOP_JOIN].LoadCSV("Data/Scenario/HandyShopJoin.csv");
+	scenario.csv[(int)ScenarioName::MAGICSHOP_JOIN].LoadCSV("Data/Scenario/MagicShopJoin.csv");
+	
+	scenario.csv[(int)ScenarioName::HANDY_EVENT1].LoadCSV("Data/Scenario/HandyEvent1.csv");
+	scenario.csv[(int)ScenarioName::HANDY_EVENT2].LoadCSV("Data/Scenario/HandyEvent2.csv");
+	scenario.csv[(int)ScenarioName::MAGIC_EVENT1].LoadCSV("Data/Scenario/MagicEvent1.csv");
+
 	scenario.csv[(int)ScenarioName::HAPPY_END].LoadCSV("Data/Scenario/HappyEnd.csv");
 	scenario.csv[(int)ScenarioName::BAD_END].LoadCSV("Data/Scenario/BadEnd.csv");
 
@@ -64,8 +71,13 @@ void NovelSystem::InitializeScenario() {
 	LoadPage();
 }
 void NovelSystem::SetEnable(bool _enable, ScenarioName _scenario) {
+
+	if (_enable == true && (end[(int)_scenario] == true || start[(int)_scenario] == true)) {
+		return;
+	}
 	enable = _enable;
-	
+
+
 
 	auto player = Player::GetInstance();
 	player->IsMove(!enable);
@@ -79,7 +91,15 @@ void NovelSystem::SetEnable(bool _enable, ScenarioName _scenario) {
 	if (_scenario != ScenarioName::MAX) {
 		scenario.num = (int)_scenario;
 	}
+	if (_enable == true) {
 
+		scenario.page = 1;
+		start[scenario.num] = true;
+		LoadPage();
+		charaAlpha[0] = 0;
+		charaAlpha[1] = 0;
+
+	}
 }
 
 void NovelSystem::LoadPage() {
@@ -145,8 +165,15 @@ void NovelSystem::Update() {
 
 		TurnPage();
 		switch (scenario.num) {
-		case (int)ScenarioName::SCENARIO_1:
+		case (int)ScenarioName::PROLOGUE:
+		case (int)ScenarioName::MAGICSHOP_JOIN:
+		case (int)ScenarioName::MAGIC_EVENT1:
 			sound->PlayFade(SoundList_BGM::SHINDY_THEME);
+			break;
+		case (int)ScenarioName::HANDYSHOP_JOIN:
+		case (int)ScenarioName::HANDY_EVENT1:
+		case (int)ScenarioName::HANDY_EVENT2:
+			sound->PlayFade(SoundList_BGM::HANDY_THEME);
 			break;
 		case (int)ScenarioName::HAPPY_END:
 			sound->PlayFade(SoundList_BGM::HAPPY_END);
@@ -161,8 +188,15 @@ void NovelSystem::Update() {
 			count--;
 		}
 		switch (scenario.num) {
-		case (int)ScenarioName::SCENARIO_1:
+		case (int)ScenarioName::PROLOGUE:
+		case (int)ScenarioName::MAGICSHOP_JOIN:
+		case (int)ScenarioName::MAGIC_EVENT1:
 			sound->StopFade(SoundList_BGM::SHINDY_THEME);
+			break;
+		case (int)ScenarioName::HANDYSHOP_JOIN:
+		case (int)ScenarioName::HANDY_EVENT1:
+		case (int)ScenarioName::HANDY_EVENT2:
+			sound->StopFade(SoundList_BGM::HANDY_THEME);
 			break;
 		case (int)ScenarioName::HAPPY_END:
 			sound->GetBGM(SoundList_BGM::HAPPY_END)->Stop();

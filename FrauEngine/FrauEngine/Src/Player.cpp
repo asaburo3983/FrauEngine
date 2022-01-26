@@ -75,7 +75,7 @@ void Player::SetStartPos() {
 		model.SetAngle(Vector3(0, 0, 0));
 		break;
 	case (int)StageNum::HANDY_SHOP:
-		model.SetPos(Vector3(-2.55, -3.9f, -2));
+		model.SetPos(Vector3(0, -3.9f, -2));
 		model.SetAngle(Vector3(0, 0, 0));
 		break;
 	case (int)StageNum::MAGIC_SHOP:
@@ -148,7 +148,7 @@ void Player::AnimationControl() {
 				KEY->key[DIK_W] > 0 ||
 				KEY->key[DIK_S] > 0) {			
 				model.SetAnimeNum(2);
-				model.SetAnimeSpeed(0.4f);
+				model.SetAnimeSpeed(0.5f);
 				
 				walkSoundCount++;
 				if (walkSoundCount > walkSoundCountMax) {

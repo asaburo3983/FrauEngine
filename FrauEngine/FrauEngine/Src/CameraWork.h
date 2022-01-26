@@ -21,6 +21,7 @@ private:
 	float lerpSpeed = 0.01f;
 
 	bool playerTarget = false;
+	bool photoMode = false;
 public:
 	static CameraWork* GetInstance() {
 		static CameraWork cw;
@@ -34,7 +35,7 @@ public:
 	void SetLerpSpeed(float _speed) { lerpSpeed = _speed; }
 
 	CameraObject* GetCamera() { return &camera;}
-
+	void SetPhotoMode(bool _enable);
 	void Reset() {
 		moveNumOld = 0;
 		moveNum = 0;
@@ -45,4 +46,5 @@ public:
 private:
 	void Move();
 	void PlayerTarget();
+	void PhotoMode();
 };

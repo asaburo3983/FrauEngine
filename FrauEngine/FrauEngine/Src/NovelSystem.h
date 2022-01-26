@@ -7,10 +7,13 @@
 using namespace frauEngine;
 
 enum class ScenarioName {
-	SCENARIO_1,
-	SCENARIO_2,
-	SCENARIO_3,
-	SCENARIO_4,
+	PROLOGUE,
+	HANDYSHOP_JOIN,
+	MAGICSHOP_JOIN,
+	HANDY_EVENT1,
+	HANDY_EVENT2,
+	MAGIC_EVENT1,
+
 	HAPPY_END,
 	BAD_END,
 	MAX
@@ -115,6 +118,8 @@ private:
 	float alphaUI = 0.0f;	//ƒmƒxƒ‹UI‚ÌA’l
 	ImageObject textBase;
 	ImageObject frame[2];
+
+	bool start[(int)ScenarioName::MAX];
 	bool end[(int)ScenarioName::MAX];
 	
 };

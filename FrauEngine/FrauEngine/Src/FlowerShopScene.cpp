@@ -22,10 +22,6 @@ void FlowerShopScene::StaticLoad() {
 
 	HandyShop* handyShop = HandyShop::GetInstance();
 
-
-
-
-
 	SetObjectList(player->GetModel(), "Player");
 	SetObjectList(camera->GetCamera(), "Camera");
 	SetObjectList(stage->GetLight(), "Lights");

@@ -14,7 +14,7 @@ class FlowerShopScene : public Scene {
 private:
 	Loading loading;
 
-	
+	bool IsPostEffect = true;
 private:
 
 

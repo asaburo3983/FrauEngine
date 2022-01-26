@@ -172,7 +172,7 @@ void StaticClassSetting() {
 
 	eventManager->Initialize();
 	stage->Initialize();
-	player->Initialize(0.04 * 5, 9.0f);
+	player->Initialize(0.04 * 2, 9.0f);
 	camera->Initialize();
 	novelSystem->Initialize();
 	tutorialSystem->Initialize();
@@ -229,10 +229,26 @@ void CommonUpdate() {
 	}
 
 	if (novelSystem->GetEnable()) {
-		//BGMを再生する
+		//BGMをフェードしてとめる
 		switch (stage->GetStageNum()) {
 		case (int)StageNum::FLOWER_SHOP:
 			sound->StopFade(SoundList_BGM::FLOWER_SHOP);
+			break;
+		case (int)StageNum::HANDY_SHOP:
+			sound->StopFade(SoundList_BGM::HANDY_SHOP);
+			break;
+		case (int)StageNum::MAGIC_SHOP:
+			sound->StopFade(SoundList_BGM::MAGIC_SHOP);
+			break;
+		case (int)StageNum::MAP:
+			sound->StopFade(SoundList_BGM::MAP);
+			break;
+		}
+		switch (stage->GetStageNumOld()) {
+		case (int)StageNum::FLOWER_SHOP:
+			if (stage->GetStageNumOld() != stage->GetStageNum()) {
+				sound->StopFade(SoundList_BGM::FLOWER_SHOP);
+			}
 			break;
 		case (int)StageNum::HANDY_SHOP:
 			sound->StopFade(SoundList_BGM::HANDY_SHOP);

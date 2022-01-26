@@ -6,7 +6,8 @@ void NormalUI::Initialize() {
 	auto rc = Resource::GetInstance();
 
 	dayBase.SetResource(rc->Image("DayBase.png"));
-	dayBase.SetAll(Vector2(170, 170));
+	dayBase.SetAll(Vector2(0,0));
+	dayBase.SetCenter(false);
 
 	moneyBase.SetResource(rc->Image("MoneyBase.png"));
 	moneyBase.SetAll(Vector2(1650, 100), Vector2(1, 1), 0, 1);
@@ -131,12 +132,17 @@ void NormalUI::Draw() {
 	//日付ベース
 	dayBase.Draw();
 	//日付　文字
-	akazukin->DrawString("5", Vector2(90, 170), 6, Color(107, 72, 46, 1), true);
+	akazukin->DrawString("5", Vector2(80, 170), 6, Color(107, 72, 46, 1), true);
 	char dayStr[50];
 	sprintf_s(dayStr, "%d", eventManager->GetDays());
-	akazukin->DrawString(dayStr, Vector2(220, 230), 5, Color(107, 72, 46, 1), true);
+	if (eventManager->GetDays() > 9) {
+		akazukin->DrawString(dayStr, Vector2(230, 230), 5, Color(107, 72, 46, 1), true);
+	}
+	else {
+		akazukin->DrawString(dayStr, Vector2(200, 230), 5, Color(107, 72, 46, 1), true);
+	}
 	sprintf_s(dayStr, "のこり%d日", 31-eventManager->GetDays());
-	akazukin->DrawString(dayStr, Vector2(190, 280), 2.5, Color(200, 20, 20, 1), true);
+	akazukin->DrawString(dayStr, Vector2(190, 320), 2.5, Color(200, 20, 20, 1), true);
 
 	if (inventoryAlpha > 0) {
 		//アイテムベース

@@ -8,6 +8,7 @@
 #include "MagicShopScene.h"
 #include "MapScene.h"
 #include "EndrollScene.h"
+#include "OptionScene.h"
 
 using namespace DirectX;
 using namespace std;
@@ -26,7 +27,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	auto app = Application::GetInstance();
 	app->Init("FrauBouquet", wx, wy, true);
 	//LowApplication::GetInstance()->SetDebugMode(false);
-	LowApplication::GetInstance()->SetDebugMode(true);
+	LowApplication::GetInstance()->SetDebugMode(false);
 
 	Loading::GetInstance()->Initialize();
 	TitleScene titleScene;
@@ -36,6 +37,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	HandyShopScene handyShopScene;
 	MagicShopScene magicShopScene;
 	EndrollScene endrollScene;
+	OptionScene optionScene;
 
 	app->SetSceneList("Title", &titleScene);
 	app->SetSceneList("FlowerShop", &flowerShopScene);
@@ -44,6 +46,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	app->SetSceneList("HandyShop", &handyShopScene);
 	app->SetSceneList("MagicShop", &magicShopScene);
 	app->SetSceneList("Endroll", &endrollScene);
+	app->SetSceneList("Option", &optionScene);
 
 	app->Load(&titleScene);
 

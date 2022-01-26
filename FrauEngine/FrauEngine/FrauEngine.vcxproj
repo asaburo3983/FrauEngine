@@ -172,7 +172,6 @@
     <ClCompile Include="Src\EventManager.cpp" />
     <ClCompile Include="Src\Fade.cpp" />
     <ClCompile Include="Src\FBX.cpp" />
-    <ClCompile Include="Src\GallaryPlayer.cpp" />
     <ClCompile Include="Src\GallaryScene.cpp" />
     <ClCompile Include="Src\GameMathLib.cpp" />
     <ClCompile Include="Src\HandyShopScene.cpp">
@@ -195,6 +194,7 @@
     <ClCompile Include="Src\MapScene.cpp" />
     <ClCompile Include="Src\NextDay.cpp" />
     <ClCompile Include="Src\NormalUI.cpp" />
+    <ClCompile Include="Src\OptionScene.cpp" />
     <ClCompile Include="Src\PlanterSystem.cpp" />
     <ClCompile Include="Src\Shop.cpp" />
     <ClCompile Include="Src\SlopeCollider.cpp" />
@@ -246,6 +246,7 @@
     <ClInclude Include="Src\MapScene.h" />
     <ClInclude Include="Src\NextDay.h" />
     <ClInclude Include="Src\NormalUI.h" />
+    <ClInclude Include="Src\OptionScene.h" />
     <ClInclude Include="Src\PlanterSystem.h" />
     <ClInclude Include="Src\Shop.h" />
     <ClInclude Include="Src\SlopeCollider.h" />
@@ -257,7 +258,6 @@
     <ClInclude Include="Src\EffekseerDX12.h" />
     <ClInclude Include="Src\Fade.h" />
     <ClInclude Include="Src\FBX.h" />
-    <ClInclude Include="Src\GallaryPlayer.h" />
     <ClInclude Include="Src\GallaryScene.h" />
     <ClInclude Include="Src\GameMathLib.h" />
     <ClInclude Include="Src\ImageObject.h" />

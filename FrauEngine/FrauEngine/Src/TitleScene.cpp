@@ -33,6 +33,10 @@ void TitleScene::Load() {
 	auto GallaryStr = resource->LoadIm("Data/Image/Title/GallaryStr.png");
 	auto OptionStr = resource->LoadIm("Data/Image/Title/OptionStr.png");
 	auto ExitStr = resource->LoadIm("Data/Image/Title/ExitStr.png");
+	auto cloud = resource->LoadIm("Data/Image/Title/TitleCloud.png");
+
+	titleCloud.SetResource(cloud);
+	titleCloud.SetAll(Vector2(960, 540));
 
 	titleFront.SetResource(TitleFront);
 	titleFront.SetAll(Vector2(960, 540), Vector2(1, 1), 0, 1);
@@ -61,6 +65,7 @@ void TitleScene::UnLoad() {
 	resource->UnLoadIm("GallaryStr.png");
 	resource->UnLoadIm("OptionStr.png");
 	resource->UnLoadIm("ExitStr.png");
+	resource->UnLoadIm("TitleCloud.png");
 }
 
 void TitleScene::Update() {
@@ -111,7 +116,7 @@ void TitleScene::Update() {
 			LoadScene("Gallary");
 			break;
 		case (int)TitleStr::OPTION:
-			LoadScene("Endroll");
+			LoadScene("Option");
 			break;
 		case (int)TitleStr::EXIT:
 			gameEnd = true;
@@ -133,9 +138,12 @@ void TitleScene::Draw() {
 
 	titleCursor.Draw();
 
+	
 	for (int i = 0; i < (int)TitleStr::MAX; i++) {
 		titleStr[i].Draw();
 	}
+
+	titleCloud.Draw();
 
 	app->SetColorMulti();
 
