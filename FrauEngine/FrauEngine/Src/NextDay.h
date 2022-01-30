@@ -3,6 +3,8 @@
 #include "Objects.h"
 #include "EventManager.h"
 #include "PlanterSystem.h"
+#include "Save.h"
+
 using namespace frauEngine;
 
 class NextDay {
@@ -15,6 +17,8 @@ private:
 	ImageObject yes;
 	ImageObject no;
 	ImageObject morningBase;
+
+	ImageObject seed[6][3];
 
 	bool processEnable = false;
 	bool enable = false;
@@ -33,9 +37,13 @@ public:
 	}
 
 	void SetEnable(bool _enable) { 
+		auto mouse = MouseInput::GetInstance();
 		enable = _enable; 
 		if (enable)
 			processEnable = true;
+
+		//多重クリックの阻止のためにフレーム数を増加
+		mouse->left = 2;
 	}
 	void SetMorning(bool _enable) { morning = _enable; }
 	bool GetNight() { return night; }

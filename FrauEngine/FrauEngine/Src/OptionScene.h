@@ -3,7 +3,6 @@
 #include "Object.h"
 
 #include "Loading.h"
-#include "Fade.h"
 
 #include "MainGameCommonProcess.h"
 using namespace frauEngine;
@@ -14,7 +13,9 @@ class OptionScene : public Scene {
 private:
 	Loading loading;
 
-	ImageObject backButton;
+	ImageObject backSceneButton;
+	ImageObject backTitleButton;
+
 	ImageObject base;
 	ImageObject bar[3];
 	ImageObject miniButton[3];

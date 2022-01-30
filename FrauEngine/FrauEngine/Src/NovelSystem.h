@@ -48,10 +48,39 @@ public:
 	bool GetEnd(ScenarioName _num) {
 		return end[(int)_num];
 	}
+	void SetStart(ScenarioName _num,bool _end) {
+		start[(int)_num] = _end;
+	}
+	void SetEnd(ScenarioName _num,bool _end) {
+		end[(int)_num] = _end;
+	}
+
 	void Reset() {
 		enable = false;
 		count = 0;	
 		alphaUI = 0.0f;
+
+		for (int i = 0; i < (int)ScenarioName::MAX; i++) {
+			start[i] = false;
+			end[i] = false;
+		}
+
+		charaAlpha[0] = 0;
+		charaAlpha[1] = 0;
+
+		count = 0;
+		alphaUI = 0.0f;	//ƒmƒxƒ‹UI‚ÌA’l
+
+		autoMode = false;
+		autoCount = 0;
+
+		
+		scenario.num = 0;
+		scenario.page = 1;
+		scenario.leftCharaNumOld = -1;
+		scenario.rightCharaNumOld = -1;
+		scenario.leftCharaNum = -1;
+		scenario.rightCharaNum = -1;
 	}
 private:
 	void InitializeScenario();
@@ -59,6 +88,7 @@ private:
 	
 	void TurnPage();
 	void LoadPage();
+	void ScenarioEnd();
 
 	void DrawChara();
 	void DrawUI();
@@ -118,6 +148,14 @@ private:
 	float alphaUI = 0.0f;	//ƒmƒxƒ‹UI‚ÌA’l
 	ImageObject textBase;
 	ImageObject frame[2];
+
+	bool autoMode = false;
+	int autoCount = 0;
+	int autoCountMax = 120;
+	int autoSpeed = 6;
+
+	ImageObject autoButton;
+	ImageObject skipButton;
 
 	bool start[(int)ScenarioName::MAX];
 	bool end[(int)ScenarioName::MAX];

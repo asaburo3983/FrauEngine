@@ -29,6 +29,7 @@ public:
 	}
 	void Initialize();
 	void SetMoveNum(int _moveNum);
+	int GetMoveNum() { return moveNum; }
 	void SetPlayerTarget(bool _enable) { playerTarget = _enable; }
 	void Updata();
 
@@ -42,6 +43,8 @@ public:
 		lerpCount = 0.0f;
 		lerpSpeed = 0.01f;
 		playerTarget = false;
+		SetMoveNum(moveNum);
+		SetPlayerTarget(playerTarget);
 	}
 private:
 	void Move();

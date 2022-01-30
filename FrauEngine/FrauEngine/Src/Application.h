@@ -18,8 +18,11 @@ namespace frauEngine {
 
 		Scene* scene;
 		Scene* sceneOld=nullptr;
-		std::unordered_map<std::string, Scene*> sceneList;
+		string sceneStr = "";
+		string sceneOldStr = "";
 
+		std::unordered_map<std::string, Scene*> sceneList;
+		
 		int loadTime = 0;//ÉçÅ[ÉhíÜÇ©Ç«Ç§Ç©
 		bool loaded = false;
 		int loadTimeMaxFrame = 15;
@@ -39,11 +42,11 @@ namespace frauEngine {
 		void Init(const char* _windowName, int _windowSizeX, int _windowSizeY, bool _fullscreen);
 		void UnInit();
 		void SetSceneList(std::string _str, Scene* _scene);
-		void Load(Scene* _scene);
 		void Load(std::string _nextScene);
 		void Loop();
 		void LoadLoop();
 		void LoadScene();
+		string GetSceneOldStr() { return sceneOldStr; };
 
 		void SetLoadTimeMaxFrame(int _maxFrame) { loadTimeMaxFrame = _maxFrame; }
 

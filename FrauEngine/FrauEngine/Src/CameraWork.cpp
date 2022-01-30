@@ -22,11 +22,12 @@ void CameraWork::Initialize() {
 	pos[1] = Vector3(2, 1, -2);
 	target[1] = Vector3(7, 0, 10);
 	//購入＿ハンディのカメラワーク
-	pos[1] = Vector3(2, 1, -2);
-	target[1] = Vector3(0, 3.9, 10);
+	pos[2] = Vector3(-2, 3, -6);
+	target[2] = Vector3(0, 0, 2);
+
 	//購入＿マジックのカメラワーク
-	pos[1] = Vector3(2, 1, -2);
-	target[1] = Vector3(7, 0, 10);
+	pos[3] = Vector3(0, 2, -5);
+	target[3] = Vector3(-7, 0, 0);
 
 
 }

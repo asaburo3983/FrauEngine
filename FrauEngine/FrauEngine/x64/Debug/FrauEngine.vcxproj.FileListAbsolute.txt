@@ -1,5 +1,0 @@
-C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Debug\PixelShader_BillBoard.cso
-C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Debug\PixelShader_Texture.cso
-C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Debug\PixelShader_Water.cso
-C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Debug\VertexShader_BillBoard.cso
-C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Debug\PixelShader_Toon.cso

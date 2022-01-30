@@ -23,7 +23,6 @@ void MagicShopScene::StaticLoad() {
 	SetObjectList(player->GetModel(), "Player");
 	SetObjectList(camera->GetCamera(), "Camera");
 	SetObjectList(stage->GetLight(), "Lights");
-	//SetObjectList(stage->GetStageModel(),"MazigSgp");
 }
 
 
@@ -38,8 +37,10 @@ void MagicShopScene::Load() {
 	eventManager->SetScene(this);
 
 
-	//ステージのモデルデータはリロードしている
-	stage->Load(StageNum::MAGIC_SHOP);
+	auto app = Application::GetInstance();
+	if (app->GetSceneOldStr() != "Option") {
+		stage->Load(StageNum::MAGIC_SHOP);
+	}
 }
 
 

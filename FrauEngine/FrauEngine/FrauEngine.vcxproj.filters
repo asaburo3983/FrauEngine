@@ -178,6 +178,9 @@
     <Filter Include="ソース ファイル\InGame\Scenes\Scenes\OptionScene">
       <UniqueIdentifier>{0ae39f6f-97c5-4833-af9b-71c90b76fd83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\InGame\Scenes\Class\Save">
+      <UniqueIdentifier>{d2776ed5-8901-495a-82e6-75b9d82dedd9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\imgui.cpp">
@@ -273,9 +276,6 @@
     <ClCompile Include="Src\Utility.cpp">
       <Filter>ソース ファイル\FrauEngine\Library</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Fade.cpp">
-      <Filter>ソース ファイル\InGame\Class\Global</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Loading.cpp">
       <Filter>ソース ファイル\InGame\Class\Global</Filter>
     </ClCompile>
@@ -368,6 +368,9 @@
     </ClCompile>
     <ClCompile Include="Src\OptionScene.cpp">
       <Filter>ソース ファイル\InGame\Scenes\Scenes\OptionScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Save.cpp">
+      <Filter>ソース ファイル\InGame\Scenes\Class\Save</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -470,9 +473,6 @@
     <ClInclude Include="Src\Utility.h">
       <Filter>ソース ファイル\FrauEngine\Library</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Fade.h">
-      <Filter>ソース ファイル\InGame\Class\Global</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Loading.h">
       <Filter>ソース ファイル\InGame\Class\Global</Filter>
     </ClInclude>
@@ -568,6 +568,9 @@
     </ClInclude>
     <ClInclude Include="Src\OptionScene.h">
       <Filter>ソース ファイル\InGame\Scenes\Scenes\OptionScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Save.h">
+      <Filter>ソース ファイル\InGame\Scenes\Class\Save</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -61,30 +61,19 @@ void frauEngine::Application::UnInit() {
 void Application::SetSceneList(std::string _str, Scene* _scene) {
 	sceneList[_str] = _scene;
 }
-void frauEngine::Application::Load(Scene* _scene) {
-	
-	loadTime = 0;
-	loaded = false;
-
-	sceneOld = scene;
-	if (sceneOld != nullptr) {
-		sceneOld->UnLoad();
-	}
-	scene = _scene;
-
-	scene->Init();
-
-	scene->LoadFrontLoad();
-
-	std::thread loadLoopThread(&frauEngine::Application::LoadLoop,this);
-
-	std::thread loadSceneThread(&frauEngine::Application::LoadScene,this);
-
-	loadLoopThread.join();
-	loadSceneThread.join();
-}
 void Application::Load(string _nextScene) {
-	
+
+	auto mouse = MouseInput::GetInstance();
+
+	//シーンをまたいだボタンを連打しないためにフレーム数をずらす
+	mouse->left = 2;
+	mouse->right = 2;
+
+	//シーン名を今と前のシーン名を保存しておく
+	sceneOldStr = sceneStr;
+	sceneStr = _nextScene;
+
+
 	loadTime = 0;
 	loaded = false;
 
@@ -250,4 +239,5 @@ void frauEngine:: Application::LoadScene() {
 	loadTime = 1;
 	loaded = true;
 }
+
 

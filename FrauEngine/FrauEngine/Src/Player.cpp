@@ -5,7 +5,6 @@
 
 Player::Player() {
 	KEY = KeyInput::GetInstance();
-	
 }
 void Player::Initialize(float _moveSpeed, float _rotaSpeed) {
 	auto resource = Resource::GetInstance();
@@ -54,7 +53,6 @@ void Player::Initialize(float _moveSpeed, float _rotaSpeed) {
 		vertexShaderBillBoard,
 		pixelShaderBillBoard
 	);
-	//
 
 	model.SetScale(Vector3(0.03f, 0.03f, 0.03f));
 	model.SetAngle(Vector3(0, 180, 0));
@@ -106,8 +104,14 @@ void Player::Update() {
 	if (isAnimation) {
 		AnimationControl();
 	}
-	if (isMove) {
+	if (isMove &&
+		model.GetAnimeNum() != 3 &&
+		model.GetAnimeNum() != 4 ) {
 		Move();
+	}
+	else if(model.GetAnimeNum() == 3 || model.GetAnimeNum() == 4){
+		float target = -1, targetX = -1, targetY = 270;
+		SetVector(target, targetX, targetY);
 	}
 	if (isCollision) {
 		Collision();
@@ -117,9 +121,17 @@ void Player::Update() {
 
 void Player::AnimationControl() {
 	auto sound = SoundManager::GetInstance();
-	
-	//‚µ‚á‚ª‚Ýƒ‚[ƒVƒ‡ƒ“
 	auto planter = PlanterSystem::GetInstance();
+	auto novelSystem = NovelSystem::GetInstance();
+
+	//ƒmƒxƒ‹’†‚ÍStayó‘Ô‚ÅŒÅ’è
+	if (novelSystem->GetEnable()) {
+		model.SetAnimeNum(1);
+		model.SetAnimeSpeed(0.3f);
+		walkSoundCount = 0;
+		return;
+	}
+
 	if (planter->GetEnable()) {
 		if (sitAnimCount < sitAnimCountMax) {
 			model.SetAnimeNum(3);
@@ -165,59 +177,33 @@ void Player::AnimationControl() {
 		}
 	}
 }
-void Player::Move() {
-	posOld = model.GetPos();
-	Vector3 pos;
-	Vector3 angle;
-	
-	pos = model.GetPos();
-	angle = model.GetAngle();
+void Player::SetVector(float _target, float _targetX, float _targetY) {
+	Vector3 angle = model.GetAngle();
 
-	float target=-1,targetX=-1, targetY=-1;
-	if (KEY->key[DIK_A] > 0) {
-		 pos.X-= moveSpeed;
-		 targetY = 270;
-	}
-	else if (KEY->key[DIK_D] > 0) {
-		pos.X += moveSpeed;
-		targetY = 90;
-	}	
-
-	if (KEY->key[DIK_W] > 0) {
-		pos.Z += moveSpeed;
-		targetX = 0;
-		if (angle.Y > 180) {
-			targetX = 360;
-		}
-	}
-	else if (KEY->key[DIK_S] > 0.0f) {
-		pos.Z -= moveSpeed;	
-		targetX = 180;
-	}
 	//Œü‚«‚ÌŒvŽZ
-	if (targetX != -1 && targetY != -1) {
-		if (targetX == 360 || targetX == 0) {
-			if (targetY > 180) {
-				targetX = 360;
+	if (_targetX != -1 && _targetY != -1) {
+		if (_targetX == 360 || _targetX == 0) {
+			if (_targetY > 180) {
+				_targetX = 360;
 			}
 			else {
-				targetX = 0;
+				_targetX = 0;
 			}
 		}
-		target = (targetX + targetY) / 2;
+		_target = (_targetX + _targetY) / 2;
 	}
 	else {
-		if (targetX>=0) {
-			target = targetX;
+		if (_targetX >= 0) {
+			_target = _targetX;
 		}
 		else {
-			target = targetY;
+			_target = _targetY;
 		}
 	}
 	//‰ñ“]ˆ—
-	if (target != -1) {
-		if (target > angle.Y) {
-			float tmp = target - angle.Y;
+	if (_target != -1) {
+		if (_target > angle.Y) {
+			float tmp = _target - angle.Y;
 			if (tmp <= 180) {
 				angle.Y += rotaSpeed;
 			}
@@ -225,8 +211,8 @@ void Player::Move() {
 				angle.Y -= rotaSpeed;
 			}
 		}
-		else if (target < angle.Y) {
-			int tmp = angle.Y - target;
+		else if (_target < angle.Y) {
+			int tmp = angle.Y - _target;
 			if (tmp < 180) {
 				angle.Y -= rotaSpeed;
 			}
@@ -241,8 +227,41 @@ void Player::Move() {
 			angle.Y = 0;
 		}
 	}
-	model.SetPos(pos);
+
 	model.SetAngle(angle);
+}
+void Player::Move() {
+	posOld = model.GetPos();
+	Vector3 pos = model.GetPos();
+	Vector3 angle = model.GetAngle();
+
+	float target = -1, targetX = -1, targetY = -1;
+
+	if (KEY->key[DIK_A] > 0) {
+		pos.X -= moveSpeed;
+		targetY = 270;
+	}
+	else if (KEY->key[DIK_D] > 0) {
+		pos.X += moveSpeed;
+		targetY = 90;
+	}
+
+	if (KEY->key[DIK_W] > 0) {
+		pos.Z += moveSpeed;
+		targetX = 0;
+		if (angle.Y > 180) {
+			targetX = 360;
+		}
+	}
+	else if (KEY->key[DIK_S] > 0.0f) {
+		pos.Z -= moveSpeed;
+		targetX = 180;
+	}
+
+	//Œü‚«‚½‚¢•ûŒü‚Éƒ‚ƒfƒ‹Šp“x‚ð•ÏX
+	SetVector(target, targetX, targetY);
+
+	model.SetPos(pos);
 
 }
 void Player::Collision() {
@@ -323,8 +342,15 @@ void Player::Draw() {
 
 }
 void Player::DrawBillBoard() {
-
-	if (eventNum != -1) {
+	bool handyShop = HandyShop::GetInstance()->GetEnable();
+	bool magicShop = MagicShop::GetInstance()->GetEnable();
+	bool novel = NovelSystem::GetInstance()->GetEnable();
+	bool planter = PlanterSystem::GetInstance()->GetEnable();
+	if (eventNum != -1 && 
+		handyShop == false && magicShop == false&&
+		novel == false &&
+		planter == false
+		) {
 		int eventNumTmp = eventNum;
 
 		Vector3 pos = GetPos();
@@ -346,7 +372,7 @@ void Player::DrawBillBoard() {
 			eventNumTmp = (int)IdeaNum::JOIN_SHOP;
 			break;
 		}
-\
+
 		ideaStr[eventNumTmp].SetAll(pos, Vector3(0, 180.0f, 0), Vector3(1.0, 0.77, 1));
 		ideaStr[eventNumTmp].Draw();
 	}

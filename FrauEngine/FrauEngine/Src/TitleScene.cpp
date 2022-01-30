@@ -17,8 +17,6 @@ void TitleScene::StaticLoad() {
 
 	CommonDataLoad();
 
-	auto WhiteTex = resource->Image("WhiteTex.png");
-	fade.SetResource(WhiteTex);
 }
 
 
@@ -39,10 +37,10 @@ void TitleScene::Load() {
 	titleCloud.SetAll(Vector2(960, 540));
 
 	titleFront.SetResource(TitleFront);
-	titleFront.SetAll(Vector2(960, 540), Vector2(1, 1), 0, 1);
+	titleFront.SetAll(Vector2(960, 540));
 
 	titleBack.SetResource(TitleBack);
-	titleBack.SetAll(Vector2(960, 540), Vector2(1, 1), 0, 1);
+	titleBack.SetAll(Vector2(960, 540));
 
 	titleCursor.SetResource(TitleCursor);
 	titleStr[0].SetResource(StartStr);
@@ -50,11 +48,10 @@ void TitleScene::Load() {
 	titleStr[2].SetResource(OptionStr);
 	titleStr[3].SetResource(ExitStr);
 
-	fade.Reset();
-
 	fadeOn = false;
 	sceneMove = false;
 
+	//ゲーム用データを初期化する
 	CommonReset();
 }
 void TitleScene::UnLoad() {
@@ -103,13 +100,16 @@ void TitleScene::Update() {
 	if (mouse->left && hitSelect) {
 		sound->GetSE(SoundList_SE::ENTER)->Play();
 		fadeOn = true;
-
+		sceneMove = true;
 	}
 	//scene移動
 	if (sceneMove) {
+		sceneMove = false;
 		sound->GetBGM(SoundList_BGM::TITLE)->Stop();
 		switch (cursorNum) {
 		case (int)TitleStr::START:
+			//セーブデータがある場合ロードする
+			Save::GetInsatnce()->LoadData();
 			LoadScene("FlowerShop");
 			break;
 		case (int)TitleStr::GALLARY:
@@ -150,8 +150,5 @@ void TitleScene::Draw() {
 	
 }
 void TitleScene::DrawNonePostEffect() {
-	if (fadeOn) {
-		sceneMove = fade.DrawFadeIn(60, 10);
-	}
 }
 

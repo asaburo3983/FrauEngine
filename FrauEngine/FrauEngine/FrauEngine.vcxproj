@@ -170,7 +170,6 @@
     <ClCompile Include="Src\EffekseerDX12.cpp" />
     <ClCompile Include="Src\EndrollScene.cpp" />
     <ClCompile Include="Src\EventManager.cpp" />
-    <ClCompile Include="Src\Fade.cpp" />
     <ClCompile Include="Src\FBX.cpp" />
     <ClCompile Include="Src\GallaryScene.cpp" />
     <ClCompile Include="Src\GameMathLib.cpp" />
@@ -196,6 +195,7 @@
     <ClCompile Include="Src\NormalUI.cpp" />
     <ClCompile Include="Src\OptionScene.cpp" />
     <ClCompile Include="Src\PlanterSystem.cpp" />
+    <ClCompile Include="Src\Save.cpp" />
     <ClCompile Include="Src\Shop.cpp" />
     <ClCompile Include="Src\SlopeCollider.cpp" />
     <ClCompile Include="Src\SoundManager.cpp" />
@@ -248,6 +248,7 @@
     <ClInclude Include="Src\NormalUI.h" />
     <ClInclude Include="Src\OptionScene.h" />
     <ClInclude Include="Src\PlanterSystem.h" />
+    <ClInclude Include="Src\Save.h" />
     <ClInclude Include="Src\Shop.h" />
     <ClInclude Include="Src\SlopeCollider.h" />
     <ClInclude Include="Src\SoundManager.h" />
@@ -256,7 +257,6 @@
     <ClInclude Include="Src\DXTK.h" />
     <ClInclude Include="Src\EffectObject.h" />
     <ClInclude Include="Src\EffekseerDX12.h" />
-    <ClInclude Include="Src\Fade.h" />
     <ClInclude Include="Src\FBX.h" />
     <ClInclude Include="Src\GallaryScene.h" />
     <ClInclude Include="Src\GameMathLib.h" />

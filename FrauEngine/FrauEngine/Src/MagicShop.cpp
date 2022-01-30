@@ -78,8 +78,10 @@ void MagicShop::Buy() {
 }
 void MagicShop::Update() {
 	auto item = Item::GetInstance();
-
+	auto cameraWork = CameraWork::GetInstance();
+	
 	if (enable) {
+		
 		Shop::Cancel();
 		//ƒvƒŒƒCƒ„[‚Ì“ü—Í‚É‘Î‚·‚é”½‰ž
 		switch (state) {
@@ -128,6 +130,10 @@ void MagicShop::Update() {
 
 	}
 	else {
+		if (cameraWork->GetMoveNum() == 3) {
+			cameraWork->SetMoveNum(0);
+		}
+
 		if (alpha > 0) {
 			alpha -= alphaSpeed;
 		}

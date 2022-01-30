@@ -3,6 +3,7 @@
 #include "Objects.h"
 #include "Item.h"
 #include "Player.h"
+#include "CameraWork.h"
 
 using namespace frauEngine;
 
@@ -60,7 +61,7 @@ protected:
 	const float alphaSpeed = 0.05;
 	float alpha = 0.0f;
 	//アイテムの選択
-	int selectNum = -1;
+	int selectNum = 0;
 	//購入個数と合計金額
 	int buyNum = 0;
 	int allPrice = 0;
@@ -83,6 +84,7 @@ public:
 	int GetBuyNum() { return buyNum; }
 	int GetAllPrice() { return allPrice; }
 	bool GetEnable() { return enable; }
+	float GetAlpha() { return alpha; }
 protected:
 	void Cancel();
 	void SelectItem();

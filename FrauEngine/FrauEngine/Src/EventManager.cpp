@@ -88,6 +88,7 @@ void EventManager::FieldEvent() {
 	auto nextDay = NextDay::GetInstance();
 	auto sound = SoundManager::GetInstance();
 	auto novelSystem = NovelSystem::GetInstance();
+	CameraWork* camera = CameraWork::GetInstance();
 
 	int eventNum = player->GetEventNum();
 
@@ -118,12 +119,14 @@ void EventManager::FieldEvent() {
 			if (handyShop->GetEnable() == false) {
 				handyShop->SetEnable(true);
 				sound->GetSE(SoundList_SE::ENTER)->Play();
+				camera->SetMoveNum(2);
 			}
 			break;
 		case (int)EventNum::BUY_MAGICSHOP:
 			if (magicShop->GetEnable() == false) {
 				magicShop->SetEnable(true);
 				sound->GetSE(SoundList_SE::ENTER)->Play();
+				camera->SetMoveNum(3);
 			}
 			break;
 		}
@@ -225,7 +228,7 @@ void EventManager::Update() {
 	NovelSystem* novelSystem = NovelSystem::GetInstance();
 	TutorialSystem* tutorialSystem = TutorialSystem::GetInstance();
 	Stage* stage = Stage::GetInstance();
-
+	auto key = KeyInput::GetInstance();
 
 	StartDays();
 
@@ -242,4 +245,9 @@ void EventManager::Update() {
 		camera->SetPlayerTarget(false);
 	}
 
+	//オプション画面への移行
+	//TODO 音楽を止める処理も追加しなければならない
+	if (key->key[DIK_ESCAPE] == 1) {
+		scene->LoadScene("Option");
+	}
 }

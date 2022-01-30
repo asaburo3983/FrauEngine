@@ -281,16 +281,6 @@ void Stage::Update() {
 void Stage::DrawShadow() {
 	//背景の影
 	model.Draw(ModelType::SHADOW);
-
-	//マップごとの固有のオブジェクト
-	switch (stageNum) {
-	case (int)StageNum::HANDY_SHOP:
-	case (int)StageNum::MAGIC_SHOP:
-		if (npc.GetMeshNum() != 0) {
-			//npc.Draw(ModelType::SHADOW);
-		}
-		break;
-	}
 }
 void Stage::Draw() {
 	auto item = Item::GetInstance();

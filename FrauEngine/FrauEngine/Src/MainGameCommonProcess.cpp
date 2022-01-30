@@ -57,13 +57,14 @@ void LoadIm() {
 
 	//アイテム
 	//タネ
-	rc->LoadIm("Data/Image/Item/Beranda_Seed.png");
-	rc->LoadIm("Data/Image/Item/Cosmo_Seed.png");
 	rc->LoadIm("Data/Image/Item/Maso_Seed.png");
+	rc->LoadIm("Data/Image/Item/Tanepopo_Seed.png");
+	rc->LoadIm("Data/Image/Item/Beranda_Seed.png");
 	rc->LoadIm("Data/Image/Item/Panda_Seed.png");
 	rc->LoadIm("Data/Image/Item/Rose_Seed.png");
 	rc->LoadIm("Data/Image/Item/Sugger_Seed.png");
-	rc->LoadIm("Data/Image/Item/Tanepopo_Seed.png");	
+	rc->LoadIm("Data/Image/Item/Cosmo_Seed.png");
+
 	rc->LoadIm("Data/Image/Item/Masomaso_Seed.png");
 	rc->LoadIm("Data/Image/Item/Ranpopo_Seed.png");
 	rc->LoadIm("Data/Image/Item/Barabara_Seed.png");
@@ -99,6 +100,7 @@ void LoadIm() {
 	//ノベル関連
 	rc->LoadIm("Data/Image/Novel/Novel_TextBase.png");
 	rc->LoadIm("Data/Image/Novel/Novel_Frame.png");
+	rc->LoadIm("Data/Image/Novel/Novel_Button.png");
 
 	//ショップ関連 
 	rc->LoadIm("Data/Image/Shop/ManualBase.png");
@@ -196,6 +198,7 @@ void CommonDataLoad() {
 	StaticClassSetting();
 }
 void CommonUpdate() {
+	auto key = KeyInput::GetInstance();
 	auto player = Player::GetInstance();
 	auto stage = Stage::GetInstance();
 	auto camera = CameraWork::GetInstance();
@@ -206,7 +209,6 @@ void CommonUpdate() {
 	auto normalUI = NormalUI::GetInstance();
 	auto planterSystem = PlanterSystem::GetInstance();
 	auto nextDay = NextDay::GetInstance();
-
 	auto sound = SoundManager::GetInstance();
 
 
@@ -223,11 +225,12 @@ void CommonUpdate() {
 	planterSystem->Update();
 	nextDay->Update();
 
-	//BGM
+	//ジングルを流すためにBGMを止める
 	if (nextDay->GetNight()|| nextDay->GetMorning()) {
 		sound->GetBGM(SoundList_BGM::FLOWER_SHOP)->SetVolumeMulti(0);
 	}
 
+	//BGM
 	if (novelSystem->GetEnable()) {
 		//BGMをフェードしてとめる
 		switch (stage->GetStageNum()) {
@@ -310,6 +313,9 @@ void CommonDraw() {
 	auto stage = Stage::GetInstance();
 	auto planterSystem = PlanterSystem::GetInstance();
 	auto nextDay = NextDay::GetInstance();
+	auto handyShop=HandyShop::GetInstance();
+	auto magicShop=HandyShop::GetInstance();
+
 	auto mouse = MouseInput::GetInstance();
 	//影の描画
 	lowApp->DrawOnDepth(Lights::GetInstance()->depthHeap, Lights::GetInstance()->shadowTexSize);
@@ -325,7 +331,7 @@ void CommonDraw() {
 	player->Draw();
 	player->DrawBillBoard();
 
-	nextDay->Draw();
+	
 	//ポストエフェクト用の処理
 	app->SetDepthOfField(true,960, 540);
 	if (novelSystem->GetAlphaUI() + tutorialSystem->GetAlpha() <= 0) {
@@ -348,6 +354,8 @@ void CommonDrawNonePostEffect() {
 	auto planterSystem = PlanterSystem::GetInstance();
 	auto nextDay = NextDay::GetInstance();
 
+	nextDay->Draw();
+
 	normalUI->Draw();
 
 	planterSystem->Draw();
@@ -357,6 +365,12 @@ void CommonDrawNonePostEffect() {
 	tutorialSystem->Draw();
 
 	app->SetColorMulti(Color(1.0f - eventManager->GetFadeCount()-nextDay->GetFade()));
+
+	if (LowApplication::GetInstance()->GetDebugMode()) {
+		ImGui::Begin("FPS");                          //ウィンドウ名になる
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::End();
+	}
 
 }
 

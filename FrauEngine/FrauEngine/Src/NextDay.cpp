@@ -20,7 +20,14 @@ void NextDay::Initialize() {
 	no.SetResource(rc->Image("MoneyBase.png"));
 	no.SetAll(Vector2(960 + dist.X, 540 + dist.Y), buttonScale);
 
-
+	for (int i = 0; i < 3; i++) {
+		seed[0][i].SetResource(rc->Image("Tanepopo_Seed.png"));
+		seed[1][i].SetResource(rc->Image("Masomaso_Seed.png"));
+		seed[2][i].SetResource(rc->Image("Ranpopo_Seed.png"));
+		seed[3][i].SetResource(rc->Image("Barabara_Seed.png"));
+		seed[4][i].SetResource(rc->Image("SuggerPan_Seed.png"));
+		seed[5][i].SetResource(rc->Image("Frau_Seed.png"));
+	}
 }
 void NextDay::Update() {
 	auto mouse = MouseInput::GetInstance();
@@ -29,7 +36,7 @@ void NextDay::Update() {
 	auto sound = SoundManager::GetInstance();
 
 	//確認用の処理
-	if (enable) {
+	if (enable&& nightAlpha <= 0.1) {
 		if (fade < 1) {
 			fade += fadeSpeed;
 		}
@@ -74,6 +81,8 @@ void NextDay::Update() {
 			//交配した種の生成を行う
 			planterSystem->SeedGrow();
 
+			//データをセーブする
+			Save::GetInsatnce()->SaveData();
 		}
 	}
 	else {
@@ -83,10 +92,10 @@ void NextDay::Update() {
 	}
 	//次の日の初めの処理
 	if (morning) {
-		if (mouse->left == 1) {
+		if (mouse->left == 1 && nightAlpha <= 0.1) {
 			morning = false;
 			eventManager->EndDays();
-
+		
 			//プランターの中身を殻にする
 			planterSystem->Reset();
 			processEnable = false;//すべての処理が終了
@@ -190,9 +199,21 @@ void NextDay::DrawMorning() {
 		
 		//交配でゲットした種
 		//同じ列///////////////
-		
-		Vector2 matiSeedPos = morningBase.GetPosLerp(Vector2(0.4, 0.7+i*0.05));
-		meirio->DrawString(matingSeedStr, matiSeedPos, strScale, strColor);
+		Vector2 matiSeedPos = morningBase.GetPosLerp(Vector2(0.25 + i * 0.25, 0.80f));
+
+		for (int h = 0; h < 6; h++) {
+			seed[h][i].SetAll(matiSeedPos, Vector2(0.5, 0.5), 0, morningAlpha);
+		}
+		int getSeed = planterSystem->GetMatingSeed(i);
+		if (getSeed == 1) {
+			seed[0][i].Draw();
+		}
+		else if (getSeed != -1) {
+			seed[getSeed - 6][i].Draw();
+		}
+
+		Vector2 matiSeedPosStr = morningBase.GetPosLerp(Vector2(0.25 + i * 0.25, 0.7));
+		meirio->DrawString(matingSeedStr, matiSeedPosStr, strScale, strColor, true);
 		///////////////////////
 	}
 	

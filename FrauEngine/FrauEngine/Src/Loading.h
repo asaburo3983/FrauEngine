@@ -2,8 +2,9 @@
 
 
 #include "Application.h"
-#include "Fade.h"
 #include "ImageObject.h"
+
+using namespace frauEngine;
 
 class Loading {
 private:
@@ -12,9 +13,7 @@ private:
 	int posX = 0;
 	int dist = 200;
 	std::vector<int> grass;
-
-	Fade fade;
-
+	
 	int frontAlpha = 0;
 
 	ImageObject backImage;

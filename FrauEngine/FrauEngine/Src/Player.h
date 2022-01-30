@@ -88,6 +88,7 @@ public:
 	}
 private:
 	void Move();
+	void SetVector(float _target,float _targetX,float _targetY);
 	void AnimationControl();
 	void Collision();
 

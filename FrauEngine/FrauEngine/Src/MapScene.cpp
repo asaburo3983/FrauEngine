@@ -32,8 +32,10 @@ void MapScene::Load() {
 	Stage* stage = Stage::GetInstance();
 	EventManager* eventManager = EventManager::GetInstance();
 	eventManager->SetScene(this);
-	
-	stage->Load(StageNum::MAP);
+	auto app = Application::GetInstance();
+	if (app->GetSceneOldStr() != "Option") {
+		stage->Load(StageNum::MAP);
+	}
 
 }
 

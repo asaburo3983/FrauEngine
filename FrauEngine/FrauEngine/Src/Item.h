@@ -34,6 +34,9 @@ public:
 	int GetMoney() {
 		return money;
 	}
+	void SetMoney(int _money) {
+		money = _money;
+	}
 	std::string GetMoneyStr() {
 		return moneyStr;
 	}
@@ -52,6 +55,9 @@ public:
 	}
 	int GetItemNum(int _num) {	
 		return item[itemName[_num]];
+	}
+	void SetItemNum(int _num, int _itemNum) {
+		item[itemName[_num]] = _itemNum;
 	}
 	std::string GetItemName(int _num) {
 		return itemName[_num];
@@ -80,6 +86,9 @@ public:
 	bool GetItemGet(int _num) {
 		return itemGet[_num];
 	}
+	void SetItemGet(int _num, bool _get) {
+		itemGet[_num] = _get;
+	}
 private:
 	CSV csvItem;
 	std::unordered_map<std::string, int> item;
@@ -98,8 +107,6 @@ private:
 	std::string moneyStr = "00001000";
 public:
 	void Reset() {
-		std::unordered_map<std::string, int> item;
-
 		for (int i = 0; i < 19; i++) {
 			item[GetItemName(i)] = 0;
 		}

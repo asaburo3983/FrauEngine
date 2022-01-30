@@ -4,7 +4,6 @@
 #include "Objects.h"
 
 #include "Loading.h"
-#include "Fade.h"
 
 #include "MagicShop.h"
 #include "MainGameCommonProcess.h"

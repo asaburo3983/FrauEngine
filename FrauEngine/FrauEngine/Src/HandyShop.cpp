@@ -28,8 +28,16 @@ void HandyShop::Initialize(std::string _itemCSVPath, std::string _textCSVPath) {
 	itemIcon[6].SetResource(rc->Image("Cosmo_Seed.png"));
 
 }
+
 void HandyShop::Update() {
+	auto cameraWork = CameraWork::GetInstance();
 	Shop::Update();
+	if (!enable) {
+		if (cameraWork->GetMoveNum() == 2) {
+			cameraWork->SetMoveNum(0);
+		}
+	}
+
 }
 void HandyShop::Draw() {
 

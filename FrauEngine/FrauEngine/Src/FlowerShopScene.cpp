@@ -26,18 +26,20 @@ void FlowerShopScene::StaticLoad() {
 	SetObjectList(camera->GetCamera(), "Camera");
 	SetObjectList(stage->GetLight(), "Lights");
 
-	stage->Load(StageNum::FLOWER_SHOP);
-	stage->MoveStage((int)StageNum::FLOWER_SHOP);
 }
 
 void FlowerShopScene::Load() {
 	Stage* stage = Stage::GetInstance();
 	EventManager* eventManager = EventManager::GetInstance();
+	auto app = Application::GetInstance();
 	eventManager->SetScene(this);
 	
-	stage->Load(StageNum::FLOWER_SHOP);
-	
-
+	if (app->GetSceneOldStr() != "Option") {	
+		stage->Load(StageNum::FLOWER_SHOP);
+	}
+	if (app->GetSceneOldStr() == "Title") {
+		stage->MoveStage((int)StageNum::FLOWER_SHOP);
+	}
 }
 
 void FlowerShopScene::UnLoad() {

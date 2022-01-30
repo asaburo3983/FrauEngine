@@ -14,18 +14,20 @@ void OptionScene::LoadInDraw() {
 }
 
 void OptionScene::StaticLoad() {
+	backSceneButton.SetResource(resource->Image("Novel_Button.png"));
+	backTitleButton.SetResource(resource->Image("Novel_Button.png"));
 
+	backSceneButton.SetAll(Vector2(350, 800));
+	backTitleButton.SetAll(Vector2(350, 900));
 }
 
 
 void OptionScene::Load() {
 	//リソース取得
-	auto backButtonI=resource->LoadIm("Data/Image/Option/OptionBackButton.png");
 	auto barI=resource->LoadIm("Data/Image/Option/OptionBar.png");
 	auto baseI =resource->LoadIm("Data/Image/Option/OptionBase.png");
 	auto miniButtonI=resource->LoadIm("Data/Image/Option/OptionMiniButton.png");
 
-	backButton.SetResource(backButtonI);
 	base.SetResource(baseI);
 	for (int i = 0; i < 3; i++) {
 		bar[i].SetResource(barI);
@@ -34,7 +36,6 @@ void OptionScene::Load() {
 
 
 	//画像情報設定
-	backButton.SetAll(Vector2(350, 900));
 	base.SetAll(Vector2(960, 540));
 
 
@@ -53,7 +54,6 @@ void OptionScene::Load() {
 
 }
 void OptionScene::UnLoad() {
-	resource->UnLoadIm("OptionBackButton.png");
 	resource->UnLoadIm("OptionBar.png");
 	resource->UnLoadIm("OptionBase.png");
 	resource->UnLoadIm("OptionMiniButton.png");
@@ -61,6 +61,9 @@ void OptionScene::UnLoad() {
 
 void OptionScene::Update() {
 	auto sound = SoundManager::GetInstance();
+	auto key = KeyInput::GetInstance();
+	auto app = Application::GetInstance();
+
 	sound->GetBGM(SoundList_BGM::TITLE)->Play();
 
 	if (mouse->left == 1) {
@@ -96,23 +99,29 @@ void OptionScene::Update() {
 	sound->SetVolumeBGM(volumes[0] * volumes[1]);
 	sound->SetVolumeSE(volumes[0] * volumes[2]);
 
-	if (backButton.Hit(mouse->x, mouse->y)&&mouse->left==1) {
+	//タイトルへ戻る
+	if (backTitleButton.Hit(mouse->x, mouse->y)&&mouse->left==1) {
 		LoadScene("Title");
+	}	
+	//一つ前のシーンに戻る
+	if (backSceneButton.Hit(mouse->x, mouse->y)&&mouse->left==1) {
+		LoadScene(app->GetSceneOldStr());
 	}
-
 }
 
 void OptionScene::Draw() {
 	auto app = Application::GetInstance();
-
-
-
 }
 void OptionScene::DrawNonePostEffect() {
+	auto akazukin = Fonts::GetInstance()->GetFont((int)FontList::AKAZUKIN);
 
 	base.Draw();
 
-	backButton.Draw();
+	backSceneButton.Draw();
+	backTitleButton.Draw();
+	akazukin->DrawString("もどる", backSceneButton.GetPos(), 2.5f, Color(1, 1, 1, 1), true);
+	akazukin->DrawString("タイトルへ", backTitleButton.GetPos(), 2.5f, Color(1, 1, 1, 1), true);
+
 	for (int i = 0; i < 3; i++) {
 		bar[i].Draw();
 		miniButton[i].Draw();

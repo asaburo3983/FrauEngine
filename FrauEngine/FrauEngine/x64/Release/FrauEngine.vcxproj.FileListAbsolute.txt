@@ -1,7 +1,0 @@
-C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\PixelShader_BillBoard.cso
-C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\PixelShader_Texture.cso
-C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\PixelShader_Water.cso
-C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\VertexShader_BillBoard.cso
-C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\PixelShader_DepthOfField.cso
-C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\PixelShader_PostEffect.cso
-C:\Users\ryose\Desktop\GitHub Repository\FrauEngine\FrauEngine\x64\Release\PixelShader_Toon.cso

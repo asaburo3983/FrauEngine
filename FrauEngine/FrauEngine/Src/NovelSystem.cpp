@@ -33,6 +33,9 @@ void NovelSystem::Initialize() {
 	chara[10].SetResource(resource->Image("Handy_Surprise.png"));
 	chara[11].SetResource(resource->Image("Handy_Trouble.png"));
 
+	autoButton.SetResource(resource->Image("Novel_Button.png"));
+	skipButton.SetResource(resource->Image("Novel_Button.png"));
+
 	//シナリオ設定
 	scenario.ecpression[""] = -1;
 	scenario.ecpression[scenario.FRAU_NORMAL] = 0;
@@ -93,6 +96,7 @@ void NovelSystem::SetEnable(bool _enable, ScenarioName _scenario) {
 	}
 	if (_enable == true) {
 
+		autoCount = 0;
 		scenario.page = 1;
 		start[scenario.num] = true;
 		LoadPage();
@@ -117,53 +121,78 @@ void NovelSystem::TurnPage() {
 	auto mouse = MouseInput::GetInstance();
 	auto sound = SoundManager::GetInstance();
 	//テキスト送り
-	if (mouse->left == 1) {
 
-		scenario.page++;
-		//終了処理
-		if (scenario.page >= scenario.csv[scenario.num].GetRowMax()) {
-			scenario.page = 1;
-			SetEnable(false);		
+	scenario.page++;
+	//終了処理
+	if (scenario.page >= scenario.csv[scenario.num].GetRowMax()) {
+		ScenarioEnd();
+	}
+	else {
+		//前のキャラ番号を保存しておく
+		scenario.leftCharaNumOld = scenario.ecpression[scenario.str[(int)ScenarioDataName::ECPRESSION_LEFT]];
+		scenario.rightCharaNumOld = scenario.ecpression[scenario.str[(int)ScenarioDataName::ECPRESSION_RIGHT]];
+		if (scenario.leftCharaNumOld < 0)
+			scenario.leftCharaNumOld = 0;
+		if (scenario.rightCharaNumOld < 0)
+			scenario.rightCharaNumOld = 0;
+		sound->GetSE(SoundList_SE::TURNPAGE)->Play();
+		//ページの読み込み
+		LoadPage();
 
-			scenario.leftCharaNum = -1;
-			scenario.rightCharaNum = -1;
-
-			scenario.leftCharaNumOld = scenario.ecpression[scenario.str[(int)ScenarioDataName::ECPRESSION_LEFT]];
-			scenario.rightCharaNumOld = scenario.ecpression[scenario.str[(int)ScenarioDataName::ECPRESSION_RIGHT]];
-
-			switch (scenario.num) {
-				break;
-			case (int)ScenarioName::HAPPY_END:
-				sound->GetBGM(SoundList_BGM::HAPPY_END)->Stop();
-				break;
-			case (int)ScenarioName::BAD_END:
-				sound->GetBGM(SoundList_BGM::BAD_END)->Stop();
-				break;
-			}
+		//文字数でページめくりのオート時間を設定する
+		int strLength = 0;
+		for (int i = 0; i < 3; i++) {
+			int strNum = (int)ScenarioDataName::SCENARIO_1 + i;
+			strLength += scenario.str[strNum].length();
 		}
-		else {
-			//前のキャラ番号を保存しておく
-			scenario.leftCharaNumOld = scenario.ecpression[scenario.str[(int)ScenarioDataName::ECPRESSION_LEFT]];
-			scenario.rightCharaNumOld = scenario.ecpression[scenario.str[(int)ScenarioDataName::ECPRESSION_RIGHT]];
-			if (scenario.leftCharaNumOld < 0)
-				scenario.leftCharaNumOld = 0;
-			if (scenario.rightCharaNumOld < 0)
-				scenario.rightCharaNumOld = 0;
-			sound->GetSE(SoundList_SE::TURNPAGE)->Play();
-			//ページの読み込み
-			LoadPage();
-		}
+		autoCountMax = strLength * autoSpeed;
+	}
+
+	autoCount = 0;
+}
+void NovelSystem::ScenarioEnd() {
+	auto sound = SoundManager::GetInstance();
+
+	scenario.page = 1;
+	SetEnable(false);
+
+	scenario.leftCharaNum = -1;
+	scenario.rightCharaNum = -1;
+
+	scenario.leftCharaNumOld = scenario.ecpression[scenario.str[(int)ScenarioDataName::ECPRESSION_LEFT]];
+	scenario.rightCharaNumOld = scenario.ecpression[scenario.str[(int)ScenarioDataName::ECPRESSION_RIGHT]];
+
+	switch (scenario.num) {
+		break;
+	case (int)ScenarioName::HAPPY_END:
+		sound->GetBGM(SoundList_BGM::HAPPY_END)->Stop();
+		break;
+	case (int)ScenarioName::BAD_END:
+		sound->GetBGM(SoundList_BGM::BAD_END)->Stop();
+		break;
 	}
 }
 void NovelSystem::Update() {
 	auto sound = SoundManager::GetInstance();
-
+	auto mouse = MouseInput::GetInstance();
 	if (enable) {
 		if (count < countMax) {
 			count++;
 		}
 
-		TurnPage();
+		if (mouse->left == 1) {
+
+			TurnPage();
+		}
+		//オートページめくり機能
+		if (autoMode) {
+			if (autoCount < autoCountMax) {
+				autoCount++;
+			}
+			else {
+				TurnPage();
+			}
+		}
 		switch (scenario.num) {
 		case (int)ScenarioName::PROLOGUE:
 		case (int)ScenarioName::MAGICSHOP_JOIN:
@@ -181,6 +210,31 @@ void NovelSystem::Update() {
 			case (int)ScenarioName::BAD_END:
 		sound->PlayFade(SoundList_BGM::BAD_END);
 			break;
+		}
+
+		if (autoButton.Hit(mouse->x, mouse->y)&&mouse->left==1) {
+			autoMode = !autoMode;
+		}		
+		if (skipButton.Hit(mouse->x, mouse->y)&&mouse->left==1) {
+			//前のキャラ番号を保存しておく
+			scenario.leftCharaNumOld = scenario.ecpression[scenario.str[(int)ScenarioDataName::ECPRESSION_LEFT]];
+			scenario.rightCharaNumOld = scenario.ecpression[scenario.str[(int)ScenarioDataName::ECPRESSION_RIGHT]];
+			if (scenario.leftCharaNumOld < 0)
+				scenario.leftCharaNumOld = 0;
+			if (scenario.rightCharaNumOld < 0)
+				scenario.rightCharaNumOld = 0;
+			sound->GetSE(SoundList_SE::TURNPAGE)->Play();
+			//ページの読み込み
+			LoadPage();
+
+			//文字数でページめくりのオート時間を設定する
+			int strLength = 0;
+			for (int i = 0; i < 3; i++) {
+				int strNum = (int)ScenarioDataName::SCENARIO_1 + i;
+				strLength += scenario.str[strNum].length();
+			}
+			autoCountMax = strLength * autoSpeed;
+			ScenarioEnd();
 		}
 	}
 	else {
@@ -279,9 +333,35 @@ void NovelSystem::DrawChara() {
 
 
 void NovelSystem::DrawUI(){
+
+	auto akazukin = Fonts::GetInstance()->GetFont((int)FontList::AKAZUKIN);
+
 	textBase.Draw();
 	frame[0].Draw();
 	frame[1].Draw();
+
+	float autoAlpha = -0.25;
+	autoAlpha += (autoMode * 0.5f * enable);
+
+	autoButton.SetAll(Vector2(1730, 900), Vector2(1, 1), 0, alphaUI + autoAlpha);
+	skipButton.SetAll(Vector2(1730, 1000), Vector2(1, 1), 0, alphaUI);
+	autoButton.Draw();
+	skipButton.Draw();
+
+	Color strColorAuto(1,1,1, autoButton.GetAlpha());
+	Color strColorSkip(1,1,1, skipButton.GetAlpha());
+
+	Vector2 autoStrPos = autoButton.GetPos();
+	autoStrPos.X - 10;
+	Vector2 skipStrPos = skipButton.GetPos();
+	skipStrPos.X - 10;
+
+	akazukin->DrawString("AUTO", autoStrPos, 3.0, strColorAuto, true);
+	akazukin->DrawString("SKIP", skipStrPos, 3.0, strColorSkip, true);
+
+
+
+	
 }
 void NovelSystem::DrawScenarioText() {
 
@@ -302,8 +382,7 @@ void NovelSystem::DrawScenarioText() {
 	Vector2 charaNamePos = Vector2(585, 775);
 
 	float charaNameScale = 3.0f;
-	Color charaNameColor(1.0f / 256.0f, 1.0f / 256.0f, 1.0f / 256.0f, alphaUI);
-	fonts->GetFont((int)FontList::AKAZUKIN)->DrawString(scenario.str[(int)ScenarioDataName::CHARA_NAME], charaNamePos, charaNameScale, charaNameColor,true);
+	fonts->GetFont((int)FontList::AKAZUKIN)->DrawString(scenario.str[(int)ScenarioDataName::CHARA_NAME], charaNamePos, charaNameScale, strColor,true);
 	//テキスト描画
 	for (int i = 0; i < 3; i++) {
 		int strNum = (int)ScenarioDataName::SCENARIO_1 + i;

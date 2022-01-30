@@ -22,8 +22,6 @@ void Loading::Reset() {
 	while (grass.size() > 0) {
 		grass.pop_back();
 	}
-
-	fade.Reset();
 }
 
 void Loading::Updata() {
@@ -82,14 +80,8 @@ void Loading::Draw() {
 	}
 
 	//ƒAƒjƒ
-	ostringstream animeStr;
-	animeStr << "LoadAnime"  << animeNum ;
-	string str = animeStr.str();
-
 	animeImage[animeNum].SetAll(Vector2(posX, 570), Vector2(0.6, 0.6), 0, 1);
 	animeImage[animeNum].SetTurn(true,false);
 	animeImage[animeNum].Draw();
-
-	//fade.DrawFadeOut(120, 10);
 
 }

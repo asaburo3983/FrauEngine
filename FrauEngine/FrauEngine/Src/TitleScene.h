@@ -3,9 +3,10 @@
 #include "Object.h"
 
 #include "Loading.h"
-#include "Fade.h"
 
 #include "MainGameCommonProcess.h"
+#include "Save.h"
+
 using namespace frauEngine;
 
 
@@ -13,8 +14,7 @@ using namespace frauEngine;
 class TitleScene : public Scene {
 private:
 	Loading loading;
-	Fade fade;
-
+	
 	ImageObject titleFront;
 	ImageObject titleBack;
 	ImageObject titleCursor;

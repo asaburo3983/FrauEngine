@@ -25,7 +25,10 @@ void HandyShopScene::Load() {
 	EventManager* eventManager = EventManager::GetInstance();
 
 	eventManager->SetScene(this);
-	stage->Load(StageNum::HANDY_SHOP);
+	auto app = Application::GetInstance();
+	if (app->GetSceneOldStr() != "Option") {
+		stage->Load(StageNum::HANDY_SHOP);
+	}
 }
 
 

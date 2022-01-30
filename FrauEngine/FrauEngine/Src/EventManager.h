@@ -35,7 +35,7 @@ public:
 	void Update();
 
 	int GetDays() { return days; }
-
+	void SetDays(int _days) { days = _days; }
 	void StartDays();
 	void AddDays();
 	void EndDays();

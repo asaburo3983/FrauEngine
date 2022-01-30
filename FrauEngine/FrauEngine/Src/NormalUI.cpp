@@ -56,6 +56,10 @@ void NormalUI::Update() {
 	auto key = KeyInput::GetInstance();
 	auto mouse = MouseInput::GetInstance();
 	auto sound = SoundManager::GetInstance();
+	auto novelSystem= NovelSystem::GetInstance();
+
+	bool magicShop = MagicShop::GetInstance()->GetEnable();
+	bool handyShop = HandyShop::GetInstance()->GetEnable();
 
 	itemBase.SetAlpha(inventoryAlpha);
 	for (int i = 0; i < 8; i++) {
@@ -68,7 +72,7 @@ void NormalUI::Update() {
 	leftArrow.SetAlpha(inventoryAlpha);
 
 	//アイテムインベントリの描画
-	if (key->key[DIK_E] == 1) {
+	if (key->key[DIK_E] == 1&& novelSystem->GetEnable()==false&&magicShop==false&&handyShop==false) {
 		inventory = !inventory;
 		selectItemNum = 0;
 		sound->GetSE(SoundList_SE::ENTER)->Play();
@@ -76,7 +80,10 @@ void NormalUI::Update() {
 	//閉じるときだけ右クリックでもできる
 	if (mouse->right == 1&& inventory == true) {
 			inventory = false;
-			selectItemNum = 0;
+	}
+	//別イベント時は表示しない
+	if (novelSystem->GetEnable()|| magicShop || handyShop) {
+		inventory = false;
 	}
 	//フェード処理
 	if (inventory) {
@@ -93,6 +100,7 @@ void NormalUI::Update() {
 			}
 			if (rightArrow.Hit(mouse->x, mouse->y)) {
 				page++;
+				selectItemNum = 0;
 				if (page > 3) {
 					page = 1;
 				}
@@ -100,6 +108,7 @@ void NormalUI::Update() {
 			}
 			else if (leftArrow.Hit(mouse->x, mouse->y)) {
 				page--;
+				selectItemNum = 0;
 				if (page < 1) {
 					page = 3;
 				}
@@ -142,7 +151,7 @@ void NormalUI::Draw() {
 		akazukin->DrawString(dayStr, Vector2(200, 230), 5, Color(107, 72, 46, 1), true);
 	}
 	sprintf_s(dayStr, "のこり%d日", 31-eventManager->GetDays());
-	akazukin->DrawString(dayStr, Vector2(190, 320), 2.5, Color(200, 20, 20, 1), true);
+	akazukin->DrawString(dayStr, Vector2(170, 320), 2.5, Color(250, 120, 40, 1), true);
 
 	if (inventoryAlpha > 0) {
 		//アイテムベース
