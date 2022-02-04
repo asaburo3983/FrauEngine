@@ -313,10 +313,11 @@ void NovelSystem::DrawChara() {
 		
 	}
 	else {
-		chara[scenario.leftCharaNumOld].SetAll(pos[0], scale, 0, charaAlpha[0]);
-		chara[scenario.leftCharaNumOld].SetTurn(true, false);
-		chara[scenario.leftCharaNumOld].Draw();
-
+		if (scenario.leftCharaNumOld != -1) {
+			chara[scenario.leftCharaNumOld].SetAll(pos[0], scale, 0, charaAlpha[0]);
+			chara[scenario.leftCharaNumOld].SetTurn(true, false);
+			chara[scenario.leftCharaNumOld].Draw();
+		}
 	}
 	if (scenario.rightCharaNum != -1) {
 		chara[scenario.rightCharaNum].SetAll(pos[1], scale, 0, charaAlpha[1]);
@@ -325,9 +326,11 @@ void NovelSystem::DrawChara() {
 		
 	}
 	else {
-		chara[scenario.rightCharaNumOld].SetAll(pos[1], scale, 0, charaAlpha[1]);
-		chara[scenario.rightCharaNumOld].SetTurn(false, false);
-		chara[scenario.rightCharaNumOld].Draw();
+		if (scenario.rightCharaNumOld != -1) {
+			chara[scenario.rightCharaNumOld].SetAll(pos[1], scale, 0, charaAlpha[1]);
+			chara[scenario.rightCharaNumOld].SetTurn(false, false);
+			chara[scenario.rightCharaNumOld].Draw();
+		}
 	}
 }
 
