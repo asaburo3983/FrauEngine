@@ -34,6 +34,7 @@ void NextDay::Update() {
 	auto eventManager = EventManager::GetInstance();
 	auto planterSystem = PlanterSystem::GetInstance();
 	auto sound = SoundManager::GetInstance();
+	auto player = Player::GetInstance();
 
 	//確認用の処理
 	if (enable&& nightAlpha <= 0.1) {
@@ -83,6 +84,13 @@ void NextDay::Update() {
 
 			//データをセーブする
 			Save::GetInsatnce()->SaveData();
+
+			//プレイヤーの位置を設定する
+			//プレイヤーの移動を制限する
+			//player->SetPos(Vector3(1.0, -3.9, 0));
+			player->SetPos(Vector3(4.5, -3.9, 5.2));
+			player->SetAngle(Vector3(0, 180, 0));
+			
 		}
 	}
 	else {
@@ -99,6 +107,9 @@ void NextDay::Update() {
 			//プランターの中身を殻にする
 			planterSystem->Reset();
 			processEnable = false;//すべての処理が終了
+
+			player->IsMove(true);
+
 		}
 		if (morningAlpha < 1) {
 			morningAlpha += fadeSpeed;

@@ -51,6 +51,7 @@ public:
 		fadeSpeed = 0.05f;
 		fadeCount = 0.0f;
 	}
+
 private:
 	void FieldEvent();
 	void GameEndEvent();

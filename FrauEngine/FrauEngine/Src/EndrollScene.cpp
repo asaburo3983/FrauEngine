@@ -53,6 +53,8 @@ void EndrollScene::Update() {
 		if (mouse->left == 1 || mouse->right == 1) {
 			LoadScene("Title");
 			sound->GetBGM(SoundList_BGM::ENDROLL)->Stop();
+			//セーブデータの削除
+			remove("Data/Save/Save.dat");
 		}
 	}
 }

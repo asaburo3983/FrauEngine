@@ -27,7 +27,7 @@ private:
 
 	bool night = false;
 	float nightAlpha = 0.0f;
-	float nightAlphaMax = 7.0f;
+	float nightAlphaMax = 0.1f;/* 7.0f;*/
 	bool morning = false;
 	float morningAlpha = 0.0f;
 public:
@@ -38,10 +38,12 @@ public:
 
 	void SetEnable(bool _enable) { 
 		auto mouse = MouseInput::GetInstance();
+		auto player = Player::GetInstance();
 		enable = _enable; 
-		if (enable)
-			processEnable = true;
-
+		if (enable) {
+			processEnable = true;		
+		}	
+		player->IsMove(!enable);
 		//多重クリックの阻止のためにフレーム数を増加
 		mouse->left = 2;
 	}

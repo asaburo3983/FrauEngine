@@ -23,12 +23,14 @@ void EventManager::StartDays() {
 
 	switch (days) {
 	case 1:
-		player->SetPos(Vector3(4.5, -3.9, 5.0));
+		player->SetPos(Vector3(4.5, -3.9, 5.2));
 		player->SetAngle(Vector3(0, 180, 0));
 		novelSystem->SetEnable(true, ScenarioName::PROLOGUE);
 		camera->SetMoveNum(1);
 		item->AddItem("マジックプランター", 1);//追加
 		item->AddItem("マソハーブの種", 3);
+
+		//デバッグ用アイテムの追加
 		if (LowApplication::GetInstance()->GetDebugMode()) {
 			item->AddItem("マジックプランター", 2);//追加
 			item->AddItem("マソハーブの種", 10);//追加
