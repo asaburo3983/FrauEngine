@@ -250,6 +250,26 @@ void EventManager::Update() {
 	//オプション画面への移行
 	//TODO 音楽を止める処理も追加しなければならない
 	if (key->key[DIK_ESCAPE] == 1) {
+		auto sound = SoundManager::GetInstance();
+
+			//ノベル側のサウンドを止める処理もいる
+			switch (stage->GetStageNum()) {
+			case (int)StageNum::FLOWER_SHOP:
+				sound->GetBGM(SoundList_BGM::FLOWER_SHOP)->Stop();
+				break;
+			case (int)StageNum::HANDY_SHOP:
+				sound->GetBGM(SoundList_BGM::HANDY_SHOP)->Stop();
+				break;
+			case (int)StageNum::MAGIC_SHOP:
+				sound->GetBGM(SoundList_BGM::MAGIC_SHOP)->Stop();
+
+				sound->PlayFade(SoundList_BGM::MAGIC_SHOP);
+				break;
+			case (int)StageNum::MAP:
+				sound->GetBGM(SoundList_BGM::MAP)->Stop();
+				break;
+			}
+			novelSystem->StopBGM();
 		scene->LoadScene("Option");
 	}
 }

@@ -35,6 +35,7 @@ void EndrollScene::StaticLoad() {
 
 void EndrollScene::Load() {
 
+	scrollCount = 0;
 }
 
 
@@ -66,7 +67,6 @@ void EndrollScene::Draw() {
 
 void EndrollScene::DrawNonePostEffect() {
 
-	//auto akazukin = Fonts::GetInstance()->GetFont((int)FontList::AKAZUKIN);
 	auto meirio = Fonts::GetInstance()->GetFont((int)FontList::MEIRIO);
 
 	black.Draw();

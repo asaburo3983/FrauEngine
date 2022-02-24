@@ -14,9 +14,7 @@ void TitleScene::LoadInDraw() {
 }
 
 void TitleScene::StaticLoad() {
-
 	CommonDataLoad();
-
 }
 
 
@@ -68,6 +66,7 @@ void TitleScene::UnLoad() {
 void TitleScene::Update() {
 	auto sound = SoundManager::GetInstance();
 	sound->GetBGM(SoundList_BGM::TITLE)->Play();
+	auto app = Application::GetInstance();
 
 	//選択肢文字画像の位置設定
 	float hitSelect = false;
@@ -124,20 +123,19 @@ void TitleScene::Update() {
 		}
 	}
 
+	//ポストエフェクト用の処理
+	app->SetAddEffect((int)AddPostEffect::NONE);
+	app->SetColorMulti();
 }
  
 void TitleScene::Draw() {
 	auto app = Application::GetInstance();
-	
-
-	
 
 	titleBack.Draw();
 	
 	titleFront.Draw();
 
 	titleCursor.Draw();
-
 	
 	for (int i = 0; i < (int)TitleStr::MAX; i++) {
 		titleStr[i].Draw();
@@ -145,9 +143,6 @@ void TitleScene::Draw() {
 
 	titleCloud.Draw();
 
-	app->SetColorMulti();
-
-	
 }
 void TitleScene::DrawNonePostEffect() {
 }

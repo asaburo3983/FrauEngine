@@ -401,3 +401,24 @@ void NovelSystem::EndNovel() {
 	SetEnable(false);
 	camera->SetMoveNum(0);
 }
+void NovelSystem::StopBGM() {
+	auto sound = SoundManager::GetInstance();
+	switch (scenario.num) {
+	case (int)ScenarioName::PROLOGUE:
+	case (int)ScenarioName::MAGICSHOP_JOIN:
+	case (int)ScenarioName::MAGIC_EVENT1:
+		sound->GetBGM(SoundList_BGM::SHINDY_THEME)->Stop();
+		break;
+	case (int)ScenarioName::HANDYSHOP_JOIN:
+	case (int)ScenarioName::HANDY_EVENT1:
+	case (int)ScenarioName::HANDY_EVENT2:
+		sound->GetBGM(SoundList_BGM::HANDY_THEME)->Stop();
+		break;
+	case (int)ScenarioName::HAPPY_END:
+		sound->GetBGM(SoundList_BGM::HAPPY_END)->Stop();
+		break;
+	case (int)ScenarioName::BAD_END:
+		sound->GetBGM(SoundList_BGM::BAD_END)->Stop();
+		break;
+	}
+}

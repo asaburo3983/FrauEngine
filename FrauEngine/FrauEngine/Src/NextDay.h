@@ -27,7 +27,7 @@ private:
 
 	bool night = false;
 	float nightAlpha = 0.0f;
-	float nightAlphaMax = 0.1f;/* 7.0f;*/
+	float nightAlphaMax = 7.0f;
 	bool morning = false;
 	float morningAlpha = 0.0f;
 public:

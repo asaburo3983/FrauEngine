@@ -111,6 +111,7 @@ void TutorialSystem::Draw() {
 	//テキスト描画
 	
 	Color strColor(63.0f / 256.0f, 41.0f / 256.0f, 20.0f / 256.0f, alpha);
+	Color strColorText(0.0f, 0.0f, 0.0f, alpha);
 
 	Vector2 titlePos = frame.GetPosLerp(Vector2(0.475, 0.25));
 	akazukin->DrawString(title, titlePos, 2.5, strColor, true);
@@ -127,12 +128,12 @@ void TutorialSystem::Draw() {
 	
 	if (enable) {
 		for (int i = 0; i < ROW_MAX; i++) {
-			meirio->DrawString(text[i], strPos[i], strSize, strColor);
+			meirio->DrawString(text[i], strPos[i], strSize, strColorText);
 		}
 	}
 	else {
 		for (int i = 0; i < ROW_MAX; i++) {
-			meirio->DrawString(textOld[i], strPos[i], strSize, strColor);
+			meirio->DrawString(textOld[i], strPos[i], strSize, strColorText);
 		}
 	}
 

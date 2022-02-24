@@ -185,6 +185,10 @@ void StaticClassSetting() {
 	planterSystem->Initialize();
 	nextDay->Initialize();
 	soundManager->Initialize();
+
+	for (int i = 0; i < 28; i++) {
+		eventManager->AddDays();
+	}
 }
 void CommonDataLoad() {
 	auto rc = Resource::GetInstance();
@@ -214,16 +218,7 @@ void CommonUpdate() {
 
 
 
-	player->Update();
-	stage->Update();
-	camera->Updata();
-	novelSystem->Update();
-	tutorialSystem->Update();
-	eventManager->Update();
-	item->Update();
-	normalUI->Update();
-	planterSystem->Update();
-	nextDay->Update();
+
 
 	//ƒWƒ“ƒOƒ‹‚ð—¬‚·‚½‚ß‚ÉBGM‚ðŽ~‚ß‚é
 	if (nextDay->GetNight()|| nextDay->GetMorning()) {
@@ -300,7 +295,16 @@ void CommonUpdate() {
 
 	}
 
-
+	player->Update();
+	stage->Update();
+	camera->Updata();
+	novelSystem->Update();
+	tutorialSystem->Update();
+	eventManager->Update();
+	item->Update();
+	normalUI->Update();
+	planterSystem->Update();
+	nextDay->Update();
 }
 
 void CommonDraw() {

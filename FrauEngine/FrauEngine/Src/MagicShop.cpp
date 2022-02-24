@@ -220,6 +220,7 @@ void MagicShop::Draw() {
 	selectFrame.SetAll(Vector2(1575, 340 + selectNum * shopBaseLine[0].GetHeight()), Vector2(1, 1), 0, alpha);
 	selectFrame.Draw();
 
+	strColor.A = alpha;
 	//文字列のベース
 	textBase.Draw();
 	//キャラの名前

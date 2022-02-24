@@ -82,6 +82,8 @@ public:
 		scenario.leftCharaNum = -1;
 		scenario.rightCharaNum = -1;
 	}
+
+	void StopBGM();
 private:
 	void InitializeScenario();
 

@@ -3,17 +3,29 @@
 using namespace frauEngine;
 
 void LightsObject::SetAmbientLight(float _power) {
+	if (imgui == true) {
+		return;
+	}
 	ambientPower = _power;
 }
 
 void LightsObject::SetDirectionalLight(DirectionalLightParam _param) {
+	if (imgui == true) {
+		return;
+	}
 	directionalLightParam = _param;
 }
 
 void LightsObject::SetPointLight(int _lightNum, PointLightParam _param) {
+	if (imgui == true) {
+		return;
+	}
 	pointLightParam[_lightNum] = _param;
 }
 void LightsObject::SetSpotLight(int _lightNum, SpotLightParam _param) {
+	if (imgui == true) {
+		return;
+	}
 	spotLightParam[_lightNum] = _param;
 }
 

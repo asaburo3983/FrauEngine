@@ -16,7 +16,25 @@ void GallaryScene::LoadInDraw() {
 
 void GallaryScene::StaticLoad() {
 
-	//UI
+	//”wŒi‰æ‘œ
+	skyImage.SetResource(resource->Image("Sky.png"));
+
+	auto stage = Stage::GetInstance();
+	stage->Load(StageNum::FLOWER_SHOP);
+	stage->MoveStage((int)StageNum::FLOWER_SHOP);
+
+	auto player = Player::GetInstance();
+
+	SetObjectList(player->GetModel(), "player");
+	SetObjectList(stage->GetLight(), "lights");
+
+}
+void GallaryScene::Load() {
+	auto player = Player::GetInstance();
+	auto stage = Stage::GetInstance();
+	auto camera = CameraWork::GetInstance();
+	auto eventManager = EventManager::GetInstance();
+
 	auto wideButton = resource->LoadIm("Data/Image/Gallary/WideButon.png");
 	for (int i = 0; i < (int)Button::MAX; i++) {
 		wideButtonImage[i].SetResource(wideButton);
@@ -40,20 +58,6 @@ void GallaryScene::StaticLoad() {
 	cameraTutorialStrImage.SetResource(resource->LoadIm("Data/Image/Gallary/Str/CameraTutorialStr.png"));
 	DoFTutorialStrImage.SetResource(resource->LoadIm("Data/Image/Gallary/Str/DoFTutorialStr.png"));
 
-	//”wŒi‰æ‘œ
-	skyImage.SetResource(resource->Image("Sky.png"));
-
-	auto stage = Stage::GetInstance();
-	stage->Load(StageNum::FLOWER_SHOP);
-	stage->MoveStage((int)StageNum::FLOWER_SHOP);
-
-
-}
-void GallaryScene::Load() {
-	auto player = Player::GetInstance();
-	auto stage = Stage::GetInstance();
-	auto camera = CameraWork::GetInstance();
-	auto eventManager = EventManager::GetInstance();
 
 	eventManager->SetScene(this);
 
@@ -97,16 +101,34 @@ void GallaryScene::Load() {
 void GallaryScene::UnLoad() {
 	auto player = Player::GetInstance();
 	auto camera = CameraWork::GetInstance();
+	auto stage = Stage::GetInstance();
 	enableUI = true;
 	photoMode = false;
 	shaderNum = 0;
 	postEffectNum = 0;
 	camera->SetPhotoMode(photoMode);
 	player->GetModel()->SetAnotherResourceEnable(1, true);
+	stage->GetStageModel()->SetAnotherResourceEnable(1, true);
+
+	resource->UnLoadIm("WideButon.png");
+	resource->UnLoadIm("CameraStr.png");
+	resource->UnLoadIm("EnableUIStr.png");
+	resource->UnLoadIm("PBRShaderStr.png");
+	resource->UnLoadIm("ToonShaderStr.png");
+	resource->UnLoadIm("NoneEffectStr.png");
+	resource->UnLoadIm("DepthOfFieldStr.png");
+	resource->UnLoadIm("BlurStr.png");
+	resource->UnLoadIm("SharpStr.png");
+	resource->UnLoadIm("RetoroStr.png");
+	resource->UnLoadIm("NegativeStr.png");
+	resource->UnLoadIm("OutlineStr.png");
+	resource->UnLoadIm("OutlineDoFStr.png");
+	resource->UnLoadIm("CameraTutorialStr.png");
+	resource->UnLoadIm("DoFTutorialStr.png");
 
 }
 
-
+ 
 void GallaryScene::Update() {
 	
 	auto app = Application::GetInstance();
@@ -159,9 +181,12 @@ void GallaryScene::Update() {
 		shaderNum = !shaderNum;
 		if (shaderNum == 0) {
 			player->GetModel()->SetAnotherResourceEnable(1, false);
+			stage->GetStageModel()->SetAnotherResourceEnable(1, false);
+
 		}		
 		if (shaderNum == 1) {
 			player->GetModel()->SetAnotherResourceEnable(1, true);
+			stage->GetStageModel()->SetAnotherResourceEnable(1, true);
 		}
 
 

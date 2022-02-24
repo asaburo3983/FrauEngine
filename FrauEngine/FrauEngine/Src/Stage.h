@@ -87,7 +87,7 @@ public:
 	void DrawShadow();
 
 	LightsObject* GetLight() { return &light; }
-	//ModelObject* GetStageModel() { return &model; }
+	ModelObject* GetStageModel() { return &model; }
 private:
 
 

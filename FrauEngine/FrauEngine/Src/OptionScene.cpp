@@ -101,10 +101,12 @@ void OptionScene::Update() {
 
 	//タイトルへ戻る
 	if (backTitleButton.Hit(mouse->x, mouse->y)&&mouse->left==1) {
+		sound->GetBGM(SoundList_BGM::TITLE)->Stop();
 		LoadScene("Title");
 	}	
 	//一つ前のシーンに戻る
 	if (backSceneButton.Hit(mouse->x, mouse->y)&&mouse->left==1) {
+		sound->GetBGM(SoundList_BGM::TITLE)->Stop();
 		LoadScene(app->GetSceneOldStr());
 	}
 }

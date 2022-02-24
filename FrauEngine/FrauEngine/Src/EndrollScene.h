@@ -21,8 +21,8 @@ private:
 	Vector2 stringDist = { 600,200 };
 
 	int scrollCount = 0;
-	int scrollCountSpeed = 2;
-	int scrollCountMax = 1080 * 4;
+	const int scrollCountSpeed = 2;
+	const int scrollCountMax = 1080 * 4;
 
 	CSV csv;
 public:
